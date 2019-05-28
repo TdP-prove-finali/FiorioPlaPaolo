@@ -7,27 +7,28 @@ public class CalciatoreStatistiche {
 	private String nome;
 	private String squadra;
 	
-	private int partiteGiocate;
+	private float partiteGiocate;
 	private float mediaVoto;
 	private float mediaFanta;
 	
-	private int golFatti;
-	private int golSubiti;
+	private float golFatti;
+	private float golSubiti;
 	
-	private int rigoriParati;
-	private int rigoriCalciati;
-	private int rigoriSegnati;
-	private int rigoriSbagliati;
+	private float rigoriParati;
+	private float rigoriCalciati;
+	private float rigoriSegnati;
+	private float rigoriSbagliati;
 	
-	private int assist;
-	private int assistFermo;
+	private float assist;
+	private float assistFermo;
 	
-	private int ammonizioni;
-	private int espulsioni;
-	private int autogol;
-	public CalciatoreStatistiche(int id, String ruolo, String nome, String squadra, int partiteGiocate, float mediaVoto,
-			float mediaFanta, int golFatti, int golSubiti, int rigoriParati, int rigoriCalciati, int rigoriSegnati,
-			int rigoriSbagliati, int assist, int assistFermo, int ammonizioni, int espulsioni, int autogol) {
+	private float ammonizioni;
+	private float espulsioni;
+	private float autogol;
+	
+	public CalciatoreStatistiche(int id, String ruolo, String nome, String squadra, float partiteGiocate, float mediaVoto,
+			float mediaFanta, float golFatti, float golSubiti, float rigoriParati, float rigoriCalciati, float rigoriSegnati,
+			float rigoriSbagliati, float assist, float assistFermo, float ammonizioni, float espulsioni, float autogol) {
 		super();
 		this.id = id;
 		this.ruolo = ruolo;
@@ -60,7 +61,7 @@ public class CalciatoreStatistiche {
 	public String getSquadra() {
 		return squadra;
 	}
-	public int getPartiteGiocate() {
+	public float getPartiteGiocate() {
 		return partiteGiocate;
 	}
 	public float getMediaVoto() {
@@ -69,37 +70,37 @@ public class CalciatoreStatistiche {
 	public float getMediaFanta() {
 		return mediaFanta;
 	}
-	public int getGolFatti() {
+	public float getGolFatti() {
 		return golFatti;
 	}
-	public int getGolSubiti() {
+	public float getGolSubiti() {
 		return golSubiti;
 	}
-	public int getRigoriParati() {
+	public float getRigoriParati() {
 		return rigoriParati;
 	}
-	public int getRigoriCalciati() {
+	public float getRigoriCalciati() {
 		return rigoriCalciati;
 	}
-	public int getRigoriSegnati() {
+	public float getRigoriSegnati() {
 		return rigoriSegnati;
 	}
-	public int getRigoriSbagliati() {
+	public float getRigoriSbagliati() {
 		return rigoriSbagliati;
 	}
-	public int getAssist() {
+	public float getAssist() {
 		return assist;
 	}
-	public int getAssistFermo() {
+	public float getAssistFermo() {
 		return assistFermo;
 	}
-	public int getAmmonizioni() {
+	public float getAmmonizioni() {
 		return ammonizioni;
 	}
-	public int getEspulsioni() {
+	public float getEspulsioni() {
 		return espulsioni;
 	}
-	public int getAutogol() {
+	public float getAutogol() {
 		return autogol;
 	}
 	@Override
@@ -128,8 +129,9 @@ public class CalciatoreStatistiche {
 	@Override
 	public String toString() {
 		return String.format(
-				"[ruolo=%s, nome=%s, squadra=%s]\n",
-				ruolo, nome, squadra);
+				"id=%s, ruolo=%s, nome=%s, squadra=%s, partiteGiocate=%s, mediaVoto=%s, mediaFanta=%s, golFatti=%s, golSubiti=%s, rigoriParati=%s, rigoriCalciati=%s, rigoriSegnati=%s, rigoriSbagliati=%s, assist=%s, assistFermo=%s, ammonizioni=%s, espulsioni=%s, autogol=%s\n",
+				id, ruolo, nome, squadra, partiteGiocate, mediaVoto, mediaFanta, golFatti, golSubiti, rigoriParati,
+				rigoriCalciati, rigoriSegnati, rigoriSbagliati, assist, assistFermo, ammonizioni, espulsioni, autogol);
 	}
 	
 	

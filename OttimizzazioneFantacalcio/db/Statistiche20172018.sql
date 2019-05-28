@@ -6,20 +6,20 @@ CREATE TABLE Statistiche20172018(
   ,Ruolo           VARCHAR(1) NOT NULL
   ,Nome            VARCHAR(18) NOT NULL
   ,Squadra         VARCHAR(10) NOT NULL
-  ,PartiteGiocate  INTEGER  NOT NULL
+  ,PartiteGiocate  NUMERIC(4,2) NOT NULL
   ,MediaVoto       NUMERIC(4,2) NOT NULL
   ,MediaFanta      NUMERIC(4,2) NOT NULL
-  ,GolFatti        INTEGER  NOT NULL
-  ,GolSubiti       INTEGER  NOT NULL
-  ,RigoriParati    INTEGER  NOT NULL
-  ,RigoriCalciati  INTEGER  NOT NULL
-  ,RigoriSegnati   INTEGER  NOT NULL
-  ,RigoriSbagliati INTEGER  NOT NULL
-  ,Assist          INTEGER  NOT NULL
-  ,AssistFermo     INTEGER  NOT NULL
-  ,Ammonizioni     INTEGER  NOT NULL
-  ,Espulsioni      INTEGER  NOT NULL
-  ,Autogol         INTEGER  NOT NULL
+  ,GolFatti        NUMERIC(4,2) NOT NULL
+  ,GolSubiti       NUMERIC(4,2) NOT NULL
+  ,RigoriParati    NUMERIC(4,2) NOT NULL
+  ,RigoriCalciati  NUMERIC(4,2) NOT NULL
+  ,RigoriSegnati   NUMERIC(4,2) NOT NULL
+  ,RigoriSbagliati NUMERIC(4,2) NOT NULL
+  ,Assist          NUMERIC(4,2) NOT NULL
+  ,AssistFermo     NUMERIC(4,2) NOT NULL
+  ,Ammonizioni     NUMERIC(4,2) NOT NULL
+  ,Espulsioni      NUMERIC(4,2) NOT NULL
+  ,Autogol         NUMERIC(4,2) NOT NULL
 );
 INSERT INTO Statistiche20172018(Id,Ruolo,Nome,Squadra,PartiteGiocate,MediaVoto,MediaFanta,GolFatti,GolSubiti,RigoriParati,RigoriCalciati,RigoriSegnati,RigoriSbagliati,Assist,AssistFermo,Ammonizioni,Espulsioni,Autogol) VALUES
  (3,'P','RADUNOVIC','Atalanta',0,0,0,0,0,0,0,0,0,0,0,0,0,0)

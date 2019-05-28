@@ -26,14 +26,15 @@ public class StatisticheDAO {
 			while(rs.next()) {
 			
 				calciatori.add(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
-						rs.getString("Squadra"), rs.getInt("PartiteGiocate"), rs.getFloat("MediaVoto"),rs.getFloat("MediaFanta"),
-						rs.getInt("GolFatti"), rs.getInt("GolSubiti"), rs.getInt("RigoriParati"), rs.getInt("RigoriCalciati"), 
-						rs.getInt("RigoriSegnati"), rs.getInt("RigoriSbagliati"), rs.getInt("Assist"), 
-						rs.getInt("AssistFermo"), rs.getInt("Ammonizioni"), rs.getInt("Espulsioni"), rs.getInt("Autogol")));
+						rs.getString("Squadra"), rs.getFloat("PartiteGiocate"), rs.getFloat("MediaVoto"),rs.getFloat("MediaFanta"),
+						rs.getFloat("GolFatti"), rs.getFloat("GolSubiti"), rs.getFloat("RigoriParati"), rs.getFloat("RigoriCalciati"), 
+						rs.getFloat("RigoriSegnati"), rs.getFloat("RigoriSbagliati"), rs.getFloat("Assist"), 
+						rs.getFloat("AssistFermo"), rs.getFloat("Ammonizioni"), rs.getFloat("Espulsioni"), rs.getFloat("Autogol")));
 				
 			
 				
 			}
+			conn.close();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -56,11 +57,11 @@ public List<CalciatoreStatistiche> getCalciatori20172018(){
 			while(rs.next()) {
 			
 				calciatori.add(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
-						rs.getString("Squadra"), rs.getInt("PartiteGiocate"), rs.getFloat("MediaVoto"),rs.getFloat("MediaFanta"),
-						rs.getInt("GolFatti"), rs.getInt("GolSubiti"), rs.getInt("RigoriParati"), rs.getInt("RigoriCalciati"), 
-						rs.getInt("RigoriSegnati"), rs.getInt("RigoriSbagliati"), rs.getInt("Assist"), 
-						rs.getInt("AssistFermo"), rs.getInt("Ammonizioni"), rs.getInt("Espulsioni"), rs.getInt("Autogol")));
-				
+						rs.getString("Squadra"), rs.getFloat("PartiteGiocate"), rs.getFloat("MediaVoto"),rs.getFloat("MediaFanta"),
+						rs.getFloat("GolFatti"), rs.getFloat("GolSubiti"), rs.getFloat("RigoriParati"), rs.getFloat("RigoriCalciati"), 
+						rs.getFloat("RigoriSegnati"), rs.getFloat("RigoriSbagliati"), rs.getFloat("Assist"), 
+						rs.getFloat("AssistFermo"), rs.getFloat("Ammonizioni"), rs.getFloat("Espulsioni"), rs.getFloat("Autogol")));
+					
 			
 				
 			}
