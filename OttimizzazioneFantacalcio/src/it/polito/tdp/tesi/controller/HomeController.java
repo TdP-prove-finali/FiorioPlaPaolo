@@ -6,9 +6,12 @@ import java.util.ResourceBundle;
 import it.polito.tdp.tesi.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class HomeController {
@@ -54,16 +57,75 @@ public class HomeController {
     @FXML
     void doCreaRosa(ActionEvent event) {
 
+
+    	try {
+    		
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("Rosa.fxml"));
+			BorderPane root = (BorderPane) loader.load();
+			Scene scene = new Scene(root);
+			
+			RosaController controller = loader.getController();
+ 			controller.setModel(model);
+ 			Stage s= new Stage();
+			
+ 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			s.setScene(scene);
+			s.setTitle("Costruisci la tua rosa");
+			s.toFront();
+			s.show();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+}
     }
 
     @FXML
     void doReset(ActionEvent event) {
+    	
+    	txtTotale.clear();
+    	txtAttaccanti.clear();
+    	txtCentrocampisti.clear();
+    	txtDifensori.clear();
+    	txtPortieri.clear();
+    	txtRimanenti.clear();
+    	txtRosa.clear();
 
     }
 
     @FXML
     void doTrovaMigliorRosa(ActionEvent event) {
-
+    	
+    	txtRosa.clear();
+    	int budgetTotale;
+    	int budgetPortieri;
+    	int budgetDifensori;
+    	int budgetCentrocampisti;
+    	int budgetAttaccanti;
+    	int budgetRimanente;
+    	try {
+    		budgetTotale = Integer.parseInt(txtTotale.getText());
+        	budgetPortieri = Integer.parseInt(txtPortieri.getText());
+        	budgetDifensori = Integer.parseInt(txtDifensori.getText());
+        	budgetCentrocampisti = Integer.parseInt(txtCentrocampisti.getText());
+        	budgetAttaccanti = Integer.parseInt(txtAttaccanti.getText());
+        	if((budgetPortieri+budgetDifensori+budgetCentrocampisti+budgetAttaccanti)>budgetTotale) {
+        		txtRosa.appendText("ERRORE!\nI budget inseriti superano quello totale");
+        		return;
+        	}
+        	budgetRimanente=budgetTotale-budgetPortieri-budgetDifensori-budgetCentrocampisti-budgetAttaccanti;
+        	System.out.format("Budget totale: %d \nBudget portieri: %d \n"
+        			+ "Budget difensori %d: \nBudget centrocampisti: %d \nBudget attaccanti: %d \nBudget rimanente: %d \n",
+        			budgetTotale,budgetPortieri,budgetDifensori, budgetCentrocampisti, budgetAttaccanti, budgetRimanente);
+        	txtRosa.appendText("Ecco la miglior rosa possibile: \n");
+        	for(int i=0; i<25 ; i++) {
+        		txtRosa.appendText("i\n" );
+        	}
+        	
+		} catch (NumberFormatException e) {
+			txtRosa.appendText("ERRORE : inserire il budget in cifre");
+			return;
+		}
+    	
     }
 
     @FXML
@@ -79,6 +141,7 @@ public class HomeController {
         assert btnCreaRosa != null : "fx:id=\"btnCreaRosa\" was not injected: check your FXML file 'Home.fxml'.";
         assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'Home.fxml'.";
 
+        txtRosa.setStyle("-fx-font-family: monospace");
     }
     
     public void setModel(Model model, Stage stage) {

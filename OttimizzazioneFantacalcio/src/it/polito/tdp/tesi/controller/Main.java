@@ -22,6 +22,8 @@ public class Main extends Application {
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
+		//	primaryStage.setAlwaysOnTop(true);
+			primaryStage.setTitle("Ottimizza la rosa del tuo Fantacalcio");
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

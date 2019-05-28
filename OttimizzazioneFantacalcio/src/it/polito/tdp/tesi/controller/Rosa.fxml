@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.tesi.controller.RosaController">
+   <top>
+      <Label text="CREA LA TUA ROSA" textFill="#2f8624" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="Britannic Bold" size="28.0" />
+         </font>
+      </Label>
+   </top>
+   <bottom>
+      <HBox spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextArea fx:id="txtListe" editable="false" maxWidth="280.0" minHeight="400.0" />
+            <VBox>
+               <children>
+                  <HBox>
+                     <children>
+                        <Label text="Budget rimanente :" />
+                        <TextField fx:id="txtResiduo" editable="false" maxWidth="40.0" visible="false" />
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
+                  <Button fx:id="btnAggiungi" minWidth="70.0" mnemonicParsing="false" onAction="#doAggiungi" text="Aggiungi">
+                     <padding>
+                        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets bottom="100.0" left="18.0" top="50.0" />
+                     </VBox.margin></Button>
+                  <Button fx:id="btnRimuovi" minWidth="70.0" mnemonicParsing="false" onAction="#doRimuovi" text="RImuovi">
+                     <padding>
+                        <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets left="18.0" />
+                     </VBox.margin></Button>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </VBox>
+            <TextArea fx:id="txtTuaRosa" editable="false" maxWidth="280.0" minHeight="400.0" />
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+   </bottom>
+   <center>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER_LEFT" spacing="20.0">
+               <children>
+                  <Label text="Portieri :" />
+                  <ComboBox fx:id="cmbPortieri" prefWidth="250.0" promptText="Seleziona le caratteristiche">
+                     <HBox.margin>
+                        <Insets left="41.0" />
+                     </HBox.margin>
+                  </ComboBox>
+                  <Button fx:id="btnGeneraPortieri" mnemonicParsing="false" onAction="#doGeneraPortieri" text="Genera Liste" />
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" spacing="20.0">
+               <children>
+                  <Label text="Difensori :" />
+                  <ComboBox fx:id="cmbDifensori" prefWidth="250.0" promptText="Seleziona le caratteristiche">
+                     <HBox.margin>
+                        <Insets left="32.0" />
+                     </HBox.margin>
+                  </ComboBox>
+                  <Button fx:id="btnGeneraDifensori" mnemonicParsing="false" onAction="#btnGeneraDifensori" text="Genera Liste" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" spacing="20.0">
+               <children>
+                  <Label text="Centrocampisti :" />
+                  <ComboBox fx:id="cmbCentrocampisti" prefWidth="250.0" promptText="Seleziona le caratteristiche" />
+                  <Button fx:id="btnGeneraCentrocampisti" mnemonicParsing="false" onAction="#doGeneraCentrocampisti" text="Genera Liste" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" spacing="20.0">
+               <children>
+                  <Label text="Attaccanti :" />
+                  <ComboBox fx:id="cmbAttaccanti" prefWidth="250.0" promptText="Seleziona le caratteristiche">
+                     <HBox.margin>
+                        <Insets left="27.0" />
+                     </HBox.margin>
+                  </ComboBox>
+                  <Button fx:id="btnGeneraAttaccanti" mnemonicParsing="false" onAction="#doGeneraAttaccanti" text="Genera Liste" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="150.0" right="150.0" top="5.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+</BorderPane>

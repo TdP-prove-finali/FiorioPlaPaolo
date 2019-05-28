@@ -76,7 +76,7 @@
       </VBox>
    </left>
    <right>
-      <VBox alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnMigliorRosa" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#doTrovaMigliorRosa" text="Trova la Miglior Rosa">
                <padding>
@@ -95,7 +95,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </HBox>
-            <TextArea fx:id="txtRosa" maxWidth="300.0" minHeight="380.0" />
+            <TextArea fx:id="txtRosa" maxWidth="300.0" minHeight="400.0" />
          </children>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
