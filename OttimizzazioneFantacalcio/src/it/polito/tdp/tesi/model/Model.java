@@ -11,6 +11,12 @@ public class Model {
 	private List<CalciatoreStatistiche> stat20162017;
 	private List<CalciatoreStatistiche> stat20172018;
 	private List<CalciatoreStatistiche> media;
+	private int budgetTotale;
+	private int budgetRimanente;
+	private int budgetPortieri;
+	private int budgetDifensori;
+	private int budgetCentrocampisti;
+	private int budgetAttaccanti;
 	
 	public Model() {
 		 dao = new StatisticheDAO();
@@ -51,6 +57,70 @@ public class Model {
 		
 		return media;
 	}
+
+
+	public int getBudgetTotale() {
+		return budgetTotale;
+	}
+
+
+	public void setBudgetTotale(int budgetTotale) {
+		this.budgetTotale = budgetTotale;
+	}
+
+
+	public int getBudgetRimanente() {
+		return budgetRimanente;
+	}
+
+
+	public void setBudgetRimanente(int budgetRimanente) {
+		this.budgetRimanente = budgetRimanente;
+	}
+
+
+	public int getBudgetPortieri() {
+		return budgetPortieri;
+	}
+
+
+	public void setBudgetPortieri(int budgetPortieri) {
+		this.budgetPortieri = budgetPortieri;
+	}
+
+
+	public int getBudgetDifensori() {
+		return budgetDifensori;
+	}
+
+
+	public void setBudgetDifensori(int budgetDifensori) {
+		this.budgetDifensori = budgetDifensori;
+	}
+
+
+	public int getBudgetCentrocampisti() {
+		return budgetCentrocampisti;
+	}
+
+
+	public void setBudgetCentrocampisti(int budgetCentrocampisti) {
+		this.budgetCentrocampisti = budgetCentrocampisti;
+	}
+
+
+	public int getBudgetAttaccanti() {
+		return budgetAttaccanti;
+	}
+
+
+	public void setBudgetAttaccanti(int budgetAttaccanti) {
+		this.budgetAttaccanti = budgetAttaccanti;
+	}
+	
+	
+	
+	
 	
 	
 }

@@ -14,8 +14,13 @@ import javafx.scene.control.TextField;
 public class RosaController {
 
 	private Model model;
+	private int budgetTotale;
+	private int budgetRimanente;
+	private int costoSelezionato;
+	
 	public void setModel(Model model) {
 		this.model = model;	
+		budgetTotale= model.getBudgetTotale();
 	}
     @FXML
     private ResourceBundle resources;
@@ -84,9 +89,10 @@ public class RosaController {
     
     @FXML
     void doAggiungi(ActionEvent event) {
-    	
     	String aggiungi = txtListe.getSelectedText();
     	txtTuaRosa.appendText(aggiungi);
+    	
+    	//budgetRimanente = budgetTotale-costoSelezionato
     }
 
     @FXML

@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -30,6 +31,9 @@ public class HomeController {
     @FXML
     private TextField txtPortieri;
 
+    @FXML
+    private CheckBox checkPortieri;
+    
     @FXML
     private TextField txtDifensori;
 
@@ -96,6 +100,12 @@ public class HomeController {
     void doTrovaMigliorRosa(ActionEvent event) {
     	
     	txtRosa.clear();
+    	if(checkPortieri.isSelected()) {
+    		// dopo aver selezionato il miglior portiere,
+    		// aggiungi i 2 portieri della sua stessa squadra
+    		// prova txtRosa.appendText("portieri stessa squadra");
+    	}
+    	;
     	int budgetTotale;
     	int budgetPortieri;
     	int budgetDifensori;
@@ -104,10 +114,16 @@ public class HomeController {
     	int budgetRimanente;
     	try {
     		budgetTotale = Integer.parseInt(txtTotale.getText());
+    		model.setBudgetTotale(budgetTotale);
         	budgetPortieri = Integer.parseInt(txtPortieri.getText());
+        	model.setBudgetPortieri(budgetPortieri);
         	budgetDifensori = Integer.parseInt(txtDifensori.getText());
+        	model.setBudgetDifensori(budgetDifensori);
         	budgetCentrocampisti = Integer.parseInt(txtCentrocampisti.getText());
+        	model.setBudgetCentrocampisti(budgetCentrocampisti);
         	budgetAttaccanti = Integer.parseInt(txtAttaccanti.getText());
+        	model.setBudgetAttaccanti(budgetAttaccanti);
+        	
         	if((budgetPortieri+budgetDifensori+budgetCentrocampisti+budgetAttaccanti)>budgetTotale) {
         		txtRosa.appendText("ERRORE!\nI budget inseriti superano quello totale");
         		return;
@@ -132,6 +148,7 @@ public class HomeController {
     void initialize() {
         assert txtTotale != null : "fx:id=\"txtTotale\" was not injected: check your FXML file 'Home.fxml'.";
         assert txtPortieri != null : "fx:id=\"txtPortieri\" was not injected: check your FXML file 'Home.fxml'.";
+        assert checkPortieri != null : "fx:id=\"checkPortieri\" was not injected: check your FXML file 'Home.fxml'.";
         assert txtDifensori != null : "fx:id=\"txtDifensori\" was not injected: check your FXML file 'Home.fxml'.";
         assert txtCentrocampisti != null : "fx:id=\"txtCentrocampisti\" was not injected: check your FXML file 'Home.fxml'.";
         assert txtAttaccanti != null : "fx:id=\"txtAttaccanti\" was not injected: check your FXML file 'Home.fxml'.";
