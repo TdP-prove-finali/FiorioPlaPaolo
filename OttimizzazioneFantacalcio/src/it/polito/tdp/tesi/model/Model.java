@@ -1,63 +1,77 @@
 package it.polito.tdp.tesi.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import it.polito.tdp.tesi.db.StatisticheDAO;
 
 public class Model {
 
 	private StatisticheDAO dao;
-	private List<CalciatoreStatistiche> stat20162017;
-	private List<CalciatoreStatistiche> stat20172018;
+	private Map<Integer,CalciatoreStatistiche> stat20162017;
+	private Map<Integer,CalciatoreStatistiche> stat20172018;
+	private Map<Integer,CalciatoreStatistiche> stat20182019;
 	private List<CalciatoreStatistiche> media;
+	private List<PunteggioCalciatore> punteggi;
 	private int budgetTotale;
 	private int budgetRimanente;
 	private int budgetPortieri;
 	private int budgetDifensori;
 	private int budgetCentrocampisti;
 	private int budgetAttaccanti;
+	private List<Quotazione> quotazioni;
 	
 	public Model() {
 		 dao = new StatisticheDAO();
+		// quotazioni = dao.getQuotazioni();
 	}
 	
-	
-	public List<CalciatoreStatistiche> getMedia(){
+	public void calcolaMedia() {
 		stat20162017 = dao.getCalciatori20162017();
 		stat20172018 = dao.getCalciatori20172018();
+		stat20182019 = dao.getCalciatori20182019();
+		
+		
 		media = new ArrayList<CalciatoreStatistiche>();
-		
-		for(CalciatoreStatistiche c : stat20162017)
-			for(CalciatoreStatistiche c1: stat20172018)
-				if(c.getNome().equals(c1.getNome()))
-					if(c.getPartiteGiocate()>0 && c1.getPartiteGiocate()>0) {
-						media.add(new CalciatoreStatistiche(c.getId(), c.getRuolo(), c.getNome(), c.getSquadra(),(c.getPartiteGiocate()+c1.getPartiteGiocate())/2,
-								(c.getMediaVoto()+c1.getMediaVoto())/2, (c.getMediaFanta()+c1.getMediaFanta())/2, (c.getGolFatti()+c1.getGolFatti())/2,
-								(c.getGolSubiti()+c1.getGolSubiti())/2, (c.getRigoriParati()+c1.getRigoriParati())/2, (c.getRigoriCalciati()+c1.getRigoriCalciati())/2, 
-								(c.getRigoriSegnati()+c1.getRigoriSegnati())/2, (c.getRigoriSbagliati()+c1.getRigoriSbagliati())/2,(c.getAssist()+c1.getAssist())/2,
-								(c.getAssistFermo()+c1.getAssistFermo())/2, (c.getAmmonizioni()+c1.getAmmonizioni())/2, (c.getEspulsioni()+c1.getEspulsioni())/2, (c.getAutogol()+c1.getAutogol())/2));
-					}else if(c.getPartiteGiocate()==0) {
-						media.add(new CalciatoreStatistiche(c1.getId(), c1.getRuolo(), c1.getNome(), c1.getSquadra(), c1.getPartiteGiocate(),
-								c1.getMediaVoto(), c1.getMediaFanta(), c1.getGolFatti(),
-								c1.getGolSubiti(), c1.getRigoriParati(), c1.getRigoriCalciati(), 
-								c1.getRigoriSegnati(), c1.getRigoriSbagliati(),c1.getAssist(),
-								c1.getAssistFermo(), c1.getAmmonizioni(), c1.getEspulsioni(), c1.getAutogol()));
-			
-					}else if(c1.getPartiteGiocate()==0) {
-						media.add(new CalciatoreStatistiche(c.getId(), c.getRuolo(), c.getNome(), c.getSquadra(), c.getPartiteGiocate(),
-								c.getMediaVoto(), c.getMediaFanta(), c.getGolFatti(),
-								c.getGolSubiti(), c.getRigoriParati(), c.getRigoriCalciati(), 
-								c.getRigoriSegnati(), c.getRigoriSbagliati(),c.getAssist(),
-								c.getAssistFermo(), c.getAmmonizioni(), c.getEspulsioni(), c.getAutogol()));
-			
-					}
-				
-		
-		
+		media.addAll(dao.getCalciatori20162017().values());
+		media.addAll(dao.getCalciatori20172018().values());
+		media.addAll(dao.getCalciatori20182019().values());
+		media.addAll(dao.getMedia2016_2017_2018().values());
+		media.addAll(dao.getMedia2016_2018_2019().values());
+		media.addAll(dao.getMedia2017_2018_2019().values());
+		media.addAll(dao.getMediaSolo20162017().values());
+		media.addAll(dao.getMediaSolo2016_2017_2018().values());
+		media.addAll(dao.getMediaSolo2016_2018_2019().values());
+		media.addAll(dao.getMediaSolo20172018().values());
+		media.addAll(dao.getMediaSolo2017_2018_2019().values());
+		media.addAll(dao.getMediaSolo20182019().values());
+		media.addAll(dao.getMediaTreAnni().values());
+							
+	}
+	public List<CalciatoreStatistiche> getMedia(){
 		return media;
 	}
 
+	public void calcolaPunteggio() {
+		
+		punteggi = new ArrayList<PunteggioCalciatore>();
+		double punteggio;
+		for(CalciatoreStatistiche c : this.media) {
+			punteggio=0;
+			punteggio+= c.getPartiteGiocate()+c.getMediaFanta()+c.getMediaVoto()+c.getAssist()+2*c.getRigoriSegnati()-3*c.getRigoriSbagliati()+3*c.getGolFatti()-c.getGolSubiti()-2*c.getAmmonizioni()-3*c.getEspulsioni()-3*c.getAutogol();
+			PunteggioCalciatore p = new PunteggioCalciatore(c.getId(),c.getSquadra(), c.getNome(), c.getSquadra(), c.getQuotazione(), punteggio);
+			punteggi.add(p);
+			
+		}
+		
+	}
+	public List<PunteggioCalciatore> getListaPunteggi(){
+		return this.punteggi;
+	}
+
+	
 
 	public int getBudgetTotale() {
 		return budgetTotale;
@@ -116,6 +130,12 @@ public class Model {
 
 	public void setBudgetAttaccanti(int budgetAttaccanti) {
 		this.budgetAttaccanti = budgetAttaccanti;
+	}
+
+
+	public void calcolaMigliorRosa() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

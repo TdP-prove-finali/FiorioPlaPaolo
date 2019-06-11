@@ -6,34 +6,36 @@ public class CalciatoreStatistiche {
 	private String ruolo;
 	private String nome;
 	private String squadra;
+	private int quotazione;
 	
-	private float partiteGiocate;
-	private float mediaVoto;
-	private float mediaFanta;
+	private double partiteGiocate;
+	private double mediaVoto;
+	private double mediaFanta;
 	
-	private float golFatti;
-	private float golSubiti;
+	private double golFatti;
+	private double golSubiti;
 	
-	private float rigoriParati;
-	private float rigoriCalciati;
-	private float rigoriSegnati;
-	private float rigoriSbagliati;
+	private double rigoriParati;
+	private double rigoriCalciati;
+	private double rigoriSegnati;
+	private double rigoriSbagliati;
 	
-	private float assist;
-	private float assistFermo;
+	private double assist;
+	private double assistFermo;
 	
-	private float ammonizioni;
-	private float espulsioni;
-	private float autogol;
-	
-	public CalciatoreStatistiche(int id, String ruolo, String nome, String squadra, float partiteGiocate, float mediaVoto,
-			float mediaFanta, float golFatti, float golSubiti, float rigoriParati, float rigoriCalciati, float rigoriSegnati,
-			float rigoriSbagliati, float assist, float assistFermo, float ammonizioni, float espulsioni, float autogol) {
+	private double ammonizioni;
+	private double espulsioni;
+	private double autogol;
+	public CalciatoreStatistiche(int id, String ruolo, String nome, String squadra, int quotazione,
+			double partiteGiocate, double mediaVoto, double mediaFanta, double golFatti, double golSubiti,
+			double rigoriParati, double rigoriCalciati, double rigoriSegnati, double rigoriSbagliati, double assist,
+			double assistFermo, double ammonizioni, double espulsioni, double autogol) {
 		super();
 		this.id = id;
 		this.ruolo = ruolo;
 		this.nome = nome;
 		this.squadra = squadra;
+		this.quotazione = quotazione;
 		this.partiteGiocate = partiteGiocate;
 		this.mediaVoto = mediaVoto;
 		this.mediaFanta = mediaFanta;
@@ -61,53 +63,56 @@ public class CalciatoreStatistiche {
 	public String getSquadra() {
 		return squadra;
 	}
-	public float getPartiteGiocate() {
+	public int getQuotazione() {
+		return quotazione;
+	}
+	public double getPartiteGiocate() {
 		return partiteGiocate;
 	}
-	public float getMediaVoto() {
+	public double getMediaVoto() {
 		return mediaVoto;
 	}
-	public float getMediaFanta() {
+	public double getMediaFanta() {
 		return mediaFanta;
 	}
-	public float getGolFatti() {
+	public double getGolFatti() {
 		return golFatti;
 	}
-	public float getGolSubiti() {
+	public double getGolSubiti() {
 		return golSubiti;
 	}
-	public float getRigoriParati() {
+	public double getRigoriParati() {
 		return rigoriParati;
 	}
-	public float getRigoriCalciati() {
+	public double getRigoriCalciati() {
 		return rigoriCalciati;
 	}
-	public float getRigoriSegnati() {
+	public double getRigoriSegnati() {
 		return rigoriSegnati;
 	}
-	public float getRigoriSbagliati() {
+	public double getRigoriSbagliati() {
 		return rigoriSbagliati;
 	}
-	public float getAssist() {
+	public double getAssist() {
 		return assist;
 	}
-	public float getAssistFermo() {
+	public double getAssistFermo() {
 		return assistFermo;
 	}
-	public float getAmmonizioni() {
+	public double getAmmonizioni() {
 		return ammonizioni;
 	}
-	public float getEspulsioni() {
+	public double getEspulsioni() {
 		return espulsioni;
 	}
-	public float getAutogol() {
+	public double getAutogol() {
 		return autogol;
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + id;
 		return result;
 	}
 	@Override
@@ -119,26 +124,19 @@ public class CalciatoreStatistiche {
 		if (getClass() != obj.getClass())
 			return false;
 		CalciatoreStatistiche other = (CalciatoreStatistiche) obj;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
+		if (id != other.id)
 			return false;
 		return true;
 	}
 	@Override
 	public String toString() {
 		return String.format(
-				"id=%s, ruolo=%s, nome=%s, squadra=%s, partiteGiocate=%s, mediaVoto=%s, mediaFanta=%s, golFatti=%s, golSubiti=%s, rigoriParati=%s, rigoriCalciati=%s, rigoriSegnati=%s, rigoriSbagliati=%s, assist=%s, assistFermo=%s, ammonizioni=%s, espulsioni=%s, autogol=%s\n",
-				id, ruolo, nome, squadra, partiteGiocate, mediaVoto, mediaFanta, golFatti, golSubiti, rigoriParati,
-				rigoriCalciati, rigoriSegnati, rigoriSbagliati, assist, assistFermo, ammonizioni, espulsioni, autogol);
+				"Calciatore [id=%s, ruolo=%s, nome=%s, squadra=%s, quotazione=%s, partiteGiocate=%s, mediaVoto=%s, mediaFanta=%s, golFatti=%s, golSubiti=%s, rigoriParati=%s, rigoriCalciati=%s, rigoriSegnati=%s, rigoriSbagliati=%s, assist=%s, assistFermo=%s, ammonizioni=%s, espulsioni=%s, autogol=%s]\n",
+				id, ruolo, nome, squadra, quotazione, partiteGiocate, mediaVoto, mediaFanta, golFatti, golSubiti,
+				rigoriParati, rigoriCalciati, rigoriSegnati, rigoriSbagliati, assist, assistFermo, ammonizioni,
+				espulsioni, autogol);
 	}
-	
-	
-	
-	
-	
-	
+
 	
 	
 }

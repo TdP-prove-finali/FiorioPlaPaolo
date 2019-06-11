@@ -74,8 +74,10 @@ public class HomeController {
 			
  			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			s.setScene(scene);
+			
 			s.setTitle("Costruisci la tua rosa");
-			s.toFront();
+			s.setX(+565.00);
+			s.setY(20.00);
 			s.show();
 			
 		} catch(Exception e) {
@@ -133,9 +135,10 @@ public class HomeController {
         			+ "Budget difensori %d: \nBudget centrocampisti: %d \nBudget attaccanti: %d \nBudget rimanente: %d \n",
         			budgetTotale,budgetPortieri,budgetDifensori, budgetCentrocampisti, budgetAttaccanti, budgetRimanente);
         	txtRosa.appendText("Ecco la miglior rosa possibile: \n");
-        	for(int i=0; i<25 ; i++) {
+        	model.calcolaMigliorRosa();
+        	/*for(int i=0; i<25 ; i++) {
         		txtRosa.appendText("i\n" );
-        	}
+        	}*/
         	
 		} catch (NumberFormatException e) {
 			txtRosa.appendText("ERRORE : inserire il budget in cifre");

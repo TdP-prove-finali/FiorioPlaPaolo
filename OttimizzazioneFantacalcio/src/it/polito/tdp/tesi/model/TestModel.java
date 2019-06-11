@@ -6,7 +6,15 @@ public class TestModel {
 		// TODO Auto-generated method stub
 
 		Model m = new Model();
+		System.out.println("medie ottenute: \n");
+		m.calcolaMedia();
+		
 		System.out.println(m.getMedia());
+	
+		m.calcolaPunteggio();
+		System.out.println(m.getListaPunteggi());
+		
+		
 	}
 
 }
