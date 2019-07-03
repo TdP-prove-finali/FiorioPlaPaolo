@@ -44,7 +44,7 @@ public class RosaController {
     private TextArea txtTuaRosa;
 
     @FXML
-    private ComboBox<?> cmbPortieri;
+    private ComboBox<String> cmbPortieri;
 
     @FXML
     private Button btnGeneraPortieri;
@@ -84,13 +84,35 @@ public class RosaController {
 
     @FXML
     void doGeneraPortieri(ActionEvent event) {
-
+    	
+    	model.selezionaPortieri();
+    	String caratteristica = cmbPortieri.getValue();
+    	if(caratteristica.equals("Media reti subite a partita")) {
+    		txtListe.clear();
+    		txtListe.appendText(String.format("%-14s %-10s %-12s %-5s\n", "Nome", "Squadra", "Reti/Partita", "Quota"));
+    		txtListe.appendText(model.getPortieriRetiSubite());
+    	}
+    	if(caratteristica.equals("Media voto migliore")) {
+    		txtListe.clear();
+    		txtListe.appendText(String.format("%-14s %-10s %-10s %-5s\n", "Nome", "Squadra", "MediaVoto", "Quota"));
+    		txtListe.appendText(model.getPortieriMediaVoto());
+    	}
+    	if(caratteristica.equals("Quotazioni")) {
+    		txtListe.clear();
+    		txtListe.appendText(String.format("%-14s %-10s %-5s\n", "Nome", "Squadra",  "Quota"));
+    		txtListe.appendText(model.getPortieriQuotazioni());
+    	}
+    	if(caratteristica.equals("Punteggio migliore")) {
+    		txtListe.clear();
+    		txtListe.appendText(String.format("%-14s %-10s %-9s %-5s\n", "Nome", "Squadra",  "Punteggio", "Quota"));
+    		txtListe.appendText(model.getPortieriPunteggio());
+    	}
     }
     
     @FXML
     void doAggiungi(ActionEvent event) {
     	String aggiungi = txtListe.getSelectedText();
-    	txtTuaRosa.appendText(aggiungi);
+    	txtTuaRosa.appendText(aggiungi+"\n");
     	
     	//budgetRimanente = budgetTotale-costoSelezionato
     }
@@ -98,8 +120,9 @@ public class RosaController {
     @FXML
     void doRimuovi(ActionEvent event) {
 
-    	String rimuovi = txtTuaRosa.getSelectedText();
+    	//String rimuovi = txtTuaRosa.getSelectedText();
     	//lista.remove(rimuovi);
+    	txtTuaRosa.replaceSelection("");
     }
 
     @FXML
@@ -119,6 +142,7 @@ public class RosaController {
         
         txtTuaRosa.setStyle("-fx-font-family: monospace");
         txtListe.setStyle("-fx-font-family: monospace");
+        cmbPortieri.getItems().addAll("Media voto migliore", "Media reti subite a partita","Quotazioni", "Punteggio migliore");
     }
 }
 

@@ -137,6 +137,15 @@ public class CalciatoreStatistiche {
 				espulsioni, autogol);
 	}
 
+	public String toStringPortieriRetiSubite() {
+		return String.format("%-14s %-10s %-12.4s %-5s ", nome, squadra, golSubiti/partiteGiocate, quotazione);
+	}
+	public String toStringMediaVoto() {
+		return String.format("%-14s %-10s %-10.4s %-5s ", nome, squadra, mediaVoto, quotazione);
+	}
+	public String toStringQuotazione() {
+		return String.format("%-14s %-10s %-5s ", nome, squadra, quotazione);
+	}
 	
 	
 }

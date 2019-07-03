@@ -6,15 +6,18 @@ public class TestModel {
 		// TODO Auto-generated method stub
 
 		Model m = new Model();
-		System.out.println("medie ottenute: \n");
+	//	System.out.println("medie ottenute: \n");
 		m.calcolaMedia();
 		
-		System.out.println(m.getMedia());
+	//	System.out.println(m.getMedia());
 	
 		m.calcolaPunteggio();
-		System.out.println(m.getListaPunteggi());
+	//	System.out.println(m.getListaPunteggi());
 		
-		
+	//	m.getPortieriRetiSubite();
+	//	String.format("%s %s %s %s", "Nome", "Squadra", "Partite Giocate", "RetiSubite");
+	//	System.out.println(m.getPortieriRetiSubite());
+		System.out.println(m.getPortieriPunteggio());
 	}
 
 }

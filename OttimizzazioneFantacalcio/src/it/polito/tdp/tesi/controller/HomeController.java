@@ -135,7 +135,10 @@ public class HomeController {
         			+ "Budget difensori %d: \nBudget centrocampisti: %d \nBudget attaccanti: %d \nBudget rimanente: %d \n",
         			budgetTotale,budgetPortieri,budgetDifensori, budgetCentrocampisti, budgetAttaccanti, budgetRimanente);
         	txtRosa.appendText("Ecco la miglior rosa possibile: \n");
-        	model.calcolaMigliorRosa();
+        	//model.calcolaMigliorRosa();
+        	model.calcolaMedia();
+        	model.calcolaPunteggio();
+        //	model.getListaPunteggi();
         	/*for(int i=0; i<25 ; i++) {
         		txtRosa.appendText("i\n" );
         	}*/
