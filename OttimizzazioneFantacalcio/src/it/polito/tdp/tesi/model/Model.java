@@ -16,20 +16,31 @@ public class Model {
 	private Map<Integer,CalciatoreStatistiche> stat20162017;
 	private Map<Integer,CalciatoreStatistiche> stat20172018;
 	private Map<Integer,CalciatoreStatistiche> stat20182019;
+	
 	private List<CalciatoreStatistiche> media;
 	private List<PunteggioCalciatore> punteggi;
+	
 	private int budgetTotale;
 	private int budgetRimanente;
 	private int budgetPortieri;
 	private int budgetDifensori;
 	private int budgetCentrocampisti;
 	private int budgetAttaccanti;
-	private List<Quotazione> quotazioni;
+	
+	private Map<Integer,Quotazione> quotazioni;
 	private List<CalciatoreStatistiche> portieri;
+	private List<CalciatoreStatistiche> difensori;
+	private List<CalciatoreStatistiche> centrocampisti;
+	private List<CalciatoreStatistiche> attaccanti;
+	
+	private List<CalciatoreStatistiche> calciatori;
+	
+	
 	public Model() {
 		 dao = new StatisticheDAO();
-		// quotazioni = dao.getQuotazioni();
-		 
+		 quotazioni = dao.getQuotazioni();
+		 this.calcolaMedia();
+		 this.calcolaPunteggio();
 		 
 	}
 	
@@ -55,6 +66,7 @@ public class Model {
 		media.addAll(dao.getMediaTreAnni().values());
 							
 	}
+	
 	public List<CalciatoreStatistiche> getMedia(){
 		return media;
 	}
@@ -65,13 +77,20 @@ public class Model {
 		double punteggio;
 		for(CalciatoreStatistiche c : this.media) {
 			punteggio=0;
-			punteggio+= 2*c.getPartiteGiocate()+c.getMediaFanta()+c.getMediaVoto()+c.getAssist()+2*c.getRigoriSegnati()-3*c.getRigoriSbagliati()+3*c.getGolFatti()-c.getGolSubiti()-2*c.getAmmonizioni()-3*c.getEspulsioni()-3*c.getAutogol();
+			//punteggio depotenziato per giocatori provenienti dalla Serie B
+			if(c.getSquadra().equals("Lecce")||c.getSquadra().equals("Brescia")||c.getSquadra().equals("Verona")) {
+				punteggio+= 0.60*(2*c.getPartiteGiocate()+c.getMediaFanta()+c.getMediaVoto()+c.getAssist()+3*c.getRigoriSegnati()-3*c.getRigoriSbagliati()+3*c.getGolFatti()-c.getGolSubiti()-2*c.getAmmonizioni()-3*c.getEspulsioni()-3*c.getAutogol());
+			}
+			else {
+				punteggio+= 2*c.getPartiteGiocate()+c.getMediaFanta()+c.getMediaVoto()+c.getAssist()+3*c.getRigoriSegnati()-3*c.getRigoriSbagliati()+3*c.getGolFatti()-c.getGolSubiti()-2*c.getAmmonizioni()-3*c.getEspulsioni()-3*c.getAutogol();
+			}
 			PunteggioCalciatore p = new PunteggioCalciatore(c.getId(),c.getSquadra(), c.getNome(), c.getSquadra(), c.getQuotazione(), punteggio);
 			punteggi.add(p);
 			
 		}
 		
 	}
+	
 	public List<PunteggioCalciatore> getListaPunteggi(){
 		return this.punteggi;
 	}
@@ -153,6 +172,33 @@ public class Model {
 		}
 		
 	}
+	public void selezionaDifensori() {
+	//	this.calcolaMedia();
+		difensori = new ArrayList<CalciatoreStatistiche>();
+		for(CalciatoreStatistiche c: this.media) {
+			if(c.getRuolo().equals("D")) {
+				difensori.add(c);
+			}
+		}
+	}
+	public void selezionaCentrocampisti() {
+	//	this.calcolaMedia();
+		centrocampisti = new ArrayList<CalciatoreStatistiche>();
+		for(CalciatoreStatistiche c: this.media) {
+			if(c.getRuolo().equals("C")) {
+				centrocampisti.add(c);
+			}
+		}
+	}
+	public void selezionaAttaccanti() {
+		//	this.calcolaMedia();
+			attaccanti = new ArrayList<CalciatoreStatistiche>();
+			for(CalciatoreStatistiche c: this.media) {
+				if(c.getRuolo().equals("A")) {
+					attaccanti.add(c);
+				}
+			}
+		}
 
 	public String getPortieriRetiSubite() {
 		
@@ -173,9 +219,36 @@ public class Model {
 		return risultato;
 	}
 
-	public String getPortieriMediaVoto() {
-		
+
+	public String getPortieriRigoriParati() {
 		Collections.sort(this.portieri, new Comparator<CalciatoreStatistiche>() {
+
+			@Override
+			public int compare(CalciatoreStatistiche o1, CalciatoreStatistiche o2) {
+				// TODO Auto-generated method stub
+				return -Double.compare(o1.getRigoriParati(),o2.getRigoriParati());
+				}
+			
+		});
+		String risultato = "";
+		for(CalciatoreStatistiche c: portieri) {
+			risultato+= c.toStringRigoriParati()+"\n";
+		}
+		return risultato;
+	}
+
+
+	
+	
+	public String getMediaVoto(String ruolo) {
+	
+	calciatori = new ArrayList<CalciatoreStatistiche>();
+	for(CalciatoreStatistiche c: this.media) {
+		if(c.getRuolo().equals(ruolo)) {
+			calciatori.add(c);
+		}
+	}	
+	Collections.sort(calciatori, new Comparator<CalciatoreStatistiche>() {
 
 			@Override
 			public int compare(CalciatoreStatistiche o1, CalciatoreStatistiche o2) {
@@ -183,34 +256,51 @@ public class Model {
 				return -Double.compare(o1.getMediaVoto(),o2.getMediaVoto());
 				}
 			
-		});
-		String risultato = "";
-		for(CalciatoreStatistiche c: portieri) {
-			risultato+= c.toStringMediaVoto()+"\n";
-		}
-		return risultato;
+	});
+	String risultato = "";
+	for(CalciatoreStatistiche c: calciatori) {
+		risultato+= c.toStringMediaVoto()+"\n";
 	}
+	return risultato;
+	}
+	
+	
+	
+	public String getQuotazioni(String ruolo) {
+		List<Quotazione> calciatoriquot;
+		calciatoriquot = new ArrayList<Quotazione>();
+		for(Quotazione c: this.quotazioni.values()) {
+			if(c.getRuolo().equals(ruolo)) {
+				calciatoriquot.add(c);
+			}
+		}
 
-	public String getPortieriQuotazioni() {
-		Collections.sort(this.portieri, new Comparator<CalciatoreStatistiche>() {
+		
+		Collections.sort(calciatoriquot, new Comparator<Quotazione>() {
 			@Override
-			public int compare(CalciatoreStatistiche o1, CalciatoreStatistiche o2) {
+			public int compare(Quotazione o1, Quotazione o2) {
 				// TODO Auto-generated method stub
 				return -Double.compare(o1.getQuotazione(), o2.getQuotazione());
 				}	
 		});
 		String risultato = "";
-		for(CalciatoreStatistiche c: portieri) {
+		for(Quotazione c: calciatoriquot) {
 			risultato+= c.toStringQuotazione()+"\n";
 		}
 		return risultato;
 	}
-
-	public String getPortieriPunteggio() {
-		this.selezionaPortieri();
-		this.calcolaPunteggio();
+	
+	
+	public String getPunteggio(String ruolo) {
+	//	this.calcolaPunteggio();
+		calciatori = new ArrayList<CalciatoreStatistiche>();
+		for(CalciatoreStatistiche c: this.media) {
+			if(c.getRuolo().equals(ruolo)) {
+				calciatori.add(c);
+			}
+		}
 		List<PunteggioCalciatore> punt = new ArrayList<PunteggioCalciatore>();
-		for(CalciatoreStatistiche c: this.portieri) {
+		for(CalciatoreStatistiche c: this.calciatori) {
 			for(PunteggioCalciatore s: this.punteggi) {
 				if(c.getId()==s.getId()) {
 					punt.add(s);
@@ -233,14 +323,101 @@ public class Model {
 		return risultato;
 		
 	}
-	
 
+
+	public String getGoleador(String ruolo) {
+
+		calciatori = new ArrayList<CalciatoreStatistiche>();
+		for(CalciatoreStatistiche c: this.media) {
+			if(c.getRuolo().equals(ruolo)) {
+				calciatori.add(c);
+			}
+		}	
+		Collections.sort(calciatori, new Comparator<CalciatoreStatistiche>() {
+
+				@Override
+				public int compare(CalciatoreStatistiche o1, CalciatoreStatistiche o2) {
+					// TODO Auto-generated method stub
+					return -Double.compare(o1.getGolFatti()+o1.getRigoriSegnati(),o2.getGolFatti()+o2.getRigoriSegnati());
+					}
+				
+		});
+		String risultato = "";
+		for(CalciatoreStatistiche c: calciatori) {
+			risultato+= c.toStringGolFatti()+"\n";
+		}
+		return risultato;
+		}
+
+	public String getAssistman(String ruolo) {
+		calciatori = new ArrayList<CalciatoreStatistiche>();
+		for(CalciatoreStatistiche c: this.media) {
+			if(c.getRuolo().equals(ruolo)) {
+				calciatori.add(c);
+			}
+		}	
+		Collections.sort(calciatori, new Comparator<CalciatoreStatistiche>() {
+
+				@Override
+				public int compare(CalciatoreStatistiche o1, CalciatoreStatistiche o2) {
+					// TODO Auto-generated method stub
+					return -Double.compare(o1.getAssist(),o2.getAssist());
+					}
+				
+		});
+		String risultato = "";
+		for(CalciatoreStatistiche c: calciatori) {
+			risultato+= c.toStringAssist()+"\n";
+		}
+		return risultato;
+
+	}
+
+	public String getCartellini(String ruolo) {
+		calciatori = new ArrayList<CalciatoreStatistiche>();
+		for(CalciatoreStatistiche c: this.media) {
+			if(c.getRuolo().equals(ruolo)) {
+				calciatori.add(c);
+			}
+		}	
+		Collections.sort(calciatori, new Comparator<CalciatoreStatistiche>() {
+
+				@Override
+				public int compare(CalciatoreStatistiche o1, CalciatoreStatistiche o2) {
+					// TODO Auto-generated method stub
+					return -Double.compare((o1.getAmmonizioni()+o1.getEspulsioni()),(o2.getAmmonizioni()+o2.getEspulsioni()));
+					}
+				
+		});
+		String risultato = "";
+		for(CalciatoreStatistiche c: calciatori) {
+			risultato+= c.toStringCartellini()+"\n";
+		}
+		return risultato;
+	}
+
+	public String getRigoristi(String ruolo) {
 	
-	
-	
-	
-	
-	
-	
+		calciatori = new ArrayList<CalciatoreStatistiche>();
+		for(CalciatoreStatistiche c: this.media) {
+			if(c.getRuolo().equals(ruolo)) {
+				calciatori.add(c);
+			}
+		}	
+		Collections.sort(calciatori, new Comparator<CalciatoreStatistiche>() {
+
+				@Override
+				public int compare(CalciatoreStatistiche o1, CalciatoreStatistiche o2) {
+					// TODO Auto-generated method stub
+					return -Double.compare(o1.getRigoriSegnati(),o2.getRigoriSegnati());
+					}
+				
+		});
+		String risultato = "";
+		for(CalciatoreStatistiche c: calciatori) {
+			risultato+= c.toStringRigoristi()+"\n";
+		}
+		return risultato;
+	}
 	
 }

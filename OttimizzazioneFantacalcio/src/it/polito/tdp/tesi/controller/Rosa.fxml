@@ -20,9 +20,9 @@
       </Label>
    </top>
    <bottom>
-      <HBox spacing="20.0" BorderPane.alignment="CENTER">
+      <HBox spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <TextArea fx:id="txtListe" editable="false" maxWidth="280.0" minHeight="400.0" />
+            <TextArea fx:id="txtListe" editable="false" maxWidth="410.0" minHeight="400.0" minWidth="417.0" />
             <VBox>
                <children>
                   <HBox>
@@ -56,7 +56,7 @@
                   <Insets />
                </HBox.margin>
             </VBox>
-            <TextArea fx:id="txtTuaRosa" editable="false" maxWidth="280.0" minHeight="400.0" />
+            <TextArea fx:id="txtTuaRosa" editable="false" maxWidth="180.0" minHeight="400.0" minWidth="180.0" />
          </children>
          <BorderPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -94,7 +94,7 @@
                         <Insets left="32.0" />
                      </HBox.margin>
                   </ComboBox>
-                  <Button fx:id="btnGeneraDifensori" mnemonicParsing="false" onAction="#btnGeneraDifensori" text="Genera Liste" />
+                  <Button fx:id="btnGeneraDifensori" mnemonicParsing="false" onAction="#doGeneraDifensori" text="Genera Liste" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

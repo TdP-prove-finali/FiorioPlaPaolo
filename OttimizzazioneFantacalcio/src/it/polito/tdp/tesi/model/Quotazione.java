@@ -55,6 +55,9 @@ public class Quotazione {
 		return String.format("Quotazione [id=%s, ruolo=%s, nome=%s, squadra=%s, quotazione=%s]\n", id, ruolo, nome,
 				squadra, quotazione);
 	}
+	public String toStringQuotazione() {
+		return String.format("%-14s %-10s %-5s ", nome, squadra, quotazione);
+	}
 	
 	
 }

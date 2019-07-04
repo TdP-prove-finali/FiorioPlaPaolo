@@ -593,6 +593,36 @@ public Map<Integer, CalciatoreStatistiche> getMediaSolo2017_2018_2019(){
 	}
 		return calciatori;
 }
+public Map<Integer,Quotazione> getQuotazioni() {
 
+	Map<Integer, Quotazione> calciatori= new HashMap<Integer, Quotazione>();
+
+	String sql= "SELECT * FROM quotazioni";
+
+	try {
+		Connection conn = DBConnect.getConnection();
+		PreparedStatement st = conn.prepareStatement(sql);
+		
+		ResultSet rs= st.executeQuery();
+		
+		while(rs.next()) {
+		
+			calciatori.put(rs.getInt("Id"),new Quotazione(rs.getInt("Id"), rs.getString("Ruolo"),
+					rs.getString("Nome"), rs.getString("Squadra"),rs.getInt("Quotazione")));
+		
+			
+		}
+		conn.close();
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+		throw new RuntimeException("Errore DB");
+	}
+		return calciatori;
+	
+	
+}
+
+	
 	
 }

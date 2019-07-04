@@ -17,7 +17,8 @@ public class TestModel {
 	//	m.getPortieriRetiSubite();
 	//	String.format("%s %s %s %s", "Nome", "Squadra", "Partite Giocate", "RetiSubite");
 	//	System.out.println(m.getPortieriRetiSubite());
-		System.out.println(m.getPortieriPunteggio());
+	//	System.out.println(m.getPunteggio("P"));
+
 	}
 
 }

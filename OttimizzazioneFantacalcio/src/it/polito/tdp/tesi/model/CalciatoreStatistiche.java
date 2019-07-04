@@ -141,11 +141,26 @@ public class CalciatoreStatistiche {
 		return String.format("%-14s %-10s %-12.4s %-5s ", nome, squadra, golSubiti/partiteGiocate, quotazione);
 	}
 	public String toStringMediaVoto() {
-		return String.format("%-14s %-10s %-10.4s %-5s ", nome, squadra, mediaVoto, quotazione);
+		return String.format("%-19s %-10s %-10.4s %-5s ", nome, squadra, mediaVoto, quotazione);
 	}
-	public String toStringQuotazione() {
-		return String.format("%-14s %-10s %-5s ", nome, squadra, quotazione);
+	public String toStringRigoriParati() {
+		return String.format("%-14s %-10s %-13.4s %-5s ", nome, squadra, rigoriParati, quotazione);
 	}
+	public String toStringGolFatti() {
+		return String.format("%-19s %-10s %-4.4s %-5s ", nome, squadra, golFatti+rigoriSegnati, quotazione);
+		
+	}
+	public String toStringAssist() {
+		return String.format("%-19s %-10s %-6.4s %-5s ", nome, squadra, assist, quotazione);
+	}
+	public String toStringCartellini() {
+		return String.format("%-19s %-10s %-6.4s %-6.4s %-5s ", nome, squadra, ammonizioni,espulsioni, quotazione);
+	}
+	public String toStringRigoristi() {
+		return String.format("%-19s %-10s %-9.4s %-9.4s %-5s ", nome, squadra, rigoriSegnati,rigoriCalciati, quotazione);
+
+	}
+	
 	
 	
 }
