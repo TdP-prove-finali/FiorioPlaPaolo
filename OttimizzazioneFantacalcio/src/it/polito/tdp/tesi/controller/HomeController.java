@@ -140,18 +140,9 @@ public class HomeController {
         	model.calcolaMedia();
         	model.calcolaPunteggio();
         	txtRosa.appendText(model.calcolaMigliorRosa());
-        	
-      /*  	if(!model.getTuaRosa().isEmpty()) {
-        		String res="";
-        		for(CalciatoreStatistiche c: model.getTuaRosa().values()) {
-        			res+= c.toStringNomeQuota()+"\n";
-        		}
-        	}
-        //	model.getListaPunteggi();
-        	for(int i=0; i<25 ; i++) {
-        		txtRosa.appendText("i\n" );
-        	}*/
-        	
+        	txtRimanenti.appendText(String.valueOf(model.getBudgetRimanente()));
+
+
 		} catch (NumberFormatException e) {
 			txtRosa.appendText("ERRORE : inserire il budget in cifre");
 			return;

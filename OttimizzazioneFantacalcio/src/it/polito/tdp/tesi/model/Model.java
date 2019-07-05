@@ -26,6 +26,7 @@ public class Model {
 	private int budgetDifensori;
 	private int budgetCentrocampisti;
 	private int budgetAttaccanti;
+	private int spesi;
 	
 	private Map<Integer,Quotazione> quotazioni;
 	private List<CalciatoreStatistiche> portieri;
@@ -116,10 +117,10 @@ public class Model {
 			punteggio=0;
 			//punteggio depotenziato per giocatori provenienti dalla Serie B
 			if(c.getSquadra().equals("Lecce")||c.getSquadra().equals("Brescia")||c.getSquadra().equals("Verona")) {
-				punteggio+= 0.40*(c.getPartiteGiocate()+2*c.getMediaFanta()+2*c.getMediaVoto()+2*c.getAssist()+3*c.getRigoriSegnati()-3*c.getRigoriSbagliati()+4*c.getGolFatti()-c.getGolSubiti()-2*c.getAmmonizioni()-3*c.getEspulsioni()-3*c.getAutogol());
+				punteggio+= 0.40*(2*c.getPartiteGiocate()+2*c.getMediaFanta()+2*c.getMediaVoto()+2*c.getAssist()+3*c.getRigoriSegnati()-3*c.getRigoriSbagliati()+3*c.getRigoriParati()+3*c.getGolFatti()-c.getGolSubiti()-2*c.getAmmonizioni()-3*c.getEspulsioni()-3*c.getAutogol());
 			}
 			else {
-				punteggio+= c.getPartiteGiocate()+2*c.getMediaFanta()+2*c.getMediaVoto()+2*c.getAssist()+3*c.getRigoriSegnati()-3*c.getRigoriSbagliati()+4*c.getGolFatti()-c.getGolSubiti()-2*c.getAmmonizioni()-3*c.getEspulsioni()-3*c.getAutogol();
+				punteggio+= 2*c.getPartiteGiocate()+2*c.getMediaFanta()+2*c.getMediaVoto()+2*c.getAssist()+3*c.getRigoriSegnati()-3*c.getRigoriSbagliati()+3*c.getRigoriParati()+3*c.getGolFatti()-c.getGolSubiti()-2*c.getAmmonizioni()-3*c.getEspulsioni()-3*c.getAutogol();
 			}
 			PunteggioCalciatore p = new PunteggioCalciatore(c.getId(),c.getRuolo(), c.getNome(), c.getSquadra(), c.getQuotazione(), punteggio);
 			punteggi.add(p);
@@ -154,7 +155,7 @@ public class Model {
 
 
 	public int getBudgetRimanente() {
-		return budgetRimanente;
+		return budgetTotale-spesi;
 	}
 
 
@@ -205,17 +206,22 @@ public class Model {
 
 	public String calcolaMigliorRosa() {
 	
-		
-		
+	/*	int resA=0;
+		for(PunteggioCalciatore c: parzialeA) {
+			resA+=c.getQuotazione();
+		}
+	*/	
 		ottima = new ArrayList<PunteggioCalciatore>();
 		punt = this.getListaPunteggi();
-		ricorsione(parzialeP,3,"P",budgetPortieri);
-		ricorsione(parzialeD,8,"D",budgetDifensori);
-		ricorsione(parzialeC,8,"C",budgetCentrocampisti);
-		ricorsione(parzialeA,6-parzialeA.size(),"A",budgetAttaccanti);
+		ricorsione(parzialeP,3,"P",this.getBudgetPortieri());
+		ricorsione(parzialeD,8,"D",this.getBudgetDifensori());
+		ricorsione(parzialeC,8,"C",this.getBudgetCentrocampisti());
+		ricorsione(parzialeA,6,"A",this.getBudgetAttaccanti());
 		String res="";
+		spesi=0;
 		for(PunteggioCalciatore c: ottima) {
 			res+= c.toStringQuotaz()+"\n";
+			spesi+=c.getQuotazione();
 			System.out.println(res);
 		}
 		return res;

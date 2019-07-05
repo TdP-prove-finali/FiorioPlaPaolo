@@ -103,7 +103,7 @@
             <HBox spacing="10.0">
                <children>
                   <Label text="Crediti rimanenti : " />
-                  <TextField fx:id="txtRimanenti" editable="false" maxWidth="50.0" visible="false" />
+                  <TextField fx:id="txtRimanenti" editable="false" maxWidth="50.0" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

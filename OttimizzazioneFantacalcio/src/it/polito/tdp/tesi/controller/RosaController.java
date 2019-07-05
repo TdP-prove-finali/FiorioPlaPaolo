@@ -241,7 +241,7 @@ public class RosaController {
 	
     	for(PunteggioCalciatore c: model.getListaPunteggi()) {
     		if(c.getNome().equals(aggiungi)) {
-    			txtTuaRosa.appendText(c.toStringNomeQuota());
+    			txtTuaRosa.appendText(c.toStringNomeQuota()+"\n");
     			res= res-c.getQuotazione();
     			txtResiduo.setText(String.valueOf(res));
     		//	model.getTuaRosa().put(c.getId(),c);
