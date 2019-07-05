@@ -3,6 +3,7 @@ package it.polito.tdp.tesi.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.tesi.model.CalciatoreStatistiche;
 import it.polito.tdp.tesi.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -135,11 +136,19 @@ public class HomeController {
         			+ "Budget difensori %d: \nBudget centrocampisti: %d \nBudget attaccanti: %d \nBudget rimanente: %d \n",
         			budgetTotale,budgetPortieri,budgetDifensori, budgetCentrocampisti, budgetAttaccanti, budgetRimanente);
         	txtRosa.appendText("Ecco la miglior rosa possibile: \n");
-        	//model.calcolaMigliorRosa();
+        	
         	model.calcolaMedia();
         	model.calcolaPunteggio();
+        	txtRosa.appendText(model.calcolaMigliorRosa());
+        	
+      /*  	if(!model.getTuaRosa().isEmpty()) {
+        		String res="";
+        		for(CalciatoreStatistiche c: model.getTuaRosa().values()) {
+        			res+= c.toStringNomeQuota()+"\n";
+        		}
+        	}
         //	model.getListaPunteggi();
-        	/*for(int i=0; i<25 ; i++) {
+        	for(int i=0; i<25 ; i++) {
         		txtRosa.appendText("i\n" );
         	}*/
         	

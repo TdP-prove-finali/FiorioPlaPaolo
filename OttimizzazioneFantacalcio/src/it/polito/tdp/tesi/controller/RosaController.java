@@ -3,7 +3,9 @@ package it.polito.tdp.tesi.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.tesi.model.CalciatoreStatistiche;
 import it.polito.tdp.tesi.model.Model;
+import it.polito.tdp.tesi.model.PunteggioCalciatore;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -21,6 +23,8 @@ public class RosaController {
 	public void setModel(Model model) {
 		this.model = model;	
 		budgetTotale= model.getBudgetTotale();
+		txtResiduo.appendText(String.valueOf(budgetTotale));
+		
 	}
     @FXML
     private ResourceBundle resources;
@@ -74,37 +78,37 @@ public class RosaController {
     	String caratteristica = cmbDifensori.getValue();
     	if(caratteristica.equals("Media voto")) {
     		txtListe.clear();
-    		txtListe.appendText(String.format("%-14s %-10s %-10s %-5s\n", "Nome", "Squadra", "MediaVoto", "Quota"));
+    		txtListe.appendText(String.format("%-19s %-10s %-10s %-5s\n", "Nome", "Squadra", "MediaVoto", "Quota"));
     		txtListe.appendText(model.getMediaVoto("D"));
     	}
     	if(caratteristica.equals("Quotazione")) {
     		txtListe.clear();
-    		txtListe.appendText(String.format("%-14s %-10s %-5s\n", "Nome", "Squadra",  "Quota"));
+    		txtListe.appendText(String.format("%-19s %-10s %-5s\n", "Nome", "Squadra",  "Quota"));
     		txtListe.appendText(model.getQuotazioni("D"));
     	}
     	if(caratteristica.equals("Punteggio")) {
     		txtListe.clear();
-    		txtListe.appendText(String.format("%-14s %-10s %-9s %-5s\n", "Nome", "Squadra",  "Punteggio", "Quota"));
+    		txtListe.appendText(String.format("%-19s %-10s %-9s %-5s\n", "Nome", "Squadra",  "Punteggio", "Quota"));
     		txtListe.appendText(model.getPunteggio("D"));
     	}
     	if(caratteristica.equals("Goleador")) {
     		txtListe.clear();
-    		txtListe.appendText(String.format("%-14s %-10s %-4s %-5s\n", "Nome", "Squadra",  "Gol", "Quota"));
+    		txtListe.appendText(String.format("%-19s %-10s %-4s %-5s\n", "Nome", "Squadra",  "Gol", "Quota"));
     		txtListe.appendText(model.getGoleador("D"));
     	}
     	if(caratteristica.equals("Assistman")) {
     		txtListe.clear();
-    		txtListe.appendText(String.format("%-14s %-10s %-6s %-5s\n", "Nome", "Squadra",  "Assist", "Quota"));
+    		txtListe.appendText(String.format("%-19s %-10s %-6s %-5s\n", "Nome", "Squadra",  "Assist", "Quota"));
     		txtListe.appendText(model.getAssistman("D"));
     	}
     	if(caratteristica.equals("Più cartellini")) {
     		txtListe.clear();
-    		txtListe.appendText(String.format("%-14s %-10s %-5s %-5s %-5s\n", "Nome", "Squadra",  "Gialli","Rossi", "Quota"));
+    		txtListe.appendText(String.format("%-19s %-10s %-5s %-5s %-5s\n", "Nome", "Squadra",  "Gialli","Rossi", "Quota"));
     		txtListe.appendText(model.getCartellini("D"));
     	}
     	if(caratteristica.equals("Rigoristi")) {
     		txtListe.clear();
-    		txtListe.appendText(String.format("%-14s %-10s %-9s %-9s %-5s\n", "Nome", "Squadra",  "Segnati","Calciati", "Quota"));
+    		txtListe.appendText(String.format("%-19s %-10s %-9s %-9s %-5s\n", "Nome", "Squadra",  "Segnati","Calciati", "Quota"));
     		txtListe.appendText(model.getRigoristi("D"));
     	}
     	
@@ -158,37 +162,37 @@ public class RosaController {
     	String caratteristica = cmbCentrocampisti.getValue();
     	if(caratteristica.equals("Media voto")) {
     		txtListe.clear();
-    		txtListe.appendText(String.format("%-18s %-10s %-10s %-5s\n", "Nome", "Squadra", "MediaVoto", "Quota"));
+    		txtListe.appendText(String.format("%-19s %-10s %-10s %-5s\n", "Nome", "Squadra", "MediaVoto", "Quota"));
     		txtListe.appendText(model.getMediaVoto("C"));
     	}
     	if(caratteristica.equals("Quotazione")) {
     		txtListe.clear();
-    		txtListe.appendText(String.format("%-18s %-10s %-5s\n", "Nome", "Squadra",  "Quota"));
+    		txtListe.appendText(String.format("%-19s %-10s %-5s\n", "Nome", "Squadra",  "Quota"));
     		txtListe.appendText(model.getQuotazioni("C"));
     	}
     	if(caratteristica.equals("Punteggio")) {
     		txtListe.clear();
-    		txtListe.appendText(String.format("%-18s %-10s %-9s %-5s\n", "Nome", "Squadra",  "Punteggio", "Quota"));
+    		txtListe.appendText(String.format("%-19s %-10s %-9s %-5s\n", "Nome", "Squadra",  "Punteggio", "Quota"));
     		txtListe.appendText(model.getPunteggio("C"));
     	}
     	if(caratteristica.equals("Goleador")) {
     		txtListe.clear();
-    		txtListe.appendText(String.format("%-18s %-10s %-4s %-5s\n", "Nome", "Squadra",  "Gol", "Quota"));
+    		txtListe.appendText(String.format("%-19s %-10s %-4s %-5s\n", "Nome", "Squadra",  "Gol", "Quota"));
     		txtListe.appendText(model.getGoleador("C"));
     	}
     	if(caratteristica.equals("Assistman")) {
     		txtListe.clear();
-    		txtListe.appendText(String.format("%-18s %-10s %-6s %-5s\n", "Nome", "Squadra",  "Assist", "Quota"));
+    		txtListe.appendText(String.format("%-19s %-10s %-6s %-5s\n", "Nome", "Squadra",  "Assist", "Quota"));
     		txtListe.appendText(model.getAssistman("C"));
     	}
     	if(caratteristica.equals("Più cartellini")) {
     		txtListe.clear();
-    		txtListe.appendText(String.format("%-18s %-10s %-5s %-5s %-5s\n", "Nome", "Squadra",  "Gialli","Rossi", "Quota"));
+    		txtListe.appendText(String.format("%-19s %-10s %-5s %-5s %-5s\n", "Nome", "Squadra",  "Gialli","Rossi", "Quota"));
     		txtListe.appendText(model.getCartellini("C"));
     	}
     	if(caratteristica.equals("Rigoristi")) {
     		txtListe.clear();
-    		txtListe.appendText(String.format("%-18s %-10s %-9s %-9s %-5s\n", "Nome", "Squadra",  "Segnati","Calciati", "Quota"));
+    		txtListe.appendText(String.format("%-19s %-10s %-9s %-9s %-5s\n", "Nome", "Squadra",  "Segnati","Calciati", "Quota"));
     		txtListe.appendText(model.getRigoristi("C"));
     	}
     	
@@ -202,27 +206,27 @@ public class RosaController {
     	String caratteristica = cmbPortieri.getValue();
     	if(caratteristica.equals("Media reti subite a partita")) {
     		txtListe.clear();
-    		txtListe.appendText(String.format("%-14s %-10s %-12s %-5s\n", "Nome", "Squadra", "Reti/Partita", "Quota"));
+    		txtListe.appendText(String.format("%-19s %-10s %-12s %-5s\n", "Nome", "Squadra", "Reti/Partita", "Quota"));
     		txtListe.appendText(model.getPortieriRetiSubite());
     	}
     	if(caratteristica.equals("Media voto")) {
     		txtListe.clear();
-    		txtListe.appendText(String.format("%-14s %-10s %-10s %-5s\n", "Nome", "Squadra", "MediaVoto", "Quota"));
+    		txtListe.appendText(String.format("%-19s %-10s %-10s %-5s\n", "Nome", "Squadra", "MediaVoto", "Quota"));
     		txtListe.appendText(model.getMediaVoto("P"));
     	}
-    	if(caratteristica.equals("Quotazioni")) {
+    	if(caratteristica.equals("Quotazione")) {
     		txtListe.clear();
-    		txtListe.appendText(String.format("%-14s %-10s %-5s\n", "Nome", "Squadra",  "Quota"));
+    		txtListe.appendText(String.format("%-19s %-10s %-5s\n", "Nome", "Squadra",  "Quota"));
     		txtListe.appendText(model.getQuotazioni("P"));
     	}
     	if(caratteristica.equals("Punteggio")) {
     		txtListe.clear();
-    		txtListe.appendText(String.format("%-14s %-10s %-9s %-5s\n", "Nome", "Squadra",  "Punteggio", "Quota"));
+    		txtListe.appendText(String.format("%-19s %-10s %-9s %-5s\n", "Nome", "Squadra",  "Punteggio", "Quota"));
     		txtListe.appendText(model.getPunteggio("P"));
     	}
     	if(caratteristica.equals("Rigori parati")) {
     		txtListe.clear();
-    		txtListe.appendText(String.format("%-14s %-10s %-13s %-5s\n", "Nome", "Squadra",  "Rigori parati", "Quota"));
+    		txtListe.appendText(String.format("%-19s %-10s %-13s %-5s\n", "Nome", "Squadra",  "Rigori parati", "Quota"));
     		txtListe.appendText(model.getPortieriRigoriParati());
     	}
     	
@@ -230,8 +234,35 @@ public class RosaController {
     
     @FXML
     void doAggiungi(ActionEvent event) {
+    	
+    	int res = Integer.parseInt(txtResiduo.getText());
+    	System.out.println(res);
     	String aggiungi = txtListe.getSelectedText();
-    	txtTuaRosa.appendText(aggiungi+"\n");
+	
+    	for(PunteggioCalciatore c: model.getListaPunteggi()) {
+    		if(c.getNome().equals(aggiungi)) {
+    			txtTuaRosa.appendText(c.toStringNomeQuota());
+    			res= res-c.getQuotazione();
+    			txtResiduo.setText(String.valueOf(res));
+    		//	model.getTuaRosa().put(c.getId(),c);
+    			if(c.getRuolo().equals("P")) {
+    				model.getParzialeP().add(c);
+    			}
+    			if(c.getRuolo().equals("D")) {
+    				model.getParzialeD().add(c);
+    			}
+    			if(c.getRuolo().equals("C")) {
+    				model.getParzialeC().add(c);
+    			}
+    			if(c.getRuolo().equals("A")) {
+    				model.setParzialeA(c);
+    				model.setBudgetAttaccanti(model.getBudgetAttaccanti()-c.getQuotazione());
+    			}
+    		}
+    			
+    	}
+    	//txtTuaRosa.appendText(aggiungi+"\n");
+    	
     	
     	//budgetRimanente = budgetTotale-costoSelezionato
     }
@@ -261,11 +292,14 @@ public class RosaController {
         
         txtTuaRosa.setStyle("-fx-font-family: monospace");
         txtListe.setStyle("-fx-font-family: monospace");
-        cmbPortieri.getItems().addAll("Media voto", "Media reti subite a partita","Quotazioni", "Punteggio migliore"
+        cmbPortieri.getItems().addAll("Media voto", "Media reti subite a partita","Quotazione", "Punteggio"
         		,"Rigori parati");
         cmbDifensori.getItems().addAll("Media voto", "Quotazione", "Punteggio","Goleador", "Assistman", "Più cartellini", "Rigoristi");
         cmbCentrocampisti.getItems().addAll("Media voto", "Quotazione", "Punteggio","Goleador", "Assistman", "Più cartellini", "Rigoristi");
         cmbAttaccanti.getItems().addAll("Media voto", "Quotazione", "Punteggio","Goleador", "Assistman", "Più cartellini", "Rigoristi");
+        
+        txtTuaRosa.appendText(String.format("%-19s %-5s\n", "Nome", "Quota"));
+        
     }
 }
 

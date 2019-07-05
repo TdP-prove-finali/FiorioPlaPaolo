@@ -56,7 +56,7 @@ public class Quotazione {
 				squadra, quotazione);
 	}
 	public String toStringQuotazione() {
-		return String.format("%-14s %-10s %-5s ", nome, squadra, quotazione);
+		return String.format("%-19s %-10s %-5s ", nome, squadra, quotazione);
 	}
 	
 	
