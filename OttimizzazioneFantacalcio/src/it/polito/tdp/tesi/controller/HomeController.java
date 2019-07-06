@@ -100,31 +100,36 @@ public class HomeController {
 			
 		} catch(Exception e) {
 			e.printStackTrace();
-}
+		}
     }
 
     @FXML
     void doReset(ActionEvent event) {
     	
+    	model.setBudgetTotale(0);
+    	model.setBudgetPortieri(0);
+    	model.setBudgetDifensori(0);
+    	model.setBudgetCentrocampisti(0);
+    	model.setBudgetAttaccanti(0);
+    	model.setBudgetRimanente(0);
     	txtTotale.clear();
     	txtAttaccanti.clear();
     	txtCentrocampisti.clear();
     	txtDifensori.clear();
     	txtPortieri.clear();
     	txtRimanenti.clear();
-//    	txtRosa.clear();
     	tabella.setItems(null);
-
+    	
+    	
     }
 
     @FXML
     void doTrovaMigliorRosa(ActionEvent event) {
     	
-//    	txtRosa.clear();
+
+    	model.setPortieriStessaSquadra(false);
     	if(checkPortieri.isSelected()) {		
     		model.setPortieriStessaSquadra(true);
-    	}else {
-    		model.setPortieriStessaSquadra(false);
     	}
     	
     	int budgetTotale;
@@ -153,18 +158,17 @@ public class HomeController {
         	System.out.format("Budget totale: %d \nBudget portieri: %d \n"
         			+ "Budget difensori %d: \nBudget centrocampisti: %d \nBudget attaccanti: %d \nBudget rimanente: %d \n",
         			budgetTotale,budgetPortieri,budgetDifensori, budgetCentrocampisti, budgetAttaccanti, budgetRimanente);
-     //   	txtRosa.appendText("Ecco la miglior rosa possibile: \n");
         	
         	model.calcolaMedia();
         	model.calcolaPunteggio();
-       // 	txtRosa.appendText(model.calcolaMigliorRosa());
+        	
         	ObservableList<PunteggioCalciatore> values = FXCollections.observableArrayList(model.calcolaMigliorRosa());
         	tabella.setItems(values);
         	txtRimanenti.appendText(String.valueOf(model.getBudgetRimanente()));
 
 
 		} catch (NumberFormatException e) {
-	//		txtRosa.appendText("ERRORE : inserire il budget in cifre");
+			txtRimanenti.appendText("ERR");
 			return;
 		}
     	
@@ -185,7 +189,6 @@ public class HomeController {
         assert colRuolo != null : "fx:id=\"colRuolo\" was not injected: check your FXML file 'Home.fxml'.";
         assert colSquadra != null : "fx:id=\"colSquadra\" was not injected: check your FXML file 'Home.fxml'.";
         assert colQuota != null : "fx:id=\"colQuota\" was not injected: check your FXML file 'Home.fxml'.";
-   //     assert txtRosa != null : "fx:id=\"txtRosa\" was not injected: check your FXML file 'Home.fxml'.";
         assert btnCreaRosa != null : "fx:id=\"btnCreaRosa\" was not injected: check your FXML file 'Home.fxml'.";
         assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'Home.fxml'.";
 
@@ -195,7 +198,7 @@ public class HomeController {
         colRuolo.setCellValueFactory(new PropertyValueFactory<PunteggioCalciatore, String>("ruolo"));
         colSquadra.setCellValueFactory(new PropertyValueFactory<PunteggioCalciatore, String>("squadra"));
         colQuota.setCellValueFactory(new PropertyValueFactory<PunteggioCalciatore, Integer>("quotazione"));
-        //        txtRosa.setStyle("-fx-font-family: monospace");
+        
     }
     
     public void setModel(Model model, Stage stage) {

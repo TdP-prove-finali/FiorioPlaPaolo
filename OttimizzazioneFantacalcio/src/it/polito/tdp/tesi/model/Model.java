@@ -132,7 +132,9 @@ public class Model {
 			for(CalciatoreStatistiche c: this.media) {
 				if(c.getId()!=q.getId()) {
 					PunteggioCalciatore p = new PunteggioCalciatore(q.getId(),q.getRuolo(),q.getNome(),q.getSquadra(),q.getQuotazione(),0.0);
-					punteggi.add(p);
+					if(!punteggi.contains(p)) {
+						punteggi.add(p);
+					}
 				}
 			}
 			
@@ -281,8 +283,8 @@ public class Model {
 				}
 						
 			
+			}
 		}
-	}
 		
 	}
 
@@ -324,8 +326,7 @@ public class Model {
 			}
 		}
 
-	public String getPortieriRetiSubite() {
-		
+	public List<CalciatoreStatistiche> getPortieriRetiSubite() {
 		
 		Collections.sort(portieri, new Comparator<CalciatoreStatistiche>() {
 
@@ -336,15 +337,12 @@ public class Model {
 				}
 			
 		});
-		String risultato = "";
-		for(CalciatoreStatistiche c: portieri) {
-			risultato+= c.toStringPortieriRetiSubite()+"\n";
-		}
-		return risultato;
+
+		return portieri;
 	}
 
 
-	public String getPortieriRigoriParati() {
+	public List<CalciatoreStatistiche> getPortieriRigoriParati() {
 		Collections.sort(this.portieri, new Comparator<CalciatoreStatistiche>() {
 
 			@Override
@@ -354,17 +352,14 @@ public class Model {
 				}
 			
 		});
-		String risultato = "";
-		for(CalciatoreStatistiche c: portieri) {
-			risultato+= c.toStringRigoriParati()+"\n";
-		}
-		return risultato;
+
+		return portieri;
 	}
 
 
 	
 	
-	public String getMediaVoto(String ruolo) {
+	public List<CalciatoreStatistiche> getMediaVoto(String ruolo) {
 	
 	calciatori = new ArrayList<CalciatoreStatistiche>();
 	for(CalciatoreStatistiche c: this.media) {
@@ -381,41 +376,34 @@ public class Model {
 				}
 			
 	});
-	String risultato = "";
-	for(CalciatoreStatistiche c: calciatori) {
-		risultato+= c.toStringMediaVoto()+"\n";
-	}
-	return risultato;
-	}
-	
-	
-	
-	public String getQuotazioni(String ruolo) {
-		List<Quotazione> calciatoriquot;
-		calciatoriquot = new ArrayList<Quotazione>();
-		for(Quotazione c: this.quotazioni.values()) {
-			if(c.getRuolo().equals(ruolo)) {
-				calciatoriquot.add(c);
-			}
-		}
 
-		
-		Collections.sort(calciatoriquot, new Comparator<Quotazione>() {
-			@Override
-			public int compare(Quotazione o1, Quotazione o2) {
-				// TODO Auto-generated method stub
-				return -Double.compare(o1.getQuotazione(), o2.getQuotazione());
-				}	
-		});
-		String risultato = "";
-		for(Quotazione c: calciatoriquot) {
-			risultato+= c.toStringQuotazione()+"\n";
-		}
-		return risultato;
+	return calciatori;
 	}
 	
 	
-	public String getPunteggio(String ruolo) {
+	
+	public List<CalciatoreStatistiche> getQuotazioni(String ruolo) {
+
+		calciatori = new ArrayList<CalciatoreStatistiche>();
+		for(CalciatoreStatistiche c: this.media) {
+			if(c.getRuolo().equals(ruolo)) {
+				calciatori.add(c);
+			}
+		}	
+		Collections.sort(calciatori, new Comparator<CalciatoreStatistiche>() {
+
+				@Override
+				public int compare(CalciatoreStatistiche o1, CalciatoreStatistiche o2) {
+					// TODO Auto-generated method stub
+					return -Double.compare(o1.getQuotazione(),o2.getQuotazione());
+					}
+				
+		});
+		return calciatori;
+	}
+	
+	
+	public List<CalciatoreStatistiche> getPunteggio(String ruolo) {
 	//	this.calcolaPunteggio();
 		calciatori = new ArrayList<CalciatoreStatistiche>();
 		for(CalciatoreStatistiche c: this.media) {
@@ -440,16 +428,21 @@ public class Model {
 			}
 		
 		});
-		String risultato = "";
-		for(PunteggioCalciatore c: punt) {
-			risultato+= c.toStringPunteggio()+"\n";
+		List<CalciatoreStatistiche> risultato = new ArrayList<CalciatoreStatistiche>();
+		for(PunteggioCalciatore s: punt) {
+			for(CalciatoreStatistiche c: this.calciatori) {
+				if(c.getId()==s.getId()) {
+					risultato.add(c);
+				}
+			}
 		}
+		
 		return risultato;
 		
 	}
 
 
-	public String getGoleador(String ruolo) {
+	public List<CalciatoreStatistiche> getGoleador(String ruolo) {
 
 		calciatori = new ArrayList<CalciatoreStatistiche>();
 		for(CalciatoreStatistiche c: this.media) {
@@ -465,15 +458,11 @@ public class Model {
 					return -Double.compare(o1.getGolFatti()+o1.getRigoriSegnati(),o2.getGolFatti()+o2.getRigoriSegnati());
 					}
 				
-		});
-		String risultato = "";
-		for(CalciatoreStatistiche c: calciatori) {
-			risultato+= c.toStringGolFatti()+"\n";
-		}
-		return risultato;
+		});	
+		return calciatori;
 		}
 
-	public String getAssistman(String ruolo) {
+	public List<CalciatoreStatistiche> getAssistman(String ruolo) {
 		calciatori = new ArrayList<CalciatoreStatistiche>();
 		for(CalciatoreStatistiche c: this.media) {
 			if(c.getRuolo().equals(ruolo)) {
@@ -489,15 +478,11 @@ public class Model {
 					}
 				
 		});
-		String risultato = "";
-		for(CalciatoreStatistiche c: calciatori) {
-			risultato+= c.toStringAssist()+"\n";
-		}
-		return risultato;
+		return calciatori;
 
 	}
 
-	public String getCartellini(String ruolo) {
+	public List<CalciatoreStatistiche> getCartellini(String ruolo) {
 		calciatori = new ArrayList<CalciatoreStatistiche>();
 		for(CalciatoreStatistiche c: this.media) {
 			if(c.getRuolo().equals(ruolo)) {
@@ -513,14 +498,11 @@ public class Model {
 					}
 				
 		});
-		String risultato = "";
-		for(CalciatoreStatistiche c: calciatori) {
-			risultato+= c.toStringCartellini()+"\n";
-		}
-		return risultato;
+		
+		return calciatori;
 	}
 
-	public String getRigoristi(String ruolo) {
+	public List<CalciatoreStatistiche> getRigoristi(String ruolo) {
 	
 		calciatori = new ArrayList<CalciatoreStatistiche>();
 		for(CalciatoreStatistiche c: this.media) {
@@ -537,11 +519,7 @@ public class Model {
 					}
 				
 		});
-		String risultato = "";
-		for(CalciatoreStatistiche c: calciatori) {
-			risultato+= c.toStringRigoristi()+"\n";
-		}
-		return risultato;
+		return calciatori;
 	}
 
 	public void setPortieriStessaSquadra(boolean b) {
