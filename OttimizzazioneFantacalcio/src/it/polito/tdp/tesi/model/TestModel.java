@@ -12,7 +12,7 @@ public class TestModel {
 	//	System.out.println(m.getMedia());
 	
 		m.calcolaPunteggio();
-		System.out.println(m.getListaPunteggi());
+	//	System.out.println(m.getListaPunteggi());
 		
 	//	m.getPortieriRetiSubite();
 	//	String.format("%s %s %s %s", "Nome", "Squadra", "Partite Giocate", "RetiSubite");

@@ -96,6 +96,7 @@ public class HomeController {
     	txtPortieri.clear();
     	txtRimanenti.clear();
     	txtRosa.clear();
+ 
 
     }
 
@@ -103,12 +104,12 @@ public class HomeController {
     void doTrovaMigliorRosa(ActionEvent event) {
     	
     	txtRosa.clear();
-    	if(checkPortieri.isSelected()) {
-    		// dopo aver selezionato il miglior portiere,
-    		// aggiungi i 2 portieri della sua stessa squadra
-    		// prova txtRosa.appendText("portieri stessa squadra");
+    	if(checkPortieri.isSelected()) {		
+    		model.setPortieriStessaSquadra(true);
+    	}else {
+    		model.setPortieriStessaSquadra(false);
     	}
-    	;
+    	
     	int budgetTotale;
     	int budgetPortieri;
     	int budgetDifensori;

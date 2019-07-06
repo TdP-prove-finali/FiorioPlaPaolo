@@ -66,6 +66,7 @@ public class Model {
 	private List<PunteggioCalciatore> parzialeA;
 	
 	private List<PunteggioCalciatore> punt;
+	private boolean portieriStessaSquadra;
 	
 	public Map<Integer, CalciatoreStatistiche> getTuaRosa() {
 		return tuaRosa;
@@ -124,6 +125,16 @@ public class Model {
 			}
 			PunteggioCalciatore p = new PunteggioCalciatore(c.getId(),c.getRuolo(), c.getNome(), c.getSquadra(), c.getQuotazione(), punteggio);
 			punteggi.add(p);
+			
+		}
+		//se esistono calciatori con 0 statistiche presenti nelle valutazioni setto il punteggio a 0
+		for(Quotazione q: this.quotazioni.values()) {
+			for(CalciatoreStatistiche c: this.media) {
+				if(c.getId()!=q.getId()) {
+					PunteggioCalciatore p = new PunteggioCalciatore(q.getId(),q.getRuolo(),q.getNome(),q.getSquadra(),q.getQuotazione(),0.0);
+					punteggi.add(p);
+				}
+			}
 			
 		}
 		
@@ -235,26 +246,43 @@ public class Model {
 			//= new ArrayList<PunteggioCalciatore>(parziale);
 			return;
 		}
-		
+		//se viene selezionato il bottone "Portieri stessa squadra"
+		if(ruolo.equals("P")) {
+			if(parziale.size()>0 && parziale.size()<i) {
+				if(portieriStessaSquadra ) {
+					String squadra = parziale.get(0).getSquadra();
+					System.out.println(squadra);
+					for(PunteggioCalciatore c:this.punt) {
+						if(!parziale.contains(c)) {
+						if(c.getSquadra().equals(squadra) &&c.getRuolo().equals("P")) {
+							parziale.add(c);
+							System.out.println(c.toStringNomeQuota());
+							ricorsione(parziale,i,ruolo,budget-c.getQuotazione());
+						}}	
+					}
+				}
+			}
+		}
+			
 		//lavoro nella lista già ordinata per punteggi decrescenti
 		
 		for(PunteggioCalciatore c:this.punt) {
 			if(parziale.size()<i) {
 				if(!parziale.contains(c)) {
 					if(c.getRuolo().equals(ruolo)){
+						
+						
 						if(c.getQuotazione()+(i-parziale.size()-1)<budget) {
-					
 							parziale.add(c);
-						//	System.out.println(c.toStringPunteggio());
 							ricorsione(parziale,i,ruolo,budget-c.getQuotazione());
 						}
 				
 					}
 				}
 						
-			}
+			
 		}
-		
+	}
 		
 	}
 
@@ -514,6 +542,10 @@ public class Model {
 			risultato+= c.toStringRigoristi()+"\n";
 		}
 		return risultato;
+	}
+
+	public void setPortieriStessaSquadra(boolean b) {
+		this.portieriStessaSquadra=b;
 	}
 	
 }
