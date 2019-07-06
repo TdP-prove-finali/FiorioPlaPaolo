@@ -215,7 +215,7 @@ public class Model {
 	}
 
 
-	public String calcolaMigliorRosa() {
+	public List<PunteggioCalciatore> calcolaMigliorRosa() {
 	
 	/*	int resA=0;
 		for(PunteggioCalciatore c: parzialeA) {
@@ -235,7 +235,7 @@ public class Model {
 			spesi+=c.getQuotazione();
 			System.out.println(res);
 		}
-		return res;
+		return ottima;
 	}
 	
 	private void ricorsione(List<PunteggioCalciatore> parziale,int i,String ruolo, int budget) {
