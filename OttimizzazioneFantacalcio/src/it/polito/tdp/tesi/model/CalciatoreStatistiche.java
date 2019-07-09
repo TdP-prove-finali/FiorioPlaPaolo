@@ -26,6 +26,7 @@ public class CalciatoreStatistiche {
 	private double ammonizioni;
 	private double espulsioni;
 	private double autogol;
+	
 	public CalciatoreStatistiche(int id, String ruolo, String nome, String squadra, int quotazione,
 			double partiteGiocate, double mediaVoto, double mediaFanta, double golFatti, double golSubiti,
 			double rigoriParati, double rigoriCalciati, double rigoriSegnati, double rigoriSbagliati, double assist,
@@ -137,7 +138,7 @@ public class CalciatoreStatistiche {
 				espulsioni, autogol);
 	}
 
-	public String toStringPortieriRetiSubite() {
+/*	public String toStringPortieriRetiSubite() {
 		return String.format("%-19s %-10s %-12.4s %-5s ", nome, squadra, golSubiti/partiteGiocate, quotazione);
 	}
 	public String toStringMediaVoto() {
@@ -164,6 +165,6 @@ public class CalciatoreStatistiche {
 		return String.format("%-19s %-5s\n", nome, quotazione);
 	}
 	
-	
+	*/
 	
 }

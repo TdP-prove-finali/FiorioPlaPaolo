@@ -11,12 +11,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 
 public class RosaController {
 
@@ -38,6 +41,8 @@ public class RosaController {
     	attaccantiRosa = new ArrayList<CalciatoreStatistiche>();
     	
     	res = Integer.parseInt(txtResiduo.getText());
+    
+    	
 		
 	}
     @FXML
@@ -46,8 +51,6 @@ public class RosaController {
     @FXML
     private URL location;
 
-  //  @FXML
-  //  private TextArea txtListe;
     @FXML
     private TableView<CalciatoreStatistiche> tabellaCaratteristiche;
 
@@ -84,6 +87,9 @@ public class RosaController {
     @FXML
     private Button btnAggiungi;
 
+    @FXML
+    private Button btnAggiornaRosa;
+    
     @FXML
     private Button btnRimuovi;
 
@@ -247,65 +253,109 @@ public class RosaController {
     
     @FXML
     void doAggiungi(ActionEvent event) {
-
-    	
+    	model.resetOttima();
     	CalciatoreStatistiche c =tabellaCaratteristiche.getSelectionModel().getSelectedItem();
     	if (!tabellaRosa.getItems().contains(c)) {
-    		if(c.getRuolo().equals("P")&&portieriRosa.size()<3) {
+    		if(c.getRuolo().equals("P")&&portieriRosa.size()<3&&(res-c.getQuotazione()>=0)) {
     			tabellaRosa.getItems().add(c);
     			portieriRosa.add(c);
     			res= res-c.getQuotazione();
+    			model.setBudgetTotale(res);			
     			txtResiduo.setText(String.valueOf(res));
     		}
-    		if(c.getRuolo().equals("D")&&difensoriRosa.size()<8) {
+    		if(c.getRuolo().equals("D")&&difensoriRosa.size()<8&&(res-c.getQuotazione()>=0)) {
     			tabellaRosa.getItems().add(c);
     			difensoriRosa.add(c);
     			res= res-c.getQuotazione();
+    			model.setBudgetTotale(res);
     			txtResiduo.setText(String.valueOf(res));
     		}
-    		if(c.getRuolo().equals("C")&&centrocampistiRosa.size()<8) {
+    		if(c.getRuolo().equals("C")&&centrocampistiRosa.size()<8&&(res-c.getQuotazione()>=0)) {
     			tabellaRosa.getItems().add(c);
     			centrocampistiRosa.add(c);
     			res= res-c.getQuotazione();
+    			model.setBudgetTotale(res);
     			txtResiduo.setText(String.valueOf(res));
     		}
-    		if(c.getRuolo().equals("A")&&attaccantiRosa.size()<6) {
+    		if(c.getRuolo().equals("A")&&attaccantiRosa.size()<6&&(res-c.getQuotazione()>=0)) {
     			tabellaRosa.getItems().add(c);
     			attaccantiRosa.add(c);
     			res= res-c.getQuotazione();
+    			model.setBudgetTotale(res);
     			txtResiduo.setText(String.valueOf(res));
     		}
     	}
+    	for(CalciatoreStatistiche f: portieriRosa) {
+    		System.out.println(f.getNome());
+    	}
+    	for(CalciatoreStatistiche f: difensoriRosa) {
+    		System.out.println(f.getNome());
+    	}
+    	for(CalciatoreStatistiche f: centrocampistiRosa) {
+    		System.out.println(f.getNome());
+    	}
+    	for(CalciatoreStatistiche f: attaccantiRosa) {
+    		System.out.println(f.getNome());
+    	}
+    	
     }
 
     @FXML
+    void doAggiornaRosa(ActionEvent event) {
+
+    	model.resetOttima();
+    	model.addParzialeP(portieriRosa);
+    	model.addParzialeD(difensoriRosa);
+    	model.addParzialeC(centrocampistiRosa);
+    	model.addParzialeA(attaccantiRosa);
+    	model.calcolaMigliorRosa();
+
+    }
+    @FXML
     void doRimuovi(ActionEvent event) {
+    	model.resetOttima();
     	CalciatoreStatistiche c =tabellaRosa.getSelectionModel().getSelectedItem();
     	if(c.getRuolo().equals("P")) {
 			tabellaRosa.getItems().remove(c);
 			portieriRosa.remove(c);
 			res= res+c.getQuotazione();
+			model.getParzialeP().remove(model.getSimile(c));
+			model.setBudgetTotale(res);
+			model.setBudgetPortieri(model.getBudgetPortieri()+c.getQuotazione());
 			txtResiduo.setText(String.valueOf(res));
 		}
 		if(c.getRuolo().equals("D")) {
 			tabellaRosa.getItems().remove(c);
 			difensoriRosa.remove(c);
 			res= res+c.getQuotazione();
+			model.getParzialeD().remove(model.getSimile(c));
+			model.setBudgetTotale(res);
+			model.setBudgetDifensori(model.getBudgetDifensori()+c.getQuotazione());
 			txtResiduo.setText(String.valueOf(res));
 		}
 		if(c.getRuolo().equals("C")) {
 			tabellaRosa.getItems().remove(c);
 			centrocampistiRosa.remove(c);
 			res= res+c.getQuotazione();
+			model.getParzialeC().remove(model.getSimile(c));
+			model.setBudgetTotale(res);
+			model.setBudgetCentrocampisti(model.getBudgetCentrocampisti()+c.getQuotazione());
 			txtResiduo.setText(String.valueOf(res));
 		}
 		if(c.getRuolo().equals("A")) {
 			tabellaRosa.getItems().remove(c);
 			attaccantiRosa.remove(c);
 			res= res+c.getQuotazione();
+			model.getParzialeA().remove(model.getSimile(c));
+			model.setBudgetTotale(res);
+			model.setBudgetAttaccanti(model.getBudgetAttaccanti()+c.getQuotazione());
 			txtResiduo.setText(String.valueOf(res));
 		}
-
+		model.addParzialeP(portieriRosa);
+    	model.addParzialeD(difensoriRosa);
+    	model.addParzialeC(centrocampistiRosa);
+    	model.addParzialeA(attaccantiRosa);
+    	model.calcolaMigliorRosa();
     }
 
     @FXML
@@ -322,6 +372,7 @@ public class RosaController {
         assert colQuotaRosa != null : "fx:id=\"colQuotaRosa\" was not injected: check your FXML file 'Rosa.fxml'.";
 
         assert btnAggiungi != null : "fx:id=\"btnAggiungi\" was not injected: check your FXML file 'Rosa.fxml'.";
+        assert btnAggiornaRosa != null : "fx:id=\"btnAggiornaRosa\" was not injected: check your FXML file 'Rosa.fxml'.";
         assert btnRimuovi != null : "fx:id=\"btnRimuovi\" was not injected: check your FXML file 'Rosa.fxml'.";
         assert cmbPortieri != null : "fx:id=\"cmbPortieri\" was not injected: check your FXML file 'Rosa.fxml'.";
         assert btnGeneraPortieri != null : "fx:id=\"btnGeneraPortieri\" was not injected: check your FXML file 'Rosa.fxml'.";

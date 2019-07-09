@@ -79,7 +79,41 @@ public class HomeController {
     @FXML
     void doCreaRosa(ActionEvent event) {
 
-
+    	int budgetTotale;
+    	int budgetPortieri;
+    	int budgetDifensori;
+    	int budgetCentrocampisti;
+    	int budgetAttaccanti;
+    	//resettano solo all'inizio e poi sforano il numero
+    	//trovare il modo di non resettare ad ogni aggiunta altrimenti ne posso aggiungere solo 1
+    	model.resetParzialeP();
+    	model.resetParzialeD();
+    	model.resetParzialeC();
+    	model.resetParzialeA();
+    	model.resetOttima();
+    	try {
+    		budgetTotale = Integer.parseInt(txtTotale.getText());
+    		model.setBudgetTotale(budgetTotale);
+    		budgetPortieri = Integer.parseInt(txtPortieri.getText());
+        	model.setBudgetPortieri(budgetPortieri);
+        	budgetDifensori = Integer.parseInt(txtDifensori.getText());
+        	model.setBudgetDifensori(budgetDifensori);
+        	budgetCentrocampisti = Integer.parseInt(txtCentrocampisti.getText());
+        	model.setBudgetCentrocampisti(budgetCentrocampisti);
+        	budgetAttaccanti = Integer.parseInt(txtAttaccanti.getText());
+        	model.setBudgetAttaccanti(budgetAttaccanti);
+        	if((budgetPortieri+budgetDifensori+budgetCentrocampisti+budgetAttaccanti)>budgetTotale) {
+        		txtRimanenti.setText("ERR");
+        		return;
+        	}
+        	if(budgetPortieri<3 ||budgetDifensori<8 ||budgetCentrocampisti<8 ||budgetAttaccanti<6) {
+        		txtRimanenti.setText("ERR");
+        		return;
+        	}
+		} catch (NumberFormatException e ) {
+			txtRimanenti.setText("ERR");
+			return;
+		}
     	try {
     		
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("Rosa.fxml"));
@@ -105,29 +139,43 @@ public class HomeController {
 
     @FXML
     void doReset(ActionEvent event) {
+ 
+    	checkPortieri.setSelected(false);
     	
-    	model.setBudgetTotale(0);
-    	model.setBudgetPortieri(0);
-    	model.setBudgetDifensori(0);
-    	model.setBudgetCentrocampisti(0);
-    	model.setBudgetAttaccanti(0);
-    	model.setBudgetRimanente(0);
     	txtTotale.clear();
     	txtAttaccanti.clear();
     	txtCentrocampisti.clear();
     	txtDifensori.clear();
     	txtPortieri.clear();
     	txtRimanenti.clear();
+    
+		model.setBudgetTotale(0);
+    	model.setBudgetPortieri(0);
+    	model.setBudgetDifensori(0);	
+    	model.setBudgetCentrocampisti(0);
+       	model.setBudgetAttaccanti(0);
+    	model.setBudgetRimanente(0);
+    	
     	tabella.setItems(null);
-    	
-    	
+    	model.setPortieriStessaSquadra(false);
+   
+    	model.resetParzialeP();
+    	model.resetParzialeD();
+    	model.resetParzialeC();
+    	model.resetParzialeA();
+    	model.resetOttima();
+    	model.calcolaMigliorRosa();
     }
 
     @FXML
-    void doTrovaMigliorRosa(ActionEvent event) {
+    public void doTrovaMigliorRosa(ActionEvent event) {
     	
-
-    	model.setPortieriStessaSquadra(false);
+    	
+    	txtRimanenti.clear();
+    	if(checkPortieri.isSelected()==false) {
+    		model.setPortieriStessaSquadra(false);
+    	}
+    	
     	if(checkPortieri.isSelected()) {		
     		model.setPortieriStessaSquadra(true);
     	}
@@ -151,7 +199,12 @@ public class HomeController {
         	model.setBudgetAttaccanti(budgetAttaccanti);
         	
         	if((budgetPortieri+budgetDifensori+budgetCentrocampisti+budgetAttaccanti)>budgetTotale) {
-        		txtRimanenti.appendText("ERR");
+        		txtRimanenti.setText("ERR");
+        		return;
+        		
+        	}
+        	if(budgetPortieri<3 ||budgetDifensori<8 ||budgetCentrocampisti<8 ||budgetAttaccanti<6) {
+        		txtRimanenti.setText("ERR");
         		return;
         	}
         	budgetRimanente=budgetTotale-budgetPortieri-budgetDifensori-budgetCentrocampisti-budgetAttaccanti;
@@ -159,16 +212,15 @@ public class HomeController {
         			+ "Budget difensori %d: \nBudget centrocampisti: %d \nBudget attaccanti: %d \nBudget rimanente: %d \n",
         			budgetTotale,budgetPortieri,budgetDifensori, budgetCentrocampisti, budgetAttaccanti, budgetRimanente);
         	
-        	model.calcolaMedia();
-        	model.calcolaPunteggio();
+        	
         	
         	ObservableList<PunteggioCalciatore> values = FXCollections.observableArrayList(model.calcolaMigliorRosa());
         	tabella.setItems(values);
-        	txtRimanenti.appendText(String.valueOf(model.getBudgetRimanente()));
+        	txtRimanenti.setText(String.valueOf(model.getBudgetRimanente()));
 
 
 		} catch (NumberFormatException e) {
-			txtRimanenti.appendText("ERR");
+			txtRimanenti.setText("ERR");
 			return;
 		}
     	
@@ -204,5 +256,7 @@ public class HomeController {
     public void setModel(Model model, Stage stage) {
     	this.model=model;
     	this.stage=stage;
+    	model.calcolaMedia();
+    	model.calcolaPunteggio();
     }
 }

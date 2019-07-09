@@ -50,8 +50,16 @@
                         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                      </padding>
                      <VBox.margin>
-                        <Insets bottom="100.0" left="18.0" top="50.0" />
+                        <Insets bottom="60.0" left="18.0" top="50.0" />
                      </VBox.margin></Button>
+                  <Button fx:id="btnAggiornaRosa" minWidth="70.0" mnemonicParsing="false" onAction="#doAggiornaRosa" text="Aggiorna Rosa">
+                     <VBox.margin>
+                        <Insets bottom="30.0" top="-30.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                     </padding>
+                  </Button>
                   <Button fx:id="btnRimuovi" minWidth="70.0" mnemonicParsing="false" onAction="#doRimuovi" text="RImuovi">
                      <padding>
                         <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />

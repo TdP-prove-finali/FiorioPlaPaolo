@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import it.polito.tdp.tesi.controller.HomeController;
 import it.polito.tdp.tesi.db.StatisticheDAO;
 
 public class Model {
@@ -36,26 +37,6 @@ public class Model {
 	
 	private List<CalciatoreStatistiche> calciatori;
 	private Map<Integer,CalciatoreStatistiche> tuaRosa;
-	
-	public List<PunteggioCalciatore> getParzialeP() {
-		return parzialeP;
-	}
-
-	public List<PunteggioCalciatore> getParzialeD() {
-		return parzialeD;
-	}
-
-	public void setParzialeA(PunteggioCalciatore c) {
-		this.parzialeA.add(c);
-	}
-
-	public List<PunteggioCalciatore> getParzialeC() {
-		return parzialeC;
-	}
-
-	public List<PunteggioCalciatore> getParzialeA() {
-		return parzialeA;
-	}
 
 	private List<PunteggioCalciatore> parzialeP;
 	private List<PunteggioCalciatore> ottima;
@@ -155,81 +136,17 @@ public class Model {
 		return this.punteggi;
 	}
 
-	
-
-	public int getBudgetTotale() {
-		return budgetTotale;
-	}
-
-
-	public void setBudgetTotale(int budgetTotale) {
-		this.budgetTotale = budgetTotale;
-	}
-
-
-	public int getBudgetRimanente() {
-		return budgetTotale-spesi;
-	}
-
-
-	public void setBudgetRimanente(int budgetRimanente) {
-		this.budgetRimanente = budgetRimanente;
-	}
-
-
-	public int getBudgetPortieri() {
-		return budgetPortieri;
-	}
-
-
-	public void setBudgetPortieri(int budgetPortieri) {
-		this.budgetPortieri = budgetPortieri;
-	}
-
-
-	public int getBudgetDifensori() {
-		return budgetDifensori;
-	}
-
-	
-	public void setBudgetDifensori(int budgetDifensori) {
-		this.budgetDifensori = budgetDifensori;
-	}
-
-
-	public int getBudgetCentrocampisti() {
-		return budgetCentrocampisti;
-	}
-
-
-	public void setBudgetCentrocampisti(int budgetCentrocampisti) {
-		this.budgetCentrocampisti = budgetCentrocampisti;
-	}
-
-
-	public int getBudgetAttaccanti() {
-		return budgetAttaccanti;
-	}
-
-
-	public void setBudgetAttaccanti(int budgetAttaccanti) {
-		this.budgetAttaccanti = budgetAttaccanti;
-	}
-
 
 	public List<PunteggioCalciatore> calcolaMigliorRosa() {
-	
-	/*	int resA=0;
-		for(PunteggioCalciatore c: parzialeA) {
-			resA+=c.getQuotazione();
-		}
-	*/	
+		
+		ottima=null;
 		ottima = new ArrayList<PunteggioCalciatore>();
 		punt = this.getListaPunteggi();
-		ricorsione(parzialeP,3,"P",this.getBudgetPortieri());
-		ricorsione(parzialeD,8,"D",this.getBudgetDifensori());
-		ricorsione(parzialeC,8,"C",this.getBudgetCentrocampisti());
-		ricorsione(parzialeA,6,"A",this.getBudgetAttaccanti());
+
+		ricorsione(this.getParzialeP(),3,"P",this.getBudgetPortieri());
+		ricorsione(this.getParzialeD(),8,"D",this.getBudgetDifensori());
+		ricorsione(this.getParzialeC(),8,"C",this.getBudgetCentrocampisti());
+		ricorsione(this.getParzialeA(),6,"A",this.getBudgetAttaccanti());
 		String res="";
 		spesi=0;
 		for(PunteggioCalciatore c: ottima) {
@@ -240,27 +157,29 @@ public class Model {
 		return ottima;
 	}
 	
+	
 	private void ricorsione(List<PunteggioCalciatore> parziale,int i,String ruolo, int budget) {
 		
 		//condizione di terminazione
 		if(parziale.size()>=i) {
 			this.ottima.addAll(parziale);
-			//= new ArrayList<PunteggioCalciatore>(parziale);
 			return;
 		}
 		//se viene selezionato il bottone "Portieri stessa squadra"
-		if(ruolo.equals("P")) {
-			if(parziale.size()>0 && parziale.size()<i) {
-				if(portieriStessaSquadra ) {
+		if(portieriStessaSquadra==true) {
+			if(ruolo.equals("P")) {
+				if(parziale.size()>0 && parziale.size()<i ) {
 					String squadra = parziale.get(0).getSquadra();
 					System.out.println(squadra);
 					for(PunteggioCalciatore c:this.punt) {
 						if(!parziale.contains(c)) {
-						if(c.getSquadra().equals(squadra) &&c.getRuolo().equals("P")) {
-							parziale.add(c);
-							System.out.println(c.toStringNomeQuota());
-							ricorsione(parziale,i,ruolo,budget-c.getQuotazione());
-						}}	
+							if(c.getSquadra().equals(squadra) &&c.getRuolo().equals("P")) {
+								parziale.add(c);
+						//		System.out.println(c.toStringNomeQuota());
+								ricorsione(parziale,i,ruolo,budget-c.getQuotazione());
+							}
+						}	
+					
 					}
 				}
 			}
@@ -276,14 +195,16 @@ public class Model {
 						
 						if(c.getQuotazione()+(i-parziale.size()-1)<budget) {
 							parziale.add(c);
+					//		System.out.println("Ruolo: "+c.getRuolo()+ " Nome : "+c.getNome()+" budget: "+budget+" speso: "+c.getQuotazione());
 							ricorsione(parziale,i,ruolo,budget-c.getQuotazione());
 						}
-				
+						
 					}
 				}
 						
 			
 			}
+			
 		}
 		
 	}
@@ -299,7 +220,6 @@ public class Model {
 		
 	}
 	public void selezionaDifensori() {
-	//	this.calcolaMedia();
 		difensori = new ArrayList<CalciatoreStatistiche>();
 		for(CalciatoreStatistiche c: this.media) {
 			if(c.getRuolo().equals("D")) {
@@ -308,7 +228,6 @@ public class Model {
 		}
 	}
 	public void selezionaCentrocampisti() {
-	//	this.calcolaMedia();
 		centrocampisti = new ArrayList<CalciatoreStatistiche>();
 		for(CalciatoreStatistiche c: this.media) {
 			if(c.getRuolo().equals("C")) {
@@ -317,7 +236,6 @@ public class Model {
 		}
 	}
 	public void selezionaAttaccanti() {
-		//	this.calcolaMedia();
 			attaccanti = new ArrayList<CalciatoreStatistiche>();
 			for(CalciatoreStatistiche c: this.media) {
 				if(c.getRuolo().equals("A")) {
@@ -404,7 +322,7 @@ public class Model {
 	
 	
 	public List<CalciatoreStatistiche> getPunteggio(String ruolo) {
-	//	this.calcolaPunteggio();
+
 		calciatori = new ArrayList<CalciatoreStatistiche>();
 		for(CalciatoreStatistiche c: this.media) {
 			if(c.getRuolo().equals(ruolo)) {
@@ -526,4 +444,157 @@ public class Model {
 		this.portieriStessaSquadra=b;
 	}
 	
+	public List<PunteggioCalciatore> getParzialeP() {
+		return parzialeP;
+	}
+
+	public List<PunteggioCalciatore> getParzialeD() {
+		return parzialeD;
+	}
+
+	
+
+	public List<PunteggioCalciatore> getParzialeC() {
+		return parzialeC;
+	}
+
+	public List<PunteggioCalciatore> getParzialeA() {
+		return parzialeA;	}
+
+	public void addParzialeP(List<CalciatoreStatistiche> lista) {
+		for(CalciatoreStatistiche c: lista) {
+			PunteggioCalciatore d = this.getSimile(c);
+			if(!this.parzialeP.contains(d)) {
+				this.parzialeP.add(d);
+				budgetRimanente= budgetRimanente-d.getQuotazione();
+				budgetPortieri = budgetPortieri-d.getQuotazione();
+				}
+			}
+	}
+
+	public void addParzialeD(List<CalciatoreStatistiche> lista) {
+		for(CalciatoreStatistiche c: lista) {
+			PunteggioCalciatore d = this.getSimile(c);
+			if(!this.parzialeD.contains(d)) {
+				this.parzialeD.add(d);
+				budgetRimanente= budgetRimanente-d.getQuotazione();
+				budgetDifensori = budgetDifensori-d.getQuotazione();
+			}
+		}
+		
+	}
+
+	public void addParzialeC(List<CalciatoreStatistiche> lista) {
+		for(CalciatoreStatistiche c: lista) {
+			PunteggioCalciatore d = this.getSimile(c);
+			if(!this.parzialeC.contains(d)) {
+				this.parzialeC.add(d);
+				budgetRimanente= budgetRimanente-d.getQuotazione();
+				budgetCentrocampisti = budgetCentrocampisti-d.getQuotazione();
+			}
+		}
+	}
+	public void addParzialeA(List<CalciatoreStatistiche> lista) {
+		for(CalciatoreStatistiche c: lista) {
+			PunteggioCalciatore d = this.getSimile(c);
+			if(!this.parzialeA.contains(d)) {
+				this.parzialeA.add(d);
+				budgetRimanente= budgetRimanente-d.getQuotazione();
+				budgetAttaccanti=budgetAttaccanti-d.getQuotazione();
+			}
+		}
+	}
+	
+
+	public void resetParzialeP() {
+		this.parzialeP.removeAll(parzialeP);
+	}
+
+	public void resetParzialeD() {
+		this.parzialeD.removeAll(parzialeD);
+	}
+
+	public void resetParzialeC() {
+		this.parzialeC.removeAll(parzialeC);
+	}
+
+	public void resetParzialeA() {
+		this.parzialeA.removeAll(parzialeA);
+	}
+	public void resetOttima() {
+		this.ottima.removeAll(ottima);
+	}
+
+	public PunteggioCalciatore getSimile(CalciatoreStatistiche c) {
+		for(PunteggioCalciatore p:punteggi) {
+			if(p.getId()==c.getId())
+				return p;
+			
+		}
+		return null;
+		
+	}
+	
+
+	public int getBudgetTotale() {
+		return budgetTotale;
+	}
+
+
+	public void setBudgetTotale(int budgetTotale) {
+		this.budgetTotale = budgetTotale;
+	}
+
+
+	public int getBudgetRimanente() {
+		return budgetTotale-spesi;
+	}
+
+
+	public void setBudgetRimanente(int budgetRimanente) {
+		this.budgetRimanente = budgetRimanente;
+	}
+
+
+	public int getBudgetPortieri() {
+		return budgetPortieri;
+	}
+
+
+	public void setBudgetPortieri(int budgetPortieri) {
+		this.budgetPortieri = budgetPortieri;
+	}
+
+
+	public int getBudgetDifensori() {
+		return budgetDifensori;
+	}
+
+	
+	public void setBudgetDifensori(int budgetDifensori) {
+		this.budgetDifensori = budgetDifensori;
+	}
+
+
+	public int getBudgetCentrocampisti() {
+		return budgetCentrocampisti;
+	}
+
+
+	public void setBudgetCentrocampisti(int budgetCentrocampisti) {
+		this.budgetCentrocampisti = budgetCentrocampisti;
+	}
+
+
+	public int getBudgetAttaccanti() {
+		return budgetAttaccanti;
+	}
+
+
+	public void setBudgetAttaccanti(int budgetAttaccanti) {
+		this.budgetAttaccanti = budgetAttaccanti;
+	}
+
+
+
 }
