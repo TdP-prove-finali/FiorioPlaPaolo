@@ -35,7 +35,7 @@
                <children>
                   <HBox>
                      <children>
-                        <Label text="Budget rimanente" />
+                        <Label text="Budget rimanente : " />
                         <TextField fx:id="txtResiduo" editable="false" maxWidth="43.0">
                            <font>
                               <Font size="11.0" />

@@ -2162,8 +2162,7 @@ INSERT INTO Statistiche20182019(Id,Ruolo,Nome,Squadra,PartiteGiocate,MediaVoto,M
 ,(636,'A','PAZZINI','Verona',25,6.09,6.93,7,0,0,5,3,2,0,0,3,0,0)
 ,(2073,'A','RAGUSA','Verona',12,5.5,5.41,0,0,0,0,0,0,0,0,2,0,0)
 ,(4421,'A','TRAORE A','Verona',2,6,6,0,0,0,0,0,0,1,0,0,0,0)
-,(767,'A','TUPTA','Verona',18,5.73,6.15,2,0,0,0,0,0,0,0,2,0,0)
-,(4422,'C','RAMSEY','Juventus',28,6.22,7.16,4,0,0,0,0,0,6,0,0,0,0);
+,(767,'A','TUPTA','Verona',18,5.73,6.15,2,0,0,0,0,0,0,0,2,0,0);
 
 
 CREATE TABLE Quotazioni(
@@ -2778,6 +2777,5 @@ INSERT INTO Quotazioni(Id,Ruolo,Nome,Squadra,Quotazione) VALUES
 ,(636,'A','PAZZINI','Verona',9)
 ,(2073,'A','RAGUSA','Verona',4)
 ,(4421,'A','TRAORE A','Verona',1)
-,(767,'A','TUPTA','Verona',2)
-,(4422,'C','RAMSEY','Juventus',19);
+,(767,'A','TUPTA','Verona',2);
 

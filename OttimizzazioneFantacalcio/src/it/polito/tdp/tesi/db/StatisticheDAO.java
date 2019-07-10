@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -581,6 +582,45 @@ public Map<Integer, CalciatoreStatistiche> getMediaSolo2017_2018_2019(){
 					rs.getDouble("GolFatti"), rs.getDouble("GolSubiti"), rs.getDouble("RigoriParati"), rs.getDouble("RigoriCalciati"), 
 					rs.getDouble("RigoriSegnati"), rs.getDouble("RigoriSbagliati"), rs.getDouble("Assist"), 
 					rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol"))));
+			
+		
+			
+		}
+		conn.close();
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+		throw new RuntimeException("Errore DB");
+	}
+		return calciatori;
+}
+
+public List <CalciatoreStatistiche> getNomeCalciatori(){
+	
+	List<CalciatoreStatistiche> calciatori= new ArrayList<CalciatoreStatistiche>();
+
+	String sql= "SELECT DISTINCT s.Id, s.Ruolo, s.Nome, s.Squadra,q.Quotazione, s.PartiteGiocate,s.MediaVoto, " + 
+			"		s.MediaFanta , s.GolFatti, s.GolSubiti , " + 
+			" 		s.RigoriParati,s.RigoriCalciati, s.RigoriSegnati, " + 
+			"		s.RigoriSbagliati , s.Assist , s.AssistFermo, " + 
+			"		s.Ammonizioni , s.Espulsioni, s.Autogol " + 
+			"FROM statistiche20182019 s, quotazioni q " + 
+			"WHERE s.Id= q.Id " +
+			"ORDER BY  q.Quotazione, s.Ruolo  " ;
+
+	try {
+		Connection conn = DBConnect.getConnection();
+		PreparedStatement st = conn.prepareStatement(sql);
+		
+		ResultSet rs= st.executeQuery();
+		
+		while(rs.next()) {
+		
+			calciatori.add(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
+					rs.getString("Squadra"),rs.getInt("Quotazione"), rs.getDouble("PartiteGiocate"), rs.getDouble("MediaVoto"),rs.getDouble("MediaFanta"),
+					rs.getDouble("GolFatti"), rs.getDouble("GolSubiti"), rs.getDouble("RigoriParati"), rs.getDouble("RigoriCalciati"), 
+					rs.getDouble("RigoriSegnati"), rs.getDouble("RigoriSbagliati"), rs.getDouble("Assist"), 
+					rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol")));
 			
 		
 			

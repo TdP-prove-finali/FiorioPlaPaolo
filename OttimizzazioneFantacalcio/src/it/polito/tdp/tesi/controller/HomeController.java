@@ -84,9 +84,7 @@ public class HomeController {
     	int budgetDifensori;
     	int budgetCentrocampisti;
     	int budgetAttaccanti;
-    	//resettano solo all'inizio e poi sforano il numero
-    	//trovare il modo di non resettare ad ogni aggiunta altrimenti ne posso aggiungere solo 1
-    	model.resetParzialeP();
+     	model.resetParzialeP();
     	model.resetParzialeD();
     	model.resetParzialeC();
     	model.resetParzialeA();
@@ -170,7 +168,7 @@ public class HomeController {
     @FXML
     public void doTrovaMigliorRosa(ActionEvent event) {
     	
-    	
+    	btnCreaRosa.setDisable(false);
     	txtRimanenti.clear();
     	if(checkPortieri.isSelected()==false) {
     		model.setPortieriStessaSquadra(false);
@@ -250,6 +248,8 @@ public class HomeController {
         colRuolo.setCellValueFactory(new PropertyValueFactory<PunteggioCalciatore, String>("ruolo"));
         colSquadra.setCellValueFactory(new PropertyValueFactory<PunteggioCalciatore, String>("squadra"));
         colQuota.setCellValueFactory(new PropertyValueFactory<PunteggioCalciatore, Integer>("quotazione"));
+        
+        btnCreaRosa.setDisable(true);
         
     }
     

@@ -103,7 +103,7 @@
             </Button>
             <HBox spacing="10.0">
                <children>
-                  <Label text="Crediti rimanenti : " />
+                  <Label text="Budget rimanente : " />
                   <TextField fx:id="txtRimanenti" editable="false" maxWidth="50.0" />
                </children>
                <padding>

@@ -10,6 +10,7 @@ import java.util.Map;
 
 import it.polito.tdp.tesi.controller.HomeController;
 import it.polito.tdp.tesi.db.StatisticheDAO;
+import javafx.util.Callback;
 
 public class Model {
 
@@ -34,7 +35,7 @@ public class Model {
 	private List<CalciatoreStatistiche> difensori;
 	private List<CalciatoreStatistiche> centrocampisti;
 	private List<CalciatoreStatistiche> attaccanti;
-	
+	private List<CalciatoreStatistiche> nomeCalciatori;
 	private List<CalciatoreStatistiche> calciatori;
 	private Map<Integer,CalciatoreStatistiche> tuaRosa;
 
@@ -56,6 +57,7 @@ public class Model {
 	public Model() {
 		 dao = new StatisticheDAO();
 		 quotazioni = dao.getQuotazioni();
+		 nomeCalciatori= dao.getNomeCalciatori();
 		 this.calcolaMedia();
 		 this.calcolaPunteggio();
 		 parzialeP = new ArrayList<PunteggioCalciatore>();
@@ -99,10 +101,11 @@ public class Model {
 			punteggio=0;
 			//punteggio depotenziato per giocatori provenienti dalla Serie B
 			if(c.getSquadra().equals("Lecce")||c.getSquadra().equals("Brescia")||c.getSquadra().equals("Verona")) {
-				punteggio+= 0.40*(2*c.getPartiteGiocate()+2*c.getMediaFanta()+2*c.getMediaVoto()+2*c.getAssist()+3*c.getRigoriSegnati()-3*c.getRigoriSbagliati()+3*c.getRigoriParati()+3*c.getGolFatti()-c.getGolSubiti()-2*c.getAmmonizioni()-3*c.getEspulsioni()-3*c.getAutogol());
+				punteggio+= 0.40*(3*c.getPartiteGiocate()+(c.getMediaFanta()*c.getMediaVoto())+c.getAssist()+3*c.getRigoriSegnati()-3*c.getRigoriSbagliati()+3*c.getRigoriParati()+5*c.getGolFatti()-c.getGolSubiti()-0.5*c.getAmmonizioni()-c.getEspulsioni()-3*c.getAutogol());
 			}
 			else {
-				punteggio+= 2*c.getPartiteGiocate()+2*c.getMediaFanta()+2*c.getMediaVoto()+2*c.getAssist()+3*c.getRigoriSegnati()-3*c.getRigoriSbagliati()+3*c.getRigoriParati()+3*c.getGolFatti()-c.getGolSubiti()-2*c.getAmmonizioni()-3*c.getEspulsioni()-3*c.getAutogol();
+				punteggio+= 3*c.getPartiteGiocate()+(c.getMediaFanta()*c.getMediaVoto())+c.getAssist()+3*c.getRigoriSegnati()-3*c.getRigoriSbagliati()+3*c.getRigoriParati()+5*c.getGolFatti()-c.getGolSubiti()-0.5*c.getAmmonizioni()-c.getEspulsioni()-3*c.getAutogol();
+				
 			}
 			PunteggioCalciatore p = new PunteggioCalciatore(c.getId(),c.getRuolo(), c.getNome(), c.getSquadra(), c.getQuotazione(), punteggio);
 			punteggi.add(p);
@@ -175,7 +178,6 @@ public class Model {
 						if(!parziale.contains(c)) {
 							if(c.getSquadra().equals(squadra) &&c.getRuolo().equals("P")) {
 								parziale.add(c);
-						//		System.out.println(c.toStringNomeQuota());
 								ricorsione(parziale,i,ruolo,budget-c.getQuotazione());
 							}
 						}	
@@ -195,7 +197,6 @@ public class Model {
 						
 						if(c.getQuotazione()+(i-parziale.size()-1)<budget) {
 							parziale.add(c);
-					//		System.out.println("Ruolo: "+c.getRuolo()+ " Nome : "+c.getNome()+" budget: "+budget+" speso: "+c.getQuotazione());
 							ricorsione(parziale,i,ruolo,budget-c.getQuotazione());
 						}
 						
@@ -275,7 +276,46 @@ public class Model {
 	}
 
 
-	
+	public List<CalciatoreStatistiche> getSquadra(String ruolo) {
+
+			
+		List<PunteggioCalciatore> punt = new ArrayList<PunteggioCalciatore>();
+		for(PunteggioCalciatore s: this.getListaPunteggi()) {
+			if(s.getRuolo().equals(ruolo)) {
+				punt.add(s);
+			}
+		
+		}
+		Collections.sort(punt, new Comparator<PunteggioCalciatore>() {
+
+			@Override
+			public int compare(PunteggioCalciatore o1, PunteggioCalciatore o2) {
+				// TODO Auto-generated method stub
+			//	return o1.getSquadra().compareTo(o2.getSquadra());
+				int c;
+			    c = o1.getSquadra().compareTo(o2.getSquadra());
+			    if (c == 0)
+			       c = -Double.compare(o1.getQuotazione(),o2.getQuotazione());
+			    return c;
+				
+				
+			}
+		
+		});
+
+		
+		List<CalciatoreStatistiche> risultato = new ArrayList<CalciatoreStatistiche>();
+		for(PunteggioCalciatore s: punt) {
+			for(CalciatoreStatistiche c: this.nomeCalciatori) {
+				if(c.getId()==s.getId()) {
+					risultato.add(c);
+				}
+			}
+		}
+		
+		return risultato;
+	}
+
 	
 	public List<CalciatoreStatistiche> getMediaVoto(String ruolo) {
 	
@@ -323,19 +363,13 @@ public class Model {
 	
 	public List<CalciatoreStatistiche> getPunteggio(String ruolo) {
 
-		calciatori = new ArrayList<CalciatoreStatistiche>();
-		for(CalciatoreStatistiche c: this.media) {
-			if(c.getRuolo().equals(ruolo)) {
-				calciatori.add(c);
-			}
-		}
 		List<PunteggioCalciatore> punt = new ArrayList<PunteggioCalciatore>();
-		for(CalciatoreStatistiche c: this.calciatori) {
+
 			for(PunteggioCalciatore s: this.punteggi) {
-				if(c.getId()==s.getId()) {
+				if(s.getRuolo().equals(ruolo)) {
 					punt.add(s);
 				}
-			}
+			
 		}
 		Collections.sort(punt, new Comparator<PunteggioCalciatore>() {
 
@@ -348,7 +382,7 @@ public class Model {
 		});
 		List<CalciatoreStatistiche> risultato = new ArrayList<CalciatoreStatistiche>();
 		for(PunteggioCalciatore s: punt) {
-			for(CalciatoreStatistiche c: this.calciatori) {
+			for(CalciatoreStatistiche c: this.nomeCalciatori) {
 				if(c.getId()==s.getId()) {
 					risultato.add(c);
 				}
@@ -594,6 +628,7 @@ public class Model {
 	public void setBudgetAttaccanti(int budgetAttaccanti) {
 		this.budgetAttaccanti = budgetAttaccanti;
 	}
+
 
 
 

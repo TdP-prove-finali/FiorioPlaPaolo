@@ -32,18 +32,16 @@ public class RosaController {
 	private List<CalciatoreStatistiche> attaccantiRosa;
 	
 	public void setModel(Model model) {
+		
 		this.model = model;	
 		budgetTotale= model.getBudgetTotale();
 		txtResiduo.appendText(String.valueOf(budgetTotale));
     	portieriRosa = new ArrayList<CalciatoreStatistiche>();
     	difensoriRosa = new ArrayList<CalciatoreStatistiche>();
     	centrocampistiRosa = new ArrayList<CalciatoreStatistiche>();
-    	attaccantiRosa = new ArrayList<CalciatoreStatistiche>();
-    	
+    	attaccantiRosa = new ArrayList<CalciatoreStatistiche>(); 	
     	res = Integer.parseInt(txtResiduo.getText());
     
-    	
-		
 	}
     @FXML
     private ResourceBundle resources;
@@ -122,6 +120,10 @@ public class RosaController {
     void doGeneraDifensori(ActionEvent event) {
     	tabellaCaratteristiche.setItems(null);
     	String caratteristica = cmbDifensori.getValue();
+    	if(caratteristica.equals("Squadra")) {
+    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getSquadra("D"));
+        	tabellaCaratteristiche.setItems(values);
+ 			}
     	if(caratteristica.equals("Media voto")) {
            	ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getMediaVoto("D"));
         	tabellaCaratteristiche.setItems(values);
@@ -157,6 +159,10 @@ public class RosaController {
     void doGeneraAttaccanti(ActionEvent event) {
        	tabellaCaratteristiche.setItems(null);
     	String caratteristica = cmbAttaccanti.getValue();
+    	if(caratteristica.equals("Squadra")) {
+    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getSquadra("A"));
+        	tabellaCaratteristiche.setItems(values);
+ 			}
     	if(caratteristica.equals("Media voto")) {
            	ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getMediaVoto("A"));
         	tabellaCaratteristiche.setItems(values);
@@ -192,6 +198,10 @@ public class RosaController {
     void doGeneraCentrocampisti(ActionEvent event) {
        	tabellaCaratteristiche.setItems(null);
     	String caratteristica = cmbCentrocampisti.getValue();
+    	if(caratteristica.equals("Squadra")) {
+    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getSquadra("C"));
+        	tabellaCaratteristiche.setItems(values);
+ 			}
     	if(caratteristica.equals("Media voto")) {
            	ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getMediaVoto("C"));
         	tabellaCaratteristiche.setItems(values);
@@ -228,6 +238,10 @@ public class RosaController {
        	tabellaCaratteristiche.setItems(null);
     	model.selezionaPortieri();
     	String caratteristica = cmbPortieri.getValue();
+    	if(caratteristica.equals("Squadra")) {
+    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getSquadra("P"));
+        	tabellaCaratteristiche.setItems(values);
+ 			}
     	if(caratteristica.equals("Media reti subite a partita")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getPortieriRetiSubite());
         	tabellaCaratteristiche.setItems(values);
@@ -285,19 +299,7 @@ public class RosaController {
     			txtResiduo.setText(String.valueOf(res));
     		}
     	}
-    	for(CalciatoreStatistiche f: portieriRosa) {
-    		System.out.println(f.getNome());
-    	}
-    	for(CalciatoreStatistiche f: difensoriRosa) {
-    		System.out.println(f.getNome());
-    	}
-    	for(CalciatoreStatistiche f: centrocampistiRosa) {
-    		System.out.println(f.getNome());
-    	}
-    	for(CalciatoreStatistiche f: attaccantiRosa) {
-    		System.out.println(f.getNome());
-    	}
-    	
+
     }
 
     @FXML
@@ -351,11 +353,7 @@ public class RosaController {
 			model.setBudgetAttaccanti(model.getBudgetAttaccanti()+c.getQuotazione());
 			txtResiduo.setText(String.valueOf(res));
 		}
-		model.addParzialeP(portieriRosa);
-    	model.addParzialeD(difensoriRosa);
-    	model.addParzialeC(centrocampistiRosa);
-    	model.addParzialeA(attaccantiRosa);
-    	model.calcolaMigliorRosa();
+
     }
 
     @FXML
@@ -370,7 +368,6 @@ public class RosaController {
         assert colRuoloRosa != null : "fx:id=\"colRuoloRosa\" was not injected: check your FXML file 'Rosa.fxml'.";
         assert colSquadraRosa != null : "fx:id=\"colSquadraRosa\" was not injected: check your FXML file 'Rosa.fxml'.";
         assert colQuotaRosa != null : "fx:id=\"colQuotaRosa\" was not injected: check your FXML file 'Rosa.fxml'.";
-
         assert btnAggiungi != null : "fx:id=\"btnAggiungi\" was not injected: check your FXML file 'Rosa.fxml'.";
         assert btnAggiornaRosa != null : "fx:id=\"btnAggiornaRosa\" was not injected: check your FXML file 'Rosa.fxml'.";
         assert btnRimuovi != null : "fx:id=\"btnRimuovi\" was not injected: check your FXML file 'Rosa.fxml'.";
@@ -384,11 +381,11 @@ public class RosaController {
         assert btnGeneraAttaccanti != null : "fx:id=\"btnGeneraAttaccanti\" was not injected: check your FXML file 'Rosa.fxml'.";
         
 
-        cmbPortieri.getItems().addAll("Media voto", "Media reti subite a partita","Quotazione", "Punteggio"
+        cmbPortieri.getItems().addAll("Squadra","Media voto", "Media reti subite a partita","Quotazione", "Punteggio"
         		,"Rigori parati");
-        cmbDifensori.getItems().addAll("Media voto", "Quotazione", "Punteggio","Goleador", "Assistman", "Più cartellini", "Rigoristi");
-        cmbCentrocampisti.getItems().addAll("Media voto", "Quotazione", "Punteggio","Goleador", "Assistman", "Più cartellini", "Rigoristi");
-        cmbAttaccanti.getItems().addAll("Media voto", "Quotazione", "Punteggio","Goleador", "Assistman", "Più cartellini", "Rigoristi");
+        cmbDifensori.getItems().addAll("Squadra","Media voto", "Quotazione", "Punteggio","Goleador", "Assistman", "Più cartellini", "Rigoristi");
+        cmbCentrocampisti.getItems().addAll("Squadra","Media voto", "Quotazione", "Punteggio","Goleador", "Assistman", "Più cartellini", "Rigoristi");
+        cmbAttaccanti.getItems().addAll("Squadra","Media voto", "Quotazione", "Punteggio","Goleador", "Assistman", "Più cartellini", "Rigoristi");
  
         colNomeCaratt.setCellValueFactory(new PropertyValueFactory<CalciatoreStatistiche, String>("nome"));
         colNomeRosa.setCellValueFactory(new PropertyValueFactory<CalciatoreStatistiche, String>("nome"));      
