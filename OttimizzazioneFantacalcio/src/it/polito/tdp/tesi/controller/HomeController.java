@@ -208,10 +208,10 @@ public class HomeController {
         	budgetRimanente=budgetTotale-budgetPortieri-budgetDifensori-budgetCentrocampisti-budgetAttaccanti;
         	
         	// stampa dei vari budget
-        	System.out.format("Budget totale: %d \nBudget portieri: %d \n"
+        /*  System.out.format("Budget totale: %d \nBudget portieri: %d \n"
         			+ "Budget difensori %d: \nBudget centrocampisti: %d \nBudget attaccanti: %d \nBudget rimanente: %d \n",
         			budgetTotale,budgetPortieri,budgetDifensori, budgetCentrocampisti, budgetAttaccanti, budgetRimanente);
-        	
+        */	
         	
         	
         	ObservableList<PunteggioCalciatore> values = FXCollections.observableArrayList(model.calcolaMigliorRosa());

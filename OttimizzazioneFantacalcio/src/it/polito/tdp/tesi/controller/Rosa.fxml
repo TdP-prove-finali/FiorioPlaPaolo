@@ -72,7 +72,7 @@
                         <Font name="Arial Rounded MT Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnRimuovi" minWidth="70.0" mnemonicParsing="false" onAction="#doRimuovi" text="RImuovi">
+                  <Button fx:id="btnRimuovi" minWidth="70.0" mnemonicParsing="false" onAction="#doRimuovi" text="Rimuovi">
                      <padding>
                         <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
                      </padding>

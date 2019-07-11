@@ -135,7 +135,7 @@ public class Model {
 		for(PunteggioCalciatore c: ottima) {
 			res+= c.toStringQuotaz()+"\n";
 			spesi+=c.getQuotazione();
-			System.out.println(res);
+		//	System.out.println(res);
 		}
 		return ottima;
 	}
@@ -226,8 +226,13 @@ public class Model {
 		}
 
 	public List<CalciatoreStatistiche> getPortieriRetiSubite() {
-		
-		Collections.sort(portieri, new Comparator<CalciatoreStatistiche>() {
+		calciatori = new ArrayList<CalciatoreStatistiche>();
+		for(CalciatoreStatistiche c: this.portieri) {
+			if(c.getGolSubiti()>0) {
+				calciatori.add(c);
+			}
+		}	
+		Collections.sort(calciatori, new Comparator<CalciatoreStatistiche>() {
 
 			@Override
 			public int compare(CalciatoreStatistiche o1, CalciatoreStatistiche o2) {
@@ -237,12 +242,18 @@ public class Model {
 			
 		});
 
-		return portieri;
+		return calciatori;
 	}
 
 
 	public List<CalciatoreStatistiche> getPortieriRigoriParati() {
-		Collections.sort(this.portieri, new Comparator<CalciatoreStatistiche>() {
+		calciatori = new ArrayList<CalciatoreStatistiche>();
+		for(CalciatoreStatistiche c: this.portieri) {
+			if(c.getRigoriParati()>0) {
+				calciatori.add(c);
+			}
+		}	
+		Collections.sort(calciatori, new Comparator<CalciatoreStatistiche>() {
 
 			@Override
 			public int compare(CalciatoreStatistiche o1, CalciatoreStatistiche o2) {
@@ -252,7 +263,7 @@ public class Model {
 			
 		});
 
-		return portieri;
+		return calciatori;
 	}
 
 
@@ -301,7 +312,7 @@ public class Model {
 	
 	calciatori = new ArrayList<CalciatoreStatistiche>();
 	for(CalciatoreStatistiche c: this.media) {
-		if(c.getRuolo().equals(ruolo)) {
+		if(c.getRuolo().equals(ruolo)&&c.getPartiteGiocate()>10) {
 			//media diminuita per giocatori provenienti dalla Serie B
 			if(c.getSquadra().equals("Lecce")||c.getSquadra().equals("Brescia")||c.getSquadra().equals("Verona")) {
 				c.setMediaVoto(c.getMediaVoto()*0.95);
@@ -326,7 +337,7 @@ public class Model {
 		
 		calciatori = new ArrayList<CalciatoreStatistiche>();
 		for(CalciatoreStatistiche c: this.media) {
-			if(c.getRuolo().equals(ruolo)) {
+			if(c.getRuolo().equals(ruolo)&&c.getPartiteGiocate()>10) {
 				//FantaMedia diminuita per giocatori provenienti dalla Serie B
 				if(c.getSquadra().equals("Lecce")||c.getSquadra().equals("Brescia")||c.getSquadra().equals("Verona")) {
 					c.setMediaFanta(c.getMediaFanta()*0.85);
@@ -465,7 +476,7 @@ public class Model {
 	
 		calciatori = new ArrayList<CalciatoreStatistiche>();
 		for(CalciatoreStatistiche c: this.media) {
-			if(c.getRuolo().equals(ruolo)) {
+			if(c.getRuolo().equals(ruolo) &&c.getRigoriSegnati()>0) {
 				calciatori.add(c);
 			}
 		}	
