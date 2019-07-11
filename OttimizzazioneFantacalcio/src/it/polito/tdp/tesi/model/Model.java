@@ -35,7 +35,6 @@ public class Model {
 	private List<PunteggioCalciatore> punt;
 	
 	
-
 	public Model() {
 		 dao = new StatisticheDAO();
 		 quotazioni = dao.getQuotazioni();
