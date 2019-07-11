@@ -168,13 +168,14 @@ public class HomeController {
     @FXML
     public void doTrovaMigliorRosa(ActionEvent event) {
     	
+    	
     	btnCreaRosa.setDisable(false);
     	txtRimanenti.clear();
-    	if(checkPortieri.isSelected()==false) {
-    		model.setPortieriStessaSquadra(false);
-    	}
+    
+    	model.setPortieriStessaSquadra(false);
     	
-    	if(checkPortieri.isSelected()) {		
+    	if(checkPortieri.isSelected()) {	
+    		checkPortieri.setSelected(true);
     		model.setPortieriStessaSquadra(true);
     	}
     	
