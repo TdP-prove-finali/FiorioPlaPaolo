@@ -117,6 +117,41 @@ public class RosaController {
     private Button btnGeneraAttaccanti;
 
     @FXML
+    void doGeneraPortieri(ActionEvent event) {
+       	tabellaCaratteristiche.setItems(null);
+    	model.selezionaPortieri();
+    	String caratteristica = cmbPortieri.getValue();
+    	if(caratteristica.equals("Squadra")) {
+    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getSquadra("P"));
+        	tabellaCaratteristiche.setItems(values);
+ 			}
+    	if(caratteristica.equals("Minor media reti subite a partita")) {
+    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getPortieriRetiSubite());
+        	tabellaCaratteristiche.setItems(values);
+ 			}
+       	if(caratteristica.equals("Media voto")) {
+           	ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getMediaVoto("P"));
+        	tabellaCaratteristiche.setItems(values);
+    	}
+       	if(caratteristica.equals("FantaMedia")) {
+           	ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getFantaMedia("P"));
+        	tabellaCaratteristiche.setItems(values);
+    	}
+    	if(caratteristica.equals("Quotazione")) {
+    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getQuotazioni("P"));
+        	tabellaCaratteristiche.setItems(values);
+    	}
+    	if(caratteristica.equals("Punteggio")) {
+    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getPunteggio("P"));
+        	tabellaCaratteristiche.setItems(values);
+    	}
+    	if(caratteristica.equals("Rigori parati")) {
+    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getPortieriRigoriParati());
+        	tabellaCaratteristiche.setItems(values);
+    	}
+    	
+    }
+    @FXML
     void doGeneraDifensori(ActionEvent event) {
     	tabellaCaratteristiche.setItems(null);
     	String caratteristica = cmbDifensori.getValue();
@@ -126,6 +161,10 @@ public class RosaController {
  			}
     	if(caratteristica.equals("Media voto")) {
            	ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getMediaVoto("D"));
+        	tabellaCaratteristiche.setItems(values);
+    	}
+       	if(caratteristica.equals("FantaMedia")) {
+           	ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getFantaMedia("D"));
         	tabellaCaratteristiche.setItems(values);
     	}
     	if(caratteristica.equals("Quotazione")) {
@@ -155,44 +194,7 @@ public class RosaController {
     	
     }
 
-    @FXML
-    void doGeneraAttaccanti(ActionEvent event) {
-       	tabellaCaratteristiche.setItems(null);
-    	String caratteristica = cmbAttaccanti.getValue();
-    	if(caratteristica.equals("Squadra")) {
-    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getSquadra("A"));
-        	tabellaCaratteristiche.setItems(values);
- 			}
-    	if(caratteristica.equals("Media voto")) {
-           	ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getMediaVoto("A"));
-        	tabellaCaratteristiche.setItems(values);
-    	}
-    	if(caratteristica.equals("Quotazione")) {
-    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getQuotazioni("A"));
-        	tabellaCaratteristiche.setItems(values);
-    	}
-    	if(caratteristica.equals("Punteggio")) {
-    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getPunteggio("A"));
-        	tabellaCaratteristiche.setItems(values);
-    	}
-    	if(caratteristica.equals("Goleador")) {
-    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getGoleador("A"));
-        	tabellaCaratteristiche.setItems(values);
-    	}
-    	if(caratteristica.equals("Assistman")) {
-    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getAssistman("A"));
-        	tabellaCaratteristiche.setItems(values);
-    	}
-    	if(caratteristica.equals("Più cartellini")) {
-    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getCartellini("A"));
-        	tabellaCaratteristiche.setItems(values);
-    	}
-    	if(caratteristica.equals("Rigoristi")) {
-    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getRigoristi("A"));
-        	tabellaCaratteristiche.setItems(values);
-    	}
-    	
-    }
+  
 
     @FXML
     void doGeneraCentrocampisti(ActionEvent event) {
@@ -204,6 +206,10 @@ public class RosaController {
  			}
     	if(caratteristica.equals("Media voto")) {
            	ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getMediaVoto("C"));
+        	tabellaCaratteristiche.setItems(values);
+    	}
+       	if(caratteristica.equals("FantaMedia")) {
+           	ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getFantaMedia("C"));
         	tabellaCaratteristiche.setItems(values);
     	}
     	if(caratteristica.equals("Quotazione")) {
@@ -234,32 +240,43 @@ public class RosaController {
     }
 
     @FXML
-    void doGeneraPortieri(ActionEvent event) {
+    void doGeneraAttaccanti(ActionEvent event) {
        	tabellaCaratteristiche.setItems(null);
-    	model.selezionaPortieri();
-    	String caratteristica = cmbPortieri.getValue();
+    	String caratteristica = cmbAttaccanti.getValue();
     	if(caratteristica.equals("Squadra")) {
-    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getSquadra("P"));
+    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getSquadra("A"));
         	tabellaCaratteristiche.setItems(values);
  			}
-    	if(caratteristica.equals("Media reti subite a partita")) {
-    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getPortieriRetiSubite());
+    	if(caratteristica.equals("Media voto")) {
+           	ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getMediaVoto("A"));
         	tabellaCaratteristiche.setItems(values);
- 			}
-       	if(caratteristica.equals("Media voto")) {
-           	ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getMediaVoto("P"));
+    	}
+       	if(caratteristica.equals("FantaMedia")) {
+           	ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getFantaMedia("A"));
         	tabellaCaratteristiche.setItems(values);
     	}
     	if(caratteristica.equals("Quotazione")) {
-    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getQuotazioni("P"));
+    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getQuotazioni("A"));
         	tabellaCaratteristiche.setItems(values);
     	}
     	if(caratteristica.equals("Punteggio")) {
-    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getPunteggio("P"));
+    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getPunteggio("A"));
         	tabellaCaratteristiche.setItems(values);
     	}
-    	if(caratteristica.equals("Rigori parati")) {
-    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getPortieriRigoriParati());
+    	if(caratteristica.equals("Goleador")) {
+    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getGoleador("A"));
+        	tabellaCaratteristiche.setItems(values);
+    	}
+    	if(caratteristica.equals("Assistman")) {
+    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getAssistman("A"));
+        	tabellaCaratteristiche.setItems(values);
+    	}
+    	if(caratteristica.equals("Più cartellini")) {
+    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getCartellini("A"));
+        	tabellaCaratteristiche.setItems(values);
+    	}
+    	if(caratteristica.equals("Rigoristi")) {
+    		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getRigoristi("A"));
         	tabellaCaratteristiche.setItems(values);
     	}
     	
@@ -381,11 +398,11 @@ public class RosaController {
         assert btnGeneraAttaccanti != null : "fx:id=\"btnGeneraAttaccanti\" was not injected: check your FXML file 'Rosa.fxml'.";
         
 
-        cmbPortieri.getItems().addAll("Squadra","Media voto", "Media reti subite a partita","Quotazione", "Punteggio"
+        cmbPortieri.getItems().addAll("Squadra","Media voto","FantaMedia", "Minor media reti subite a partita","Quotazione", "Punteggio"
         		,"Rigori parati");
-        cmbDifensori.getItems().addAll("Squadra","Media voto", "Quotazione", "Punteggio","Goleador", "Assistman", "Più cartellini", "Rigoristi");
-        cmbCentrocampisti.getItems().addAll("Squadra","Media voto", "Quotazione", "Punteggio","Goleador", "Assistman", "Più cartellini", "Rigoristi");
-        cmbAttaccanti.getItems().addAll("Squadra","Media voto", "Quotazione", "Punteggio","Goleador", "Assistman", "Più cartellini", "Rigoristi");
+        cmbDifensori.getItems().addAll("Squadra","Media voto","FantaMedia", "Quotazione", "Punteggio","Goleador", "Assistman", "Più cartellini", "Rigoristi");
+        cmbCentrocampisti.getItems().addAll("Squadra","Media voto","FantaMedia", "Quotazione", "Punteggio","Goleador", "Assistman", "Più cartellini", "Rigoristi");
+        cmbAttaccanti.getItems().addAll("Squadra","Media voto","FantaMedia", "Quotazione", "Punteggio","Goleador", "Assistman", "Più cartellini", "Rigoristi");
  
         colNomeCaratt.setCellValueFactory(new PropertyValueFactory<CalciatoreStatistiche, String>("nome"));
         colNomeRosa.setCellValueFactory(new PropertyValueFactory<CalciatoreStatistiche, String>("nome"));      

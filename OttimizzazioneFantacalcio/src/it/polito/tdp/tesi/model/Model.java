@@ -3,25 +3,12 @@ package it.polito.tdp.tesi.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-
-import it.polito.tdp.tesi.controller.HomeController;
 import it.polito.tdp.tesi.db.StatisticheDAO;
-import javafx.util.Callback;
 
 public class Model {
 
 	private StatisticheDAO dao;
-	private Map<Integer,CalciatoreStatistiche> stat20162017;
-	private Map<Integer,CalciatoreStatistiche> stat20172018;
-	private Map<Integer,CalciatoreStatistiche> stat20182019;
-	
-	private List<CalciatoreStatistiche> media;
-	private List<PunteggioCalciatore> punteggi;
-	
 	private int budgetTotale;
 	private int budgetRimanente;
 	private int budgetPortieri;
@@ -29,30 +16,25 @@ public class Model {
 	private int budgetCentrocampisti;
 	private int budgetAttaccanti;
 	private int spesi;
+	private boolean portieriStessaSquadra;
 	
-	private Map<Integer,Quotazione> quotazioni;
+	private List<CalciatoreStatistiche> media;
+	private List<PunteggioCalciatore> punteggi;
+	private List<Quotazione> quotazioni;
 	private List<CalciatoreStatistiche> portieri;
 	private List<CalciatoreStatistiche> difensori;
 	private List<CalciatoreStatistiche> centrocampisti;
 	private List<CalciatoreStatistiche> attaccanti;
 	private List<CalciatoreStatistiche> nomeCalciatori;
 	private List<CalciatoreStatistiche> calciatori;
-	private Map<Integer,CalciatoreStatistiche> tuaRosa;
-
 	private List<PunteggioCalciatore> parzialeP;
-	private List<PunteggioCalciatore> ottima;
-	private List<PunteggioCalciatore> parzialeD;
-	
-	private List<PunteggioCalciatore> parzialeC;
-	
+	private List<PunteggioCalciatore> parzialeD;	
+	private List<PunteggioCalciatore> parzialeC;	
 	private List<PunteggioCalciatore> parzialeA;
-	
+	private List<PunteggioCalciatore> ottima;
 	private List<PunteggioCalciatore> punt;
-	private boolean portieriStessaSquadra;
 	
-	public Map<Integer, CalciatoreStatistiche> getTuaRosa() {
-		return tuaRosa;
-	}
+	
 
 	public Model() {
 		 dao = new StatisticheDAO();
@@ -67,25 +49,22 @@ public class Model {
 	}
 	
 	public void calcolaMedia() {
-		stat20162017 = dao.getCalciatori20162017();
-		stat20172018 = dao.getCalciatori20172018();
-		stat20182019 = dao.getCalciatori20182019();
 		
 		
 		media = new ArrayList<CalciatoreStatistiche>();
-		media.addAll(dao.getCalciatori20162017().values());
-		media.addAll(dao.getCalciatori20172018().values());
-		media.addAll(dao.getCalciatori20182019().values());
-		media.addAll(dao.getMedia2016_2017_2018().values());
-		media.addAll(dao.getMedia2016_2018_2019().values());
-		media.addAll(dao.getMedia2017_2018_2019().values());
-		media.addAll(dao.getMediaSolo20162017().values());
-		media.addAll(dao.getMediaSolo2016_2017_2018().values());
-		media.addAll(dao.getMediaSolo2016_2018_2019().values());
-		media.addAll(dao.getMediaSolo20172018().values());
-		media.addAll(dao.getMediaSolo2017_2018_2019().values());
-		media.addAll(dao.getMediaSolo20182019().values());
-		media.addAll(dao.getMediaTreAnni().values());
+		media.addAll(dao.getCalciatori20162017());
+		media.addAll(dao.getCalciatori20172018());
+		media.addAll(dao.getCalciatori20182019());
+		media.addAll(dao.getMedia2016_2017_2018());
+		media.addAll(dao.getMedia2016_2018_2019());
+		media.addAll(dao.getMedia2017_2018_2019());
+		media.addAll(dao.getMediaSolo20162017());
+		media.addAll(dao.getMediaSolo2016_2017_2018());
+		media.addAll(dao.getMediaSolo2016_2018_2019());
+		media.addAll(dao.getMediaSolo20172018());
+		media.addAll(dao.getMediaSolo2017_2018_2019());
+		media.addAll(dao.getMediaSolo20182019());
+		media.addAll(dao.getMediaTreAnni());
 							
 	}
 	
@@ -101,18 +80,18 @@ public class Model {
 			punteggio=0;
 			//punteggio depotenziato per giocatori provenienti dalla Serie B
 			if(c.getSquadra().equals("Lecce")||c.getSquadra().equals("Brescia")||c.getSquadra().equals("Verona")) {
-				punteggio+= 0.40*(3*c.getPartiteGiocate()+(c.getMediaFanta()*c.getMediaVoto())+c.getAssist()+3*c.getRigoriSegnati()-3*c.getRigoriSbagliati()+3*c.getRigoriParati()+5*c.getGolFatti()-c.getGolSubiti()-0.5*c.getAmmonizioni()-c.getEspulsioni()-3*c.getAutogol());
+				punteggio+= 0.40*(2*c.getPartiteGiocate()+2*(c.getMediaFanta()*c.getMediaVoto())+2*c.getAssist()+3*c.getRigoriSegnati()-3*c.getRigoriSbagliati()+3*c.getRigoriParati()+5*c.getGolFatti()-c.getGolSubiti()-c.getAmmonizioni()-2*c.getEspulsioni()-3*c.getAutogol());
 			}
 			else {
-				punteggio+= 3*c.getPartiteGiocate()+(c.getMediaFanta()*c.getMediaVoto())+c.getAssist()+3*c.getRigoriSegnati()-3*c.getRigoriSbagliati()+3*c.getRigoriParati()+5*c.getGolFatti()-c.getGolSubiti()-0.5*c.getAmmonizioni()-c.getEspulsioni()-3*c.getAutogol();
-				
+				punteggio+= 2*c.getPartiteGiocate()+2*(c.getMediaFanta()*c.getMediaVoto())+2*c.getAssist()+3*c.getRigoriSegnati()-3*c.getRigoriSbagliati()+3*c.getRigoriParati()+5*c.getGolFatti()-c.getGolSubiti()-c.getAmmonizioni()-2*c.getEspulsioni()-3*c.getAutogol();
+					
 			}
 			PunteggioCalciatore p = new PunteggioCalciatore(c.getId(),c.getRuolo(), c.getNome(), c.getSquadra(), c.getQuotazione(), punteggio);
 			punteggi.add(p);
 			
 		}
-		//se esistono calciatori con 0 statistiche presenti nelle valutazioni setto il punteggio a 0
-		for(Quotazione q: this.quotazioni.values()) {
+		//se esistono calciatori con 0 statistiche presenti nelle valutazioni  il punteggio viene posto uguale a 0
+		for(Quotazione q: this.quotazioni) {
 			for(CalciatoreStatistiche c: this.media) {
 				if(c.getId()!=q.getId()) {
 					PunteggioCalciatore p = new PunteggioCalciatore(q.getId(),q.getRuolo(),q.getNome(),q.getSquadra(),q.getQuotazione(),0.0);
@@ -150,6 +129,8 @@ public class Model {
 		ricorsione(this.getParzialeD(),8,"D",this.getBudgetDifensori());
 		ricorsione(this.getParzialeC(),8,"C",this.getBudgetCentrocampisti());
 		ricorsione(this.getParzialeA(),6,"A",this.getBudgetAttaccanti());
+
+		//calcolo della spesa e stampa a console dei vari passaggi
 		String res="";
 		spesi=0;
 		for(PunteggioCalciatore c: ottima) {
@@ -291,7 +272,7 @@ public class Model {
 			@Override
 			public int compare(PunteggioCalciatore o1, PunteggioCalciatore o2) {
 				// TODO Auto-generated method stub
-			//	return o1.getSquadra().compareTo(o2.getSquadra());
+		
 				int c;
 			    c = o1.getSquadra().compareTo(o2.getSquadra());
 			    if (c == 0)
@@ -322,6 +303,10 @@ public class Model {
 	calciatori = new ArrayList<CalciatoreStatistiche>();
 	for(CalciatoreStatistiche c: this.media) {
 		if(c.getRuolo().equals(ruolo)) {
+			//media diminuita per giocatori provenienti dalla Serie B
+			if(c.getSquadra().equals("Lecce")||c.getSquadra().equals("Brescia")||c.getSquadra().equals("Verona")) {
+				c.setMediaVoto(c.getMediaVoto()*0.95);
+			}
 			calciatori.add(c);
 		}
 	}	
@@ -338,7 +323,30 @@ public class Model {
 	return calciatori;
 	}
 	
-	
+	public List<CalciatoreStatistiche> getFantaMedia(String ruolo) {
+		
+		calciatori = new ArrayList<CalciatoreStatistiche>();
+		for(CalciatoreStatistiche c: this.media) {
+			if(c.getRuolo().equals(ruolo)) {
+				//FantaMedia diminuita per giocatori provenienti dalla Serie B
+				if(c.getSquadra().equals("Lecce")||c.getSquadra().equals("Brescia")||c.getSquadra().equals("Verona")) {
+					c.setMediaFanta(c.getMediaFanta()*0.85);
+				}
+				calciatori.add(c);
+			}
+		}	
+		Collections.sort(calciatori, new Comparator<CalciatoreStatistiche>() {
+
+				@Override
+				public int compare(CalciatoreStatistiche o1, CalciatoreStatistiche o2) {
+					// TODO Auto-generated method stub
+					return -Double.compare(o1.getMediaFanta(),o2.getMediaFanta());
+					}
+				
+		});
+
+		return calciatori;
+		}
 	
 	public List<CalciatoreStatistiche> getQuotazioni(String ruolo) {
 

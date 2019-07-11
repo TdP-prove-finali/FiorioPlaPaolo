@@ -73,8 +73,16 @@ public class CalciatoreStatistiche {
 	public double getMediaVoto() {
 		return mediaVoto;
 	}
+	
+	public void setMediaVoto(double mediaVoto) {
+		this.mediaVoto = mediaVoto;
+	}
 	public double getMediaFanta() {
 		return mediaFanta;
+	}
+	
+	public void setMediaFanta(double mediaFanta) {
+		this.mediaFanta = mediaFanta;
 	}
 	public double getGolFatti() {
 		return golFatti;
@@ -138,33 +146,6 @@ public class CalciatoreStatistiche {
 				espulsioni, autogol);
 	}
 
-/*	public String toStringPortieriRetiSubite() {
-		return String.format("%-19s %-10s %-12.4s %-5s ", nome, squadra, golSubiti/partiteGiocate, quotazione);
-	}
-	public String toStringMediaVoto() {
-		return String.format("%-19s %-10s %-10.4s %-5s ", nome, squadra, mediaVoto, quotazione);
-	}
-	public String toStringRigoriParati() {
-		return String.format("%-19s %-10s %-13.4s %-5s ", nome, squadra, rigoriParati, quotazione);
-	}
-	public String toStringGolFatti() {
-		return String.format("%-19s %-10s %-4.4s %-5s ", nome, squadra, golFatti+rigoriSegnati, quotazione);
-		
-	}
-	public String toStringAssist() {
-		return String.format("%-19s %-10s %-6.4s %-5s ", nome, squadra, assist, quotazione);
-	}
-	public String toStringCartellini() {
-		return String.format("%-19s %-10s %-6.4s %-6.4s %-5s ", nome, squadra, ammonizioni,espulsioni, quotazione);
-	}
-	public String toStringRigoristi() {
-		return String.format("%-19s %-10s %-9.4s %-9.4s %-5s ", nome, squadra, rigoriSegnati,rigoriCalciati, quotazione);
 
-	}
-	public String toStringNomeQuota() {
-		return String.format("%-19s %-5s\n", nome, quotazione);
-	}
-	
-	*/
 	
 }

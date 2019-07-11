@@ -16,7 +16,7 @@
    <top>
       <Label text="OTTIMIZZAZIONE ROSA FANTACALCIO" textFill="#c61c1c" BorderPane.alignment="CENTER">
          <font>
-            <Font name="Arial Rounded MT Bold" size="26.0" />
+            <Font name="Arial Black" size="25.0" />
          </font>
          <BorderPane.margin>
             <Insets left="5.0" right="5.0" top="5.0" />
@@ -26,40 +26,52 @@
    <left>
       <VBox alignment="CENTER" spacing="60.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox spacing="49.0">
+            <HBox spacing="60.0">
                <children>
-                  <Label text="Budget Totale : " />
+                  <Label text="Budget Totale : ">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font></Label>
                   <TextField fx:id="txtTotale" maxWidth="50.0" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </HBox>
-            <HBox spacing="47.0">
+            <HBox spacing="57.0">
                <children>
-                  <Label text="Budget Portieri :" />
+                  <Label text="Budget Portieri :">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font></Label>
                   <TextField fx:id="txtPortieri" maxWidth="50.0" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </HBox>
-            <HBox spacing="10.0">
+            <HBox spacing="35.0">
                <VBox.margin>
-                  <Insets left="5.0" top="-60.0" />
+                  <Insets left="5.0" top="-55.0" />
                </VBox.margin>
                <children>
                   <Label text="Portieri stessa squadra ?">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="12.0" />
+                     </font>
                   </Label>
                   <CheckBox fx:id="checkPortieri" mnemonicParsing="false" />
                </children>
             </HBox>
-            <HBox spacing="38.0">
+            <HBox spacing="47.0">
                <children>
-                  <Label text="Budget Difensori :" />
+                  <Label text="Budget Difensori :">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font></Label>
                   <TextField fx:id="txtDifensori" maxWidth="50.0" />
                </children>
                <padding>
@@ -68,16 +80,22 @@
             </HBox>
             <HBox spacing="5.0">
                <children>
-                  <Label text="Budget Centrocampisti :" />
+                  <Label text="Budget Centrocampisti :">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font></Label>
                   <TextField fx:id="txtCentrocampisti" maxWidth="50.0" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </HBox>
-            <HBox spacing="32.0">
+            <HBox spacing="36.0">
                <children>
-                  <Label text="Budget Attaccanti :" />
+                  <Label text="Budget Attaccanti :">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font></Label>
                   <TextField fx:id="txtAttaccanti" maxWidth="50.0" />
                </children>
                <padding>
@@ -86,7 +104,7 @@
             </HBox>
          </children>
          <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            <Insets bottom="20.0" left="20.0" right="5.0" top="20.0" />
          </padding>
       </VBox>
    </left>
@@ -100,10 +118,16 @@
                <VBox.margin>
                   <Insets />
                </VBox.margin>
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="12.0" />
+               </font>
             </Button>
             <HBox spacing="10.0">
                <children>
-                  <Label text="Budget rimanente : " />
+                  <Label text="Budget rimanente : ">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font></Label>
                   <TextField fx:id="txtRimanenti" editable="false" maxWidth="50.0" />
                </children>
                <padding>
@@ -127,8 +151,14 @@
    <bottom>
       <HBox alignment="TOP_CENTER" spacing="250.0" BorderPane.alignment="TOP_CENTER">
          <children>
-            <Button fx:id="btnCreaRosa" mnemonicParsing="false" onAction="#doCreaRosa" text="Costruisci la tua rosa" />
-            <Button fx:id="btnReset" mnemonicParsing="false" onAction="#doReset" text="Reset" />
+            <Button fx:id="btnCreaRosa" mnemonicParsing="false" onAction="#doCreaRosa" text="Costruisci la tua rosa">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="btnReset" mnemonicParsing="false" onAction="#doReset" text="Reset">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="12.0" />
+               </font></Button>
          </children>
          <padding>
             <Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />

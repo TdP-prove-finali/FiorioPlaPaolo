@@ -91,11 +91,6 @@ public class PunteggioCalciatore {
 	}
 
 
-/*
-	public String toStringPunteggio() {
-		return String.format("%-19s %-10s %-9.5s %-3s ", nome, squadra,punteggio, quotazione);
-	}
-	*/
 	public String toStringQuotaz() {
 		return String.format("%-19s %-10s %-3s ", nome, squadra, quotazione);
 	}

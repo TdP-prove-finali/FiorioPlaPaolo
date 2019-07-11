@@ -5,10 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+
 
 import it.polito.tdp.tesi.model.CalciatoreStatistiche;
 import it.polito.tdp.tesi.model.Quotazione;
@@ -19,9 +17,9 @@ public class StatisticheDAO {
  * Ritorna la media dei giocatori presenti nelle tre tabelle
  * che hanno giocato in tutte e tre le stagioni
  */
-	public Map<Integer, CalciatoreStatistiche> getMediaTreAnni(){
+	public List<CalciatoreStatistiche> getMediaTreAnni(){
 		
-		Map<Integer, CalciatoreStatistiche> calciatori= new HashMap<Integer, CalciatoreStatistiche>();
+		List <CalciatoreStatistiche> calciatori= new ArrayList<CalciatoreStatistiche>();
 
 		String sql= "SELECT q.Id, q.Ruolo , q.Nome, q.Squadra, q.Quotazione , ((s1.PartiteGiocate+ s2.PartiteGiocate + s3.PartiteGiocate) /3) AS PartiteGiocate, " + 
 			"((s1.MediaVoto+ s2.MediaVoto + s3.MediaVoto) /3) AS MediaVoto , ((s1.MediaFanta+ s2.MediaFanta + s3.MediaFanta) /3) AS MediaFanta , " + 
@@ -43,11 +41,11 @@ public class StatisticheDAO {
 			
 			while(rs.next()) {
 			
-				calciatori.put(rs.getInt("Id"),(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
+				calciatori.add(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
 						rs.getString("Squadra"),rs.getInt("Quotazione"), rs.getDouble("PartiteGiocate"), rs.getDouble("MediaVoto"),rs.getDouble("MediaFanta"),
 						rs.getDouble("GolFatti"), rs.getDouble("GolSubiti"), rs.getDouble("RigoriParati"), rs.getDouble("RigoriCalciati"), 
 						rs.getDouble("RigoriSegnati"), rs.getDouble("RigoriSbagliati"), rs.getDouble("Assist"), 
-						rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol"))));
+						rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol")));
 				
 			
 				
@@ -64,9 +62,9 @@ public class StatisticheDAO {
  * Ritorna le medie dei calciatori sempre presenti nelle tre tabelle 
  * che hanno giocato solo nella stagione 2018-2019
  */
-	public Map<Integer, CalciatoreStatistiche> getCalciatori20182019(){
+	public List<CalciatoreStatistiche> getCalciatori20182019(){
 		
-		Map<Integer, CalciatoreStatistiche> calciatori= new HashMap<Integer, CalciatoreStatistiche>();
+		List <CalciatoreStatistiche> calciatori= new ArrayList<CalciatoreStatistiche>();
 		
 		final String sql = "SELECT q.Id, q.Ruolo, q.Nome, q.Squadra,q.Quotazione, s3.PartiteGiocate,s3.MediaVoto,s3.MediaFanta,s3.GolFatti,s3.GolSubiti , " + 
 				"				s3.RigoriParati,s3.RigoriCalciati,s3.RigoriSegnati, s3.RigoriSbagliati, s3.Assist, s3.AssistFermo, s3.Ammonizioni, s3.Espulsioni, s3.Autogol " + 
@@ -81,11 +79,11 @@ public class StatisticheDAO {
 			
 			while(rs.next()) {
 			
-				calciatori.put(rs.getInt("Id"),(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
+				calciatori.add(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
 						rs.getString("Squadra"),rs.getInt("Quotazione"), rs.getDouble("PartiteGiocate"), rs.getDouble("MediaVoto"),rs.getDouble("MediaFanta"),
 						rs.getDouble("GolFatti"), rs.getDouble("GolSubiti"), rs.getDouble("RigoriParati"), rs.getDouble("RigoriCalciati"), 
 						rs.getDouble("RigoriSegnati"), rs.getDouble("RigoriSbagliati"), rs.getDouble("Assist"), 
-						rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol"))));
+						rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol")));
 				
 			
 				
@@ -103,10 +101,9 @@ public class StatisticheDAO {
 * Ritorna le medie dei calciatori sempre presenti nelle tre tabelle 
 * che hanno giocato solo nella stagione 2017-2018
 */
-public Map<Integer, CalciatoreStatistiche> getCalciatori20172018(){
+	public List<CalciatoreStatistiche> getCalciatori20172018(){
 		
-		Map<Integer, CalciatoreStatistiche> calciatori= new HashMap<Integer, CalciatoreStatistiche>();
-		
+	List <CalciatoreStatistiche> calciatori= new ArrayList<CalciatoreStatistiche>();
 		final String sql = "SELECT q.Id, q.Ruolo, q.Nome, q.Squadra,q.Quotazione, s2.PartiteGiocate,s2.MediaVoto,s2.MediaFanta,s2.GolFatti,s2.GolSubiti , " + 
 				"s2.RigoriParati,s2.RigoriCalciati,s2.RigoriSegnati, s2.RigoriSbagliati, s2.Assist, s2.AssistFermo, s2.Ammonizioni, s2.Espulsioni, s2.Autogol " + 
 				"FROM quotazioni q, statistiche20162017 s1, statistiche20172018 s2, statistiche20182019 s3 " + 
@@ -120,11 +117,11 @@ public Map<Integer, CalciatoreStatistiche> getCalciatori20172018(){
 			
 			while(rs.next()) {
 			
-				calciatori.put(rs.getInt("Id"),(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
+				calciatori.add(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
 						rs.getString("Squadra"),rs.getInt("Quotazione"), rs.getDouble("PartiteGiocate"), rs.getDouble("MediaVoto"),rs.getDouble("MediaFanta"),
 						rs.getDouble("GolFatti"), rs.getDouble("GolSubiti"), rs.getDouble("RigoriParati"), rs.getDouble("RigoriCalciati"), 
 						rs.getDouble("RigoriSegnati"), rs.getDouble("RigoriSbagliati"), rs.getDouble("Assist"), 
-						rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol"))));
+						rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol")));
 				
 			
 				
@@ -142,9 +139,9 @@ public Map<Integer, CalciatoreStatistiche> getCalciatori20172018(){
  * Ritorna le medie dei calciatori sempre presenti nelle tre tabelle 
  * che hanno giocato solo nella stagione 2016-2017
  */
-public Map<Integer, CalciatoreStatistiche> getCalciatori20162017(){
+	public List <CalciatoreStatistiche> getCalciatori20162017(){
 	
-	Map<Integer, CalciatoreStatistiche> calciatori= new HashMap<Integer, CalciatoreStatistiche>();
+	List <CalciatoreStatistiche> calciatori= new ArrayList<CalciatoreStatistiche>();
 	
 	final String sql = "SELECT q.Id, q.Ruolo, q.Nome, q.Squadra,q.Quotazione, s1.PartiteGiocate,s1.MediaVoto,s1.MediaFanta,s1.GolFatti,s1.GolSubiti , " + 
 			"s1.RigoriParati,s1.RigoriCalciati,s1.RigoriSegnati, s1.RigoriSbagliati, s1.Assist, s1.AssistFermo, s1.Ammonizioni, s1.Espulsioni, s1.Autogol " + 
@@ -159,11 +156,11 @@ public Map<Integer, CalciatoreStatistiche> getCalciatori20162017(){
 		
 		while(rs.next()) {
 		
-			calciatori.put(rs.getInt("Id"),(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
+			calciatori.add(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
 					rs.getString("Squadra"),rs.getInt("Quotazione"), rs.getDouble("PartiteGiocate"), rs.getDouble("MediaVoto"),rs.getDouble("MediaFanta"),
 					rs.getDouble("GolFatti"), rs.getDouble("GolSubiti"), rs.getDouble("RigoriParati"), rs.getDouble("RigoriCalciati"), 
 					rs.getDouble("RigoriSegnati"), rs.getDouble("RigoriSbagliati"), rs.getDouble("Assist"), 
-					rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol"))));
+					rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol")));
 			
 		
 			
@@ -175,15 +172,15 @@ public Map<Integer, CalciatoreStatistiche> getCalciatori20162017(){
 		throw new RuntimeException("Errore DB");
 	}
 	return calciatori;
-}
+	}
 /*
  * Ritorna le medie dei calciatori sempre presenti nelle tre tabelle 
  * che hanno giocato solo nelle stagioni 2016-2017 e 2017-2018
  */
-public Map<Integer, CalciatoreStatistiche> getMedia2016_2017_2018(){
+	public List<CalciatoreStatistiche> getMedia2016_2017_2018(){
 	
-	Map<Integer, CalciatoreStatistiche> calciatori= new HashMap<Integer, CalciatoreStatistiche>();
-
+	List <CalciatoreStatistiche> calciatori= new ArrayList<CalciatoreStatistiche>();
+	
 	String sql= "SELECT q.Id, q.Ruolo , q.Nome, q.Squadra, q.Quotazione , ((s1.PartiteGiocate+ s2.PartiteGiocate) /2) AS PartiteGiocate,  " + 
 			"((s1.MediaVoto+ s2.MediaVoto) /2) AS MediaVoto , ((s1.MediaFanta+ s2.MediaFanta) /2) AS MediaFanta , " + 
 			"((s1.GolFatti+ s2.GolFatti) /2) AS GolFatti , ((s1.GolSubiti+ s2.GolSubiti)/2) AS GolSubiti, " + 
@@ -204,11 +201,11 @@ public Map<Integer, CalciatoreStatistiche> getMedia2016_2017_2018(){
 		
 		while(rs.next()) {
 		
-			calciatori.put(rs.getInt("Id"),(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
+			calciatori.add(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
 					rs.getString("Squadra"),rs.getInt("Quotazione"), rs.getDouble("PartiteGiocate"), rs.getDouble("MediaVoto"),rs.getDouble("MediaFanta"),
 					rs.getDouble("GolFatti"), rs.getDouble("GolSubiti"), rs.getDouble("RigoriParati"), rs.getDouble("RigoriCalciati"), 
 					rs.getDouble("RigoriSegnati"), rs.getDouble("RigoriSbagliati"), rs.getDouble("Assist"), 
-					rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol"))));
+					rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol")));
 			
 		
 			
@@ -220,15 +217,15 @@ public Map<Integer, CalciatoreStatistiche> getMedia2016_2017_2018(){
 		throw new RuntimeException("Errore DB");
 	}
 		return calciatori;
-}
+	}
 
 /*
  * Ritorna le medie dei calciatori sempre presenti nelle tre tabelle 
  * che hanno giocato solo nelle stagioni 2016-2017 e 2018-2019
  */
-public Map<Integer, CalciatoreStatistiche> getMedia2016_2018_2019(){
+	public List<CalciatoreStatistiche> getMedia2016_2018_2019(){
 	
-	Map<Integer, CalciatoreStatistiche> calciatori= new HashMap<Integer, CalciatoreStatistiche>();
+	List <CalciatoreStatistiche> calciatori= new ArrayList<CalciatoreStatistiche>();
 
 	String sql= "SELECT q.Id, q.Ruolo , q.Nome, q.Squadra, q.Quotazione , ((s1.PartiteGiocate+ s3.PartiteGiocate) /2) AS PartiteGiocate, " + 
 			"((s1.MediaVoto+ s3.MediaVoto) /2) AS MediaVoto , ((s1.MediaFanta+ s3.MediaFanta) /2) AS MediaFanta , " + 
@@ -250,11 +247,11 @@ public Map<Integer, CalciatoreStatistiche> getMedia2016_2018_2019(){
 		
 		while(rs.next()) {
 		
-			calciatori.put(rs.getInt("Id"),(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
+			calciatori.add(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
 					rs.getString("Squadra"),rs.getInt("Quotazione"), rs.getDouble("PartiteGiocate"), rs.getDouble("MediaVoto"),rs.getDouble("MediaFanta"),
 					rs.getDouble("GolFatti"), rs.getDouble("GolSubiti"), rs.getDouble("RigoriParati"), rs.getDouble("RigoriCalciati"), 
 					rs.getDouble("RigoriSegnati"), rs.getDouble("RigoriSbagliati"), rs.getDouble("Assist"), 
-					rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol"))));
+					rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol")));
 			
 		
 			
@@ -266,15 +263,15 @@ public Map<Integer, CalciatoreStatistiche> getMedia2016_2018_2019(){
 		throw new RuntimeException("Errore DB");
 	}
 		return calciatori;
-}
+	}
 /*
  * Ritorna le medie dei calciatori sempre presenti nelle tre tabelle 
  * che hanno giocato solo nelle stagioni 2017-2018 e 2018-2019
  */
-public Map<Integer, CalciatoreStatistiche> getMedia2017_2018_2019(){
+	public List<CalciatoreStatistiche> getMedia2017_2018_2019(){
 	
-	Map<Integer, CalciatoreStatistiche> calciatori= new HashMap<Integer, CalciatoreStatistiche>();
-
+	List <CalciatoreStatistiche> calciatori= new ArrayList<CalciatoreStatistiche>();
+		
 	String sql= "SELECT q.Id, q.Ruolo , q.Nome, q.Squadra, q.Quotazione , ((s2.PartiteGiocate+ s3.PartiteGiocate) /2) AS PartiteGiocate, " + 
 			"((s2.MediaVoto+ s3.MediaVoto) /2) AS MediaVoto , ((s2.MediaFanta+ s3.MediaFanta) /2) AS MediaFanta , " + 
 			"((s2.GolFatti+ s3.GolFatti) /2) AS GolFatti , ((s2.GolSubiti+ s3.GolSubiti)/2) AS GolSubiti, " + 
@@ -295,11 +292,11 @@ public Map<Integer, CalciatoreStatistiche> getMedia2017_2018_2019(){
 		
 		while(rs.next()) {
 		
-			calciatori.put(rs.getInt("Id"),(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
+			calciatori.add(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
 					rs.getString("Squadra"),rs.getInt("Quotazione"), rs.getDouble("PartiteGiocate"), rs.getDouble("MediaVoto"),rs.getDouble("MediaFanta"),
 					rs.getDouble("GolFatti"), rs.getDouble("GolSubiti"), rs.getDouble("RigoriParati"), rs.getDouble("RigoriCalciati"), 
 					rs.getDouble("RigoriSegnati"), rs.getDouble("RigoriSbagliati"), rs.getDouble("Assist"), 
-					rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol"))));
+					rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol")));
 			
 		
 			
@@ -316,9 +313,9 @@ public Map<Integer, CalciatoreStatistiche> getMedia2017_2018_2019(){
  * Ritorna le statistiche dei giocatori attualmente presenti nelle quotazioni che sono
  * stati presenti ed hanno giocato solo nella stagione 2018-2019
  */
-public Map<Integer, CalciatoreStatistiche> getMediaSolo20182019(){
+	public List<CalciatoreStatistiche> getMediaSolo20182019(){
 	
-	Map<Integer, CalciatoreStatistiche> calciatori= new HashMap<Integer, CalciatoreStatistiche>();
+	List <CalciatoreStatistiche> calciatori= new ArrayList<CalciatoreStatistiche>();
 
 	String sql= "SELECT q.Id, q.Ruolo, q.Nome, q.Squadra,q.Quotazione, s3.PartiteGiocate,s3.MediaVoto,s3.MediaFanta,s3.GolFatti,s3.GolSubiti , " + 
 			"s3.RigoriParati,s3.RigoriCalciati,s3.RigoriSegnati, s3.RigoriSbagliati, s3.Assist, s3.AssistFermo, s3.Ammonizioni, s3.Espulsioni, s3.Autogol " + 
@@ -340,11 +337,11 @@ public Map<Integer, CalciatoreStatistiche> getMediaSolo20182019(){
 		
 		while(rs.next()) {
 		
-			calciatori.put(rs.getInt("Id"),(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
+			calciatori.add(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
 					rs.getString("Squadra"),rs.getInt("Quotazione"), rs.getDouble("PartiteGiocate"), rs.getDouble("MediaVoto"),rs.getDouble("MediaFanta"),
 					rs.getDouble("GolFatti"), rs.getDouble("GolSubiti"), rs.getDouble("RigoriParati"), rs.getDouble("RigoriCalciati"), 
 					rs.getDouble("RigoriSegnati"), rs.getDouble("RigoriSbagliati"), rs.getDouble("Assist"), 
-					rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol"))));
+					rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol")));
 			
 		
 			
@@ -362,10 +359,10 @@ public Map<Integer, CalciatoreStatistiche> getMediaSolo20182019(){
  * stati presenti ed hanno giocato solo nella stagione 2017-2018
  * Attualmente mappa vuota
  */
-public Map<Integer, CalciatoreStatistiche> getMediaSolo20172018(){
+	public List<CalciatoreStatistiche> getMediaSolo20172018(){
 	
-	Map<Integer, CalciatoreStatistiche> calciatori= new HashMap<Integer, CalciatoreStatistiche>();
-
+	List <CalciatoreStatistiche> calciatori= new ArrayList<CalciatoreStatistiche>();
+	
 	String sql= "SELECT q.Id, q.Ruolo, q.Nome, q.Squadra,q.Quotazione, s2.PartiteGiocate,s2.MediaVoto,s2.MediaFanta,s2.GolFatti,s2.GolSubiti , " + 
 			" 			s2.RigoriParati,s2.RigoriCalciati,s2.RigoriSegnati, s2.RigoriSbagliati, s2.Assist, s2.AssistFermo, s2.Ammonizioni, s2.Espulsioni, s2.Autogol " + 
 			"FROM quotazioni q, statistiche20172018 s2 " + 
@@ -386,11 +383,11 @@ public Map<Integer, CalciatoreStatistiche> getMediaSolo20172018(){
 		
 		while(rs.next()) {
 		
-			calciatori.put(rs.getInt("Id"),(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
+			calciatori.add(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
 					rs.getString("Squadra"),rs.getInt("Quotazione"), rs.getDouble("PartiteGiocate"), rs.getDouble("MediaVoto"),rs.getDouble("MediaFanta"),
 					rs.getDouble("GolFatti"), rs.getDouble("GolSubiti"), rs.getDouble("RigoriParati"), rs.getDouble("RigoriCalciati"), 
 					rs.getDouble("RigoriSegnati"), rs.getDouble("RigoriSbagliati"), rs.getDouble("Assist"), 
-					rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol"))));
+					rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol")));
 			
 		
 			
@@ -408,10 +405,10 @@ public Map<Integer, CalciatoreStatistiche> getMediaSolo20172018(){
  * stati presenti ed hanno giocato solo nella stagione 2016-2017
  * Attualmente mappa vuota
  */
-public Map<Integer, CalciatoreStatistiche> getMediaSolo20162017(){
+	public List<CalciatoreStatistiche> getMediaSolo20162017(){
 	
-	Map<Integer, CalciatoreStatistiche> calciatori= new HashMap<Integer, CalciatoreStatistiche>();
-
+	List <CalciatoreStatistiche> calciatori= new ArrayList<CalciatoreStatistiche>();
+		
 	String sql= "SELECT q.Id, q.Ruolo, q.Nome, q.Squadra,q.Quotazione, s1.PartiteGiocate,s1.MediaVoto,s1.MediaFanta,s1.GolFatti,s1.GolSubiti , " + 
 			" 		s1.RigoriParati,s1.RigoriCalciati,s1.RigoriSegnati, s1.RigoriSbagliati, s1.Assist, s1.AssistFermo, s1.Ammonizioni, s1.Espulsioni, s1.Autogol " + 
 			"FROM quotazioni q, statistiche20162017 s1 " + 
@@ -432,11 +429,11 @@ public Map<Integer, CalciatoreStatistiche> getMediaSolo20162017(){
 		
 		while(rs.next()) {
 		
-			calciatori.put(rs.getInt("Id"),(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
+			calciatori.add(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
 					rs.getString("Squadra"),rs.getInt("Quotazione"), rs.getDouble("PartiteGiocate"), rs.getDouble("MediaVoto"),rs.getDouble("MediaFanta"),
 					rs.getDouble("GolFatti"), rs.getDouble("GolSubiti"), rs.getDouble("RigoriParati"), rs.getDouble("RigoriCalciati"), 
 					rs.getDouble("RigoriSegnati"), rs.getDouble("RigoriSbagliati"), rs.getDouble("Assist"), 
-					rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol"))));
+					rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol")));
 			
 		
 			
@@ -454,10 +451,10 @@ public Map<Integer, CalciatoreStatistiche> getMediaSolo20162017(){
  * stati presenti ed hanno giocato solo nelle stagioni 2016-2017 e 2017-2018
  * Attualmente mappa vuota
  */
-public Map<Integer, CalciatoreStatistiche> getMediaSolo2016_2017_2018(){
+	public List<CalciatoreStatistiche> getMediaSolo2016_2017_2018(){
 	
-	Map<Integer, CalciatoreStatistiche> calciatori= new HashMap<Integer, CalciatoreStatistiche>();
-
+		List <CalciatoreStatistiche> calciatori= new ArrayList<CalciatoreStatistiche>();
+		
 	String sql= "SELECT q.Id, q.Ruolo, q.Nome, q.Squadra,q.Quotazione, ((s1.PartiteGiocate+ s2.PartiteGiocate)/2)AS PartiteGiocate, ((s1.MediaVoto+ s2.MediaVoto)/2) AS MediaVoto , " + 
 			"		((s1.MediaFanta+ s2.MediaVoto)/2) AS MediaFanta , ((s1.GolFatti+ s2.GolFatti)/2) AS GolFatti ,(( s1.GolSubiti+ s2.GolSubiti)/2) AS GolSubiti , " + 
 			" 		((s1.RigoriParati+ s2.RigoriParati)/2) AS RigoriParati ,((s1.RigoriCalciati+ s2.RigoriCalciati)/2) AS RigoriCalciati, ((s1.RigoriSegnati+ s2.RigoriSegnati)/2) AS RigoriSegnati, " + 
@@ -481,11 +478,11 @@ public Map<Integer, CalciatoreStatistiche> getMediaSolo2016_2017_2018(){
 		
 		while(rs.next()) {
 		
-			calciatori.put(rs.getInt("Id"),(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
+			calciatori.add(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
 					rs.getString("Squadra"),rs.getInt("Quotazione"), rs.getDouble("PartiteGiocate"), rs.getDouble("MediaVoto"),rs.getDouble("MediaFanta"),
 					rs.getDouble("GolFatti"), rs.getDouble("GolSubiti"), rs.getDouble("RigoriParati"), rs.getDouble("RigoriCalciati"), 
 					rs.getDouble("RigoriSegnati"), rs.getDouble("RigoriSbagliati"), rs.getDouble("Assist"), 
-					rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol"))));
+					rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol")));
 			
 		
 			
@@ -502,10 +499,10 @@ public Map<Integer, CalciatoreStatistiche> getMediaSolo2016_2017_2018(){
  * Ritorna le statistiche dei giocatori attualmente presenti nelle quotazioni che sono
  * stati presenti ed hanno giocato solo nelle stagioni 2016-2017 e 2018-2019
  */
-public Map<Integer, CalciatoreStatistiche> getMediaSolo2016_2018_2019(){
+	public List<CalciatoreStatistiche> getMediaSolo2016_2018_2019(){
 	
-	Map<Integer, CalciatoreStatistiche> calciatori= new HashMap<Integer, CalciatoreStatistiche>();
-
+	List <CalciatoreStatistiche> calciatori= new ArrayList<CalciatoreStatistiche>();
+		
 	String sql= "SELECT q.Id, q.Ruolo, q.Nome, q.Squadra,q.Quotazione, ((s1.PartiteGiocate+ s3.PartiteGiocate)/2)AS PartiteGiocate, ((s1.MediaVoto+ s3.MediaVoto)/2) AS MediaVoto , " + 
 			"		((s1.MediaFanta+ s3.MediaVoto)/2) AS MediaFanta , ((s1.GolFatti+ s3.GolFatti)/2) AS GolFatti ,(( s1.GolSubiti+ s3.GolSubiti)/2) AS GolSubiti , " + 
 			" 		((s1.RigoriParati+ s3.RigoriParati)/2) AS RigoriParati ,((s1.RigoriCalciati+ s3.RigoriCalciati)/2) AS RigoriCalciati, ((s1.RigoriSegnati+ s3.RigoriSegnati)/2) AS RigoriSegnati, " + 
@@ -529,11 +526,11 @@ public Map<Integer, CalciatoreStatistiche> getMediaSolo2016_2018_2019(){
 		
 		while(rs.next()) {
 		
-			calciatori.put(rs.getInt("Id"),(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
+			calciatori.add(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
 					rs.getString("Squadra"),rs.getInt("Quotazione"), rs.getDouble("PartiteGiocate"), rs.getDouble("MediaVoto"),rs.getDouble("MediaFanta"),
 					rs.getDouble("GolFatti"), rs.getDouble("GolSubiti"), rs.getDouble("RigoriParati"), rs.getDouble("RigoriCalciati"), 
 					rs.getDouble("RigoriSegnati"), rs.getDouble("RigoriSbagliati"), rs.getDouble("Assist"), 
-					rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol"))));
+					rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol")));
 			
 		
 			
@@ -545,15 +542,15 @@ public Map<Integer, CalciatoreStatistiche> getMediaSolo2016_2018_2019(){
 		throw new RuntimeException("Errore DB");
 	}
 		return calciatori;
-}
+	}
 /*
  * Ritorna le statistiche dei giocatori attualmente presenti nelle quotazioni che sono
  * stati presenti ed hanno giocato solo nelle stagioni 2017-2018 e 2018-2019
  */
-public Map<Integer, CalciatoreStatistiche> getMediaSolo2017_2018_2019(){
+	public List<CalciatoreStatistiche> getMediaSolo2017_2018_2019(){
 	
-	Map<Integer, CalciatoreStatistiche> calciatori= new HashMap<Integer, CalciatoreStatistiche>();
-
+	List <CalciatoreStatistiche> calciatori= new ArrayList<CalciatoreStatistiche>();
+		
 	String sql= "SELECT q.Id, q.Ruolo, q.Nome, q.Squadra,q.Quotazione, ((s2.PartiteGiocate+ s3.PartiteGiocate)/2)AS PartiteGiocate, ((s2.MediaVoto+ s3.MediaVoto)/2) AS MediaVoto , " + 
 			"		((s2.MediaFanta+ s3.MediaVoto)/2) AS MediaFanta , ((s2.GolFatti+ s3.GolFatti)/2) AS GolFatti ,(( s2.GolSubiti+ s3.GolSubiti)/2) AS GolSubiti , " + 
 			" 		((s2.RigoriParati+ s3.RigoriParati)/2) AS RigoriParati ,((s2.RigoriCalciati+ s3.RigoriCalciati)/2) AS RigoriCalciati, ((s2.RigoriSegnati+ s3.RigoriSegnati)/2) AS RigoriSegnati, " + 
@@ -577,11 +574,11 @@ public Map<Integer, CalciatoreStatistiche> getMediaSolo2017_2018_2019(){
 		
 		while(rs.next()) {
 		
-			calciatori.put(rs.getInt("Id"),(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
+			calciatori.add(new CalciatoreStatistiche(rs.getInt("Id"), rs.getString("Ruolo"), rs.getString("Nome"), 
 					rs.getString("Squadra"),rs.getInt("Quotazione"), rs.getDouble("PartiteGiocate"), rs.getDouble("MediaVoto"),rs.getDouble("MediaFanta"),
 					rs.getDouble("GolFatti"), rs.getDouble("GolSubiti"), rs.getDouble("RigoriParati"), rs.getDouble("RigoriCalciati"), 
 					rs.getDouble("RigoriSegnati"), rs.getDouble("RigoriSbagliati"), rs.getDouble("Assist"), 
-					rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol"))));
+					rs.getDouble("AssistFermo"), rs.getDouble("Ammonizioni"), rs.getDouble("Espulsioni"), rs.getDouble("Autogol")));
 			
 		
 			
@@ -593,9 +590,9 @@ public Map<Integer, CalciatoreStatistiche> getMediaSolo2017_2018_2019(){
 		throw new RuntimeException("Errore DB");
 	}
 		return calciatori;
-}
-
-public List <CalciatoreStatistiche> getNomeCalciatori(){
+	}
+	
+	public List <CalciatoreStatistiche> getNomeCalciatori(){
 	
 	List<CalciatoreStatistiche> calciatori= new ArrayList<CalciatoreStatistiche>();
 
@@ -632,10 +629,10 @@ public List <CalciatoreStatistiche> getNomeCalciatori(){
 		throw new RuntimeException("Errore DB");
 	}
 		return calciatori;
-}
-public Map<Integer,Quotazione> getQuotazioni() {
+	}
+	public List<Quotazione> getQuotazioni() {
 
-	Map<Integer, Quotazione> calciatori= new HashMap<Integer, Quotazione>();
+	 List<Quotazione> calciatori= new ArrayList<Quotazione>();
 
 	String sql= "SELECT * FROM quotazioni";
 
@@ -647,7 +644,7 @@ public Map<Integer,Quotazione> getQuotazioni() {
 		
 		while(rs.next()) {
 		
-			calciatori.put(rs.getInt("Id"),new Quotazione(rs.getInt("Id"), rs.getString("Ruolo"),
+			calciatori.add(new Quotazione(rs.getInt("Id"), rs.getString("Ruolo"),
 					rs.getString("Nome"), rs.getString("Squadra"),rs.getInt("Quotazione")));
 		
 			
@@ -661,7 +658,7 @@ public Map<Integer,Quotazione> getQuotazioni() {
 		return calciatori;
 	
 	
-}
+	}
 
 	
 	
