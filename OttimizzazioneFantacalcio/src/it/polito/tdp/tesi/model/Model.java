@@ -119,8 +119,7 @@ public class Model {
 
 
 	public List<PunteggioCalciatore> calcolaMigliorRosa() {
-//		this.setBudgetRimanente(0);
-//		budgetTotale = this.getBudgetTotale();
+
 		ottima=null;
 		ottima = new ArrayList<PunteggioCalciatore>();
 		punt = this.getListaPunteggi();
@@ -155,7 +154,6 @@ public class Model {
 			if(ruolo.equals("P")) {
 				if(parziale.size()>0 && parziale.size()<i ) {
 					String squadra = parziale.get(0).getSquadra();
-					System.out.println(squadra);
 					for(PunteggioCalciatore c:this.punt) {
 						if(!parziale.contains(c)) {
 							if(c.getSquadra().equals(squadra) &&c.getRuolo().equals("P")&&c.getQuotazione()+(i-parziale.size()-1)<=budget) {
@@ -521,7 +519,6 @@ public class Model {
 			if(!this.parzialeP.contains(d)) {
 				this.parzialeP.add(d);
 				budgetRimanente= budgetRimanente-d.getQuotazione();
-	//			System.out.println(c.getNome()+budgetPortieri);
 				}
 			}
 	}
@@ -532,7 +529,6 @@ public class Model {
 			if(!this.parzialeD.contains(d)) {
 				this.parzialeD.add(d);
 				budgetRimanente= budgetRimanente-d.getQuotazione();
-	//			System.out.println(c.getNome()+budgetDifensori);
 			}
 		}
 		
@@ -544,8 +540,7 @@ public class Model {
 			if(!this.parzialeC.contains(d)) {
 				this.parzialeC.add(d);
 				budgetRimanente= budgetRimanente-d.getQuotazione();
-	//			System.out.println(budgetCentrocampisti + " " + d.getQuotazione());
-	//			System.out.println(c.getNome()+budgetCentrocampisti);
+
 			}
 		}
 	}
@@ -555,7 +550,6 @@ public class Model {
 			if(!this.parzialeA.contains(d)) {
 				this.parzialeA.add(d);
 				budgetRimanente= budgetRimanente-d.getQuotazione();
-	//			System.out.println(c.getNome()+budgetAttaccanti);
 			}
 		}
 	}
@@ -608,7 +602,6 @@ public class Model {
 
 
 	public int getBudgetRimanente() {
-	//	return budgetTotale-spesi;
 		return	budgetRimanente;
 	}
 
