@@ -85,6 +85,7 @@ public class HomeController {
     void doCreaRosa(ActionEvent event) {
 
     	btnCreaRosa.setDisable(true);
+    	btnReset.setDisable(false);
     	int budgetTotale;
     	int budgetPortieri;
     	int budgetDifensori;
@@ -148,7 +149,8 @@ public class HomeController {
 
     @FXML
     void doReset(ActionEvent event) {
- 
+    	
+    	btnReset.setDisable(true);
     	checkPortieri.setSelected(false);
     	btnCreaRosa.setDisable(true);
     	txtTotale.clear();
@@ -243,7 +245,7 @@ public class HomeController {
         	}
 
         	
-        	
+
         	ObservableList<PunteggioCalciatore> values = FXCollections.observableArrayList(model.calcolaMigliorRosa());
         	tabella.setItems(values);
         	txtRimanenti.setText(String.valueOf(model.getBudgetRimanente()));
@@ -282,7 +284,7 @@ public class HomeController {
         colQuota.setCellValueFactory(new PropertyValueFactory<PunteggioCalciatore, Integer>("quotazione"));
         
         btnCreaRosa.setDisable(true);
-        
+        btnReset.setDisable(true);
     }
     
     public void setModel(Model model, Stage stage) {

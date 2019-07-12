@@ -130,6 +130,9 @@ public class RosaController {
        	tabellaCaratteristiche.setItems(null);
     	model.selezionaPortieri();
     	String caratteristica = cmbPortieri.getValue();
+    	if(cmbPortieri.getSelectionModel().isEmpty()) {
+    		return;
+    	}
     	if(caratteristica.equals("Squadra")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getSquadra("P"));
         	tabellaCaratteristiche.setItems(values);
@@ -164,6 +167,9 @@ public class RosaController {
     void doGeneraDifensori(ActionEvent event) {
     	tabellaCaratteristiche.setItems(null);
     	String caratteristica = cmbDifensori.getValue();
+    	if(cmbDifensori.getSelectionModel().isEmpty()) {
+    		return;
+    	}
     	if(caratteristica.equals("Squadra")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getSquadra("D"));
         	tabellaCaratteristiche.setItems(values);
@@ -209,6 +215,9 @@ public class RosaController {
     void doGeneraCentrocampisti(ActionEvent event) {
        	tabellaCaratteristiche.setItems(null);
     	String caratteristica = cmbCentrocampisti.getValue();
+    	if(cmbCentrocampisti.getSelectionModel().isEmpty()) {
+    		return;
+    	}
     	if(caratteristica.equals("Squadra")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getSquadra("C"));
         	tabellaCaratteristiche.setItems(values);
@@ -252,6 +261,9 @@ public class RosaController {
     void doGeneraAttaccanti(ActionEvent event) {
        	tabellaCaratteristiche.setItems(null);
     	String caratteristica = cmbAttaccanti.getValue();
+    	if(cmbAttaccanti.getSelectionModel().isEmpty()) {
+    		return;
+    	}
     	if(caratteristica.equals("Squadra")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getSquadra("A"));
         	tabellaCaratteristiche.setItems(values);
