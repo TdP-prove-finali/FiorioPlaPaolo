@@ -228,7 +228,7 @@ public class Model {
 	public List<CalciatoreStatistiche> getPortieriRetiSubite() {
 		calciatori = new ArrayList<CalciatoreStatistiche>();
 		for(CalciatoreStatistiche c: this.portieri) {
-			if(c.getGolSubiti()>0) {
+			if(c.getGolSubiti()>0 && c.getPartiteGiocate()>10) {
 				calciatori.add(c);
 			}
 		}	
