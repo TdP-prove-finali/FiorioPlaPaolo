@@ -3,6 +3,7 @@ package it.polito.tdp.tesi.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+
 import it.polito.tdp.tesi.model.CalciatoreStatistiche;
 import it.polito.tdp.tesi.model.Model;
 import it.polito.tdp.tesi.model.PunteggioCalciatore;
@@ -21,10 +22,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+
 public class HomeController {
 
-	private Model model;
+	private Model model;   
 	private Stage stage;
+	private Stage s;
     @FXML
     private ResourceBundle resources;
 
@@ -75,10 +78,13 @@ public class HomeController {
 
     @FXML
     private Button btnReset;
+    
+ 
 
     @FXML
     void doCreaRosa(ActionEvent event) {
 
+    	btnCreaRosa.setDisable(true);
     	int budgetTotale;
     	int budgetPortieri;
     	int budgetDifensori;
@@ -89,6 +95,7 @@ public class HomeController {
     	model.resetParzialeC();
     	model.resetParzialeA();
     	model.resetOttima();
+    	
     	try {
     		budgetTotale = Integer.parseInt(txtTotale.getText());
     		model.setBudgetTotale(budgetTotale);
@@ -113,22 +120,26 @@ public class HomeController {
 			return;
 		}
     	try {
-    		
+    		if(s==null) {
+    			
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("Rosa.fxml"));
 			BorderPane root = (BorderPane) loader.load();
 			Scene scene = new Scene(root);
-			
 			RosaController controller = loader.getController();
  			controller.setModel(model);
- 			Stage s= new Stage();
-			
+ 			s= new Stage();
  			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			s.setScene(scene);
-			
 			s.setTitle("Costruisci la tua rosa");
 			s.setX(+565.00);
 			s.setY(20.00);
 			s.show();
+    		}
+    		else {
+    			s.toFront();
+    
+    		}
+    	
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -139,14 +150,14 @@ public class HomeController {
     void doReset(ActionEvent event) {
  
     	checkPortieri.setSelected(false);
-    	
+    	btnCreaRosa.setDisable(true);
     	txtTotale.clear();
     	txtAttaccanti.clear();
     	txtCentrocampisti.clear();
     	txtDifensori.clear();
     	txtPortieri.clear();
     	txtRimanenti.clear();
-    
+    	
 		model.setBudgetTotale(0);
     	model.setBudgetPortieri(0);
     	model.setBudgetDifensori(0);	
@@ -161,8 +172,22 @@ public class HomeController {
     	model.resetParzialeD();
     	model.resetParzialeC();
     	model.resetParzialeA();
-    	model.resetOttima();
+    	
     	model.calcolaMigliorRosa();
+    	if(model.getOttima().size()>0) { 
+    		model.resetOttima();    		
+    	}
+ 
+    	if(s.getScene()!=null) {
+    		s.close();
+    		s=null;
+    		
+    	}
+        
+    	
+    	
+    	
+    	
     }
 
     @FXML
@@ -171,7 +196,7 @@ public class HomeController {
     	
     	btnCreaRosa.setDisable(false);
     	txtRimanenti.clear();
-    
+
     	model.setPortieriStessaSquadra(false);
     	
     	if(checkPortieri.isSelected()) {	
@@ -184,18 +209,28 @@ public class HomeController {
     	int budgetDifensori;
     	int budgetCentrocampisti;
     	int budgetAttaccanti;
-    	int budgetRimanente;
+
     	try {
+      
     		budgetTotale = Integer.parseInt(txtTotale.getText());
-    		model.setBudgetTotale(budgetTotale);
+    		if(model.getBudgetTotale()==0) {
+    		model.setBudgetTotale(budgetTotale);}
+    		
         	budgetPortieri = Integer.parseInt(txtPortieri.getText());
-        	model.setBudgetPortieri(budgetPortieri);
+        	if(model.getBudgetPortieri()==0) {
+        		model.setBudgetPortieri(budgetPortieri);}
+        	
         	budgetDifensori = Integer.parseInt(txtDifensori.getText());
-        	model.setBudgetDifensori(budgetDifensori);
+        	if(model.getBudgetDifensori()==0) {
+        	model.setBudgetDifensori(budgetDifensori);}
+        	
         	budgetCentrocampisti = Integer.parseInt(txtCentrocampisti.getText());
-        	model.setBudgetCentrocampisti(budgetCentrocampisti);
+        	if(model.getBudgetCentrocampisti()==0) {
+        	model.setBudgetCentrocampisti(budgetCentrocampisti);}
+        	
         	budgetAttaccanti = Integer.parseInt(txtAttaccanti.getText());
-        	model.setBudgetAttaccanti(budgetAttaccanti);
+        	if(model.getBudgetAttaccanti()==0) {
+        	model.setBudgetAttaccanti(budgetAttaccanti);}
         	
         	if((budgetPortieri+budgetDifensori+budgetCentrocampisti+budgetAttaccanti)>budgetTotale) {
         		txtRimanenti.setText("ERR");
@@ -206,13 +241,7 @@ public class HomeController {
         		txtRimanenti.setText("ERR");
         		return;
         	}
-        	budgetRimanente=budgetTotale-budgetPortieri-budgetDifensori-budgetCentrocampisti-budgetAttaccanti;
-        	
-        	// stampa dei vari budget
-        /*  System.out.format("Budget totale: %d \nBudget portieri: %d \n"
-        			+ "Budget difensori %d: \nBudget centrocampisti: %d \nBudget attaccanti: %d \nBudget rimanente: %d \n",
-        			budgetTotale,budgetPortieri,budgetDifensori, budgetCentrocampisti, budgetAttaccanti, budgetRimanente);
-        */	
+
         	
         	
         	ObservableList<PunteggioCalciatore> values = FXCollections.observableArrayList(model.calcolaMigliorRosa());

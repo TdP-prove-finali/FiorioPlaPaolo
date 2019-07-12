@@ -26,6 +26,10 @@ public class RosaController {
 	private Model model;
 	private int budgetTotale;
 	private int res;
+	private int budgetP;
+	private int budgetD;
+	private int budgetC;
+	private int budgetA;
 	private List<CalciatoreStatistiche> portieriRosa;
 	private List<CalciatoreStatistiche> difensoriRosa;
 	private List<CalciatoreStatistiche> centrocampistiRosa;
@@ -36,11 +40,16 @@ public class RosaController {
 		this.model = model;	
 		budgetTotale= model.getBudgetTotale();
 		txtResiduo.appendText(String.valueOf(budgetTotale));
+		res = Integer.parseInt(txtResiduo.getText());
     	portieriRosa = new ArrayList<CalciatoreStatistiche>();
     	difensoriRosa = new ArrayList<CalciatoreStatistiche>();
     	centrocampistiRosa = new ArrayList<CalciatoreStatistiche>();
     	attaccantiRosa = new ArrayList<CalciatoreStatistiche>(); 	
-    	res = Integer.parseInt(txtResiduo.getText());
+   	
+    	budgetP = model.getBudgetPortieri();
+    	budgetD = model.getBudgetDifensori();
+    	budgetC = model.getBudgetCentrocampisti();
+    	budgetA = model.getBudgetAttaccanti();
     
 	}
     @FXML
@@ -284,35 +293,39 @@ public class RosaController {
     
     @FXML
     void doAggiungi(ActionEvent event) {
-    	model.resetOttima();
+   
     	CalciatoreStatistiche c =tabellaCaratteristiche.getSelectionModel().getSelectedItem();
     	if (!tabellaRosa.getItems().contains(c)) {
-    		if(c.getRuolo().equals("P")&&portieriRosa.size()<3&&(res-c.getQuotazione()>=0)) {
+    		if(c.getRuolo().equals("P")&&portieriRosa.size()<3&&(res-c.getQuotazione()>=0)&&(budgetP-c.getQuotazione()>=2-portieriRosa.size())) {
     			tabellaRosa.getItems().add(c);
     			portieriRosa.add(c);
     			res= res-c.getQuotazione();
-    			model.setBudgetTotale(res);			
+    			budgetP= budgetP-c.getQuotazione();
+    			model.setBudgetPortieri(budgetP);
     			txtResiduo.setText(String.valueOf(res));
     		}
-    		if(c.getRuolo().equals("D")&&difensoriRosa.size()<8&&(res-c.getQuotazione()>=0)) {
+    		if(c.getRuolo().equals("D")&&difensoriRosa.size()<8&&(res-c.getQuotazione()>=0)&&(budgetD-c.getQuotazione()>=7-difensoriRosa.size())) {
     			tabellaRosa.getItems().add(c);
     			difensoriRosa.add(c);
     			res= res-c.getQuotazione();
-    			model.setBudgetTotale(res);
+    			budgetD= budgetD-c.getQuotazione();
+    			model.setBudgetDifensori(budgetD);
     			txtResiduo.setText(String.valueOf(res));
     		}
-    		if(c.getRuolo().equals("C")&&centrocampistiRosa.size()<8&&(res-c.getQuotazione()>=0)) {
+    		if(c.getRuolo().equals("C")&&centrocampistiRosa.size()<8&&(res-c.getQuotazione()>=0)&&(budgetC-c.getQuotazione()>=7-centrocampistiRosa.size())) {
     			tabellaRosa.getItems().add(c);
     			centrocampistiRosa.add(c);
     			res= res-c.getQuotazione();
-    			model.setBudgetTotale(res);
+    			budgetC= budgetC-c.getQuotazione();
+    			model.setBudgetCentrocampisti(budgetC);
     			txtResiduo.setText(String.valueOf(res));
     		}
-    		if(c.getRuolo().equals("A")&&attaccantiRosa.size()<6&&(res-c.getQuotazione()>=0)) {
+    		if(c.getRuolo().equals("A")&&attaccantiRosa.size()<6&&(res-c.getQuotazione()>=0)&&(budgetA-c.getQuotazione()>=5-portieriRosa.size())) {
     			tabellaRosa.getItems().add(c);
     			attaccantiRosa.add(c);
     			res= res-c.getQuotazione();
-    			model.setBudgetTotale(res);
+    			budgetA= budgetA-c.getQuotazione();
+    			model.setBudgetAttaccanti(budgetA);
     			txtResiduo.setText(String.valueOf(res));
     		}
     	}
@@ -323,12 +336,15 @@ public class RosaController {
     void doAggiornaRosa(ActionEvent event) {
 
     	model.resetOttima();
+    	model.resetParzialeP();
+    	model.resetParzialeD();
+    	model.resetParzialeC();
+    	model.resetParzialeA();
     	model.addParzialeP(portieriRosa);
     	model.addParzialeD(difensoriRosa);
     	model.addParzialeC(centrocampistiRosa);
     	model.addParzialeA(attaccantiRosa);
-    	model.calcolaMigliorRosa();
-
+    	
     }
     @FXML
     void doRimuovi(ActionEvent event) {
@@ -339,8 +355,8 @@ public class RosaController {
 			portieriRosa.remove(c);
 			res= res+c.getQuotazione();
 			model.getParzialeP().remove(model.getSimile(c));
-			model.setBudgetTotale(res);
-			model.setBudgetPortieri(model.getBudgetPortieri()+c.getQuotazione());
+			budgetP = budgetP+c.getQuotazione();
+			model.setBudgetPortieri(budgetP);
 			txtResiduo.setText(String.valueOf(res));
 		}
 		if(c.getRuolo().equals("D")) {
@@ -348,8 +364,8 @@ public class RosaController {
 			difensoriRosa.remove(c);
 			res= res+c.getQuotazione();
 			model.getParzialeD().remove(model.getSimile(c));
-			model.setBudgetTotale(res);
-			model.setBudgetDifensori(model.getBudgetDifensori()+c.getQuotazione());
+			budgetD = budgetD+c.getQuotazione();
+			model.setBudgetDifensori(budgetD);
 			txtResiduo.setText(String.valueOf(res));
 		}
 		if(c.getRuolo().equals("C")) {
@@ -357,8 +373,8 @@ public class RosaController {
 			centrocampistiRosa.remove(c);
 			res= res+c.getQuotazione();
 			model.getParzialeC().remove(model.getSimile(c));
-			model.setBudgetTotale(res);
-			model.setBudgetCentrocampisti(model.getBudgetCentrocampisti()+c.getQuotazione());
+			budgetC = budgetC+c.getQuotazione();
+			model.setBudgetCentrocampisti(budgetC);
 			txtResiduo.setText(String.valueOf(res));
 		}
 		if(c.getRuolo().equals("A")) {
@@ -366,8 +382,8 @@ public class RosaController {
 			attaccantiRosa.remove(c);
 			res= res+c.getQuotazione();
 			model.getParzialeA().remove(model.getSimile(c));
-			model.setBudgetTotale(res);
-			model.setBudgetAttaccanti(model.getBudgetAttaccanti()+c.getQuotazione());
+			budgetA = budgetA+c.getQuotazione();
+			model.setBudgetAttaccanti(budgetA);
 			txtResiduo.setText(String.valueOf(res));
 		}
 
