@@ -137,30 +137,37 @@ public class RosaController {
     	if(caratteristica.equals("Squadra")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getSquadra("P"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
  			}
     	if(caratteristica.equals("Minor media reti subite a partita")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getPortieriRetiSubite());
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
  			}
        	if(caratteristica.equals("Media voto decrescente")) {
            	ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getMediaVoto("P"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
        	if(caratteristica.equals("FantaMedia decrescente")) {
            	ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getFantaMedia("P"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	if(caratteristica.equals("Quotazione decrescente")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getQuotazioni("P"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	if(caratteristica.equals("Punteggio decrescente")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getPunteggio("P"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	if(caratteristica.equals("Rigori parati")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getPortieriRigoriParati());
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	
     }
@@ -174,38 +181,47 @@ public class RosaController {
     	if(caratteristica.equals("Squadra")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getSquadra("D"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
  			}
     	if(caratteristica.equals("Media voto decrescente")) {
            	ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getMediaVoto("D"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
        	if(caratteristica.equals("FantaMedia decrescente")) {
            	ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getFantaMedia("D"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	if(caratteristica.equals("Quotazione decrescente")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getQuotazioni("D"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	if(caratteristica.equals("Punteggio decrescente")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getPunteggio("D"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	if(caratteristica.equals("Goleador")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getGoleador("D"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	if(caratteristica.equals("Assistman")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getAssistman("D"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	if(caratteristica.equals("Più cartellini")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getCartellini("D"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	if(caratteristica.equals("Rigoristi")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getRigoristi("D"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	
     }
@@ -222,38 +238,47 @@ public class RosaController {
     	if(caratteristica.equals("Squadra")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getSquadra("C"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
  			}
     	if(caratteristica.equals("Media voto decrescente")) {
            	ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getMediaVoto("C"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
        	if(caratteristica.equals("FantaMedia decrescente")) {
            	ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getFantaMedia("C"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	if(caratteristica.equals("Quotazione decrescente")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getQuotazioni("C"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	if(caratteristica.equals("Punteggio decrescente")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getPunteggio("C"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	if(caratteristica.equals("Goleador")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getGoleador("C"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	if(caratteristica.equals("Assistman")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getAssistman("C"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	if(caratteristica.equals("Più cartellini")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getCartellini("C"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	if(caratteristica.equals("Rigoristi")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getRigoristi("C"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	
     }
@@ -261,45 +286,55 @@ public class RosaController {
     @FXML
     void doGeneraAttaccanti(ActionEvent event) {
        	tabellaCaratteristiche.setItems(null);
+     
     	String caratteristica = cmbAttaccanti.getValue();
     	if(cmbAttaccanti.getSelectionModel().isEmpty()) {
     		return;
     	}
     	if(caratteristica.equals("Squadra")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getSquadra("A"));
-        	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
  			}
     	if(caratteristica.equals("Media voto decrescente")) {
            	ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getMediaVoto("A"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
        	if(caratteristica.equals("FantaMedia decrescente")) {
            	ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getFantaMedia("A"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	if(caratteristica.equals("Quotazione decrescente")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getQuotazioni("A"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	if(caratteristica.equals("Punteggio decrescente")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getPunteggio("A"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	if(caratteristica.equals("Goleador")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getGoleador("A"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	if(caratteristica.equals("Assistman")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getAssistman("A"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	if(caratteristica.equals("Più cartellini")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getCartellini("A"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	if(caratteristica.equals("Rigoristi")) {
     		ObservableList<CalciatoreStatistiche> values = FXCollections.observableArrayList(model.getRigoristi("A"));
         	tabellaCaratteristiche.setItems(values);
+    		tabellaCaratteristiche.scrollTo(values.get(0));
     	}
     	
     }
