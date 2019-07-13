@@ -494,6 +494,8 @@ public class Model {
 
 	public void setPortieriStessaSquadra(boolean b) {
 		this.portieriStessaSquadra=b;
+		if(parzialeP.size()==3) {
+		this.resetParzialeP();}
 	}
 	
 	public List<PunteggioCalciatore> getParzialeP() {

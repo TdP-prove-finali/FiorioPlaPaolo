@@ -199,11 +199,12 @@ public class HomeController {
     	btnCreaRosa.setDisable(false);
     	txtRimanenti.clear();
 
-    	model.setPortieriStessaSquadra(false);
+    	
     	
     	if(checkPortieri.isSelected()) {	
-    		checkPortieri.setSelected(true);
     		model.setPortieriStessaSquadra(true);
+    	}else {
+    		model.setPortieriStessaSquadra(false);
     	}
     	
     	int budgetTotale;
