@@ -95,7 +95,9 @@ public class HomeController {
     	model.resetParzialeD();
     	model.resetParzialeC();
     	model.resetParzialeA();
-    	model.resetOttima();
+    	if(model.getOttima().size()>0) {
+    		model.resetOttima();
+    	}
     	
     	try {
     		budgetTotale = Integer.parseInt(txtTotale.getText());
@@ -237,23 +239,41 @@ public class HomeController {
         	
         	if((budgetPortieri+budgetDifensori+budgetCentrocampisti+budgetAttaccanti)>budgetTotale) {
         		txtRimanenti.setText("ERR");
+        		model.setBudgetTotale(0);
+        		model.setBudgetPortieri(0);
+        		model.setBudgetDifensori(0);
+        		model.setBudgetCentrocampisti(0);
+        		model.setBudgetAttaccanti(0);
+        		btnCreaRosa.setDisable(true);
         		return;
         		
         	}
         	if(budgetPortieri<3 ||budgetDifensori<8 ||budgetCentrocampisti<8 ||budgetAttaccanti<6) {
         		txtRimanenti.setText("ERR");
+        		model.setBudgetTotale(0);
+        		model.setBudgetPortieri(0);
+        		model.setBudgetDifensori(0);
+        		model.setBudgetCentrocampisti(0);
+        		model.setBudgetAttaccanti(0);
+        		btnCreaRosa.setDisable(true);
         		return;
         	}
 
-        	
 
         	ObservableList<PunteggioCalciatore> values = FXCollections.observableArrayList(model.calcolaMigliorRosa());
         	tabella.setItems(values);
+        	tabella.scrollTo(values.get(0));
         	txtRimanenti.setText(String.valueOf(model.getBudgetRimanente()));
 
 
 		} catch (NumberFormatException e) {
 			txtRimanenti.setText("ERR");
+			model.setBudgetTotale(0);
+    		model.setBudgetPortieri(0);
+    		model.setBudgetDifensori(0);
+    		model.setBudgetCentrocampisti(0);
+    		model.setBudgetAttaccanti(0);
+    		btnCreaRosa.setDisable(true);
 			return;
 		}
     	
